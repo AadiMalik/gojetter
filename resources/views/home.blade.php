@@ -3,11 +3,11 @@
 @section('content')
 <div class="main-content pt-4">
     <div class="breadcrumb">
-        <h1 class="mr-2">Version 4</h1>
-        <ul>
-            <li><a href="">Dashboard</a></li>
-            <li>Version 4</li>
-        </ul>
+        <h1 class="mr-2">Dashboard</h1>
+        <!-- <ul>
+            <li><a href="{{url('home')}}">Dashboard</a></li>
+            <li>Version 1</li>
+        </ul> -->
     </div>
     <div class="separator-breadcrumb border-top"></div>
     <div class="row mb-4">

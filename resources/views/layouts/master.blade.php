@@ -5,12 +5,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Dashboard v4 | Gull admin template</title>
+    <title>Go Jetter Admin </title>
     <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet" />
     <link href="{{asset('public/dist-assets/css/themes/lite-purple.css')}}" rel="stylesheet" />
     <link href="{{asset('public/dist-assets/css/plugins/perfect-scrollbar.css')}}" rel="stylesheet" />
-    <link rel="stylesheet" href="{{asset('public/dist-assets/css/plugins/fontawesome-5.css')}}" />
+    <link href="{{asset('public/dist-assets/css/plugins/fontawesome-5.css')}}" rel="stylesheet"/>
     <link href="{{asset('public/dist-assets/css/plugins/metisMenu.min.css')}}" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.1/sweetalert2.min.css" rel="stylesheet" />
     @yield('css')
 </head>
 
@@ -66,6 +69,12 @@
     <script src="{{asset('public/dist-assets/js/plugins/apexcharts.min.js')}}"></script>
     <script src="{{asset('public/dist-assets/js/scripts/apexSparklineChart.script.min.js')}}"></script>
     <script src="{{asset('public/dist-assets/js/scripts/customizer.script.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="{{ asset('public/dist-assets/js/vendor/toastr.min.js') }}"></script>
+    <script src="{{ asset('public/dist-assets/js/toastr.script.js') }}"></script>
+    <script src="{{ asset('public/dist-assets/js/vendor/datatables.min.js') }}"></script>
     @yield('js')
 </body>
 
