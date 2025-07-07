@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Services\Concrete\PermissionService;
 use App\Services\Concrete\RoleService;
@@ -67,10 +68,10 @@ class RoleController extends Controller
             $role->syncPermissions($request->permissions);
 
             if (!$role)
-                return redirect()->back()->with('error', config('enum.error'));
+                return redirect()->back()->with('error', ResponseMessage::NOT_SAVE);
 
 
-            return redirect('roles')->with('success', config('enum.saved'));
+            return redirect('roles')->with('success', ResponseMessage::SAVE);
         } catch (Exception $e) {
             return redirect()->back()->with('error',  $e->getMessage());
         }

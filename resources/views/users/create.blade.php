@@ -30,6 +30,14 @@
                         <div class="row">
                             <input type="hidden" name="id" value="{{isset($user)?$user->id:''}}" />
                             <div class="col-md-6 form-group mb-3">
+                                <label for="name">Username<span class="text-danger">*</span> </label>
+                                <input class="form-control" type="text" name="username" value="{{isset($user)?$user->username:old('username')}}"
+                                    maxlength="50" placeholder="Enter Username" required />
+                                @error('username')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 form-group mb-3">
                                 <label for="name">Full Name<span class="text-danger">*</span> </label>
                                 <input class="form-control" type="text" name="name" value="{{isset($user)?$user->name:old('name')}}"
                                     maxlength="50" placeholder="Enter User name" required />
@@ -38,10 +46,18 @@
                                 @enderror
                             </div>
                             <div class="col-md-6 form-group mb-3">
-                                <label for="name">User EMail<span class="text-danger">*</span> </label>
+                                <label for="name">Email<span class="text-danger">*</span> </label>
                                 <input class="form-control" type="email" name="email" value="{{isset($user)?$user->email:old('email')}}"
                                     maxlength="50" placeholder="Enter User EMail" required />
-                                @error('name')
+                                @error('email')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="name">User Phone</label>
+                                <input class="form-control" type="phone" name="phone" value="{{isset($user)?$user->phone:old('phone')}}"
+                                    maxlength="50" placeholder="Enter User Phone" />
+                                @error('phone')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

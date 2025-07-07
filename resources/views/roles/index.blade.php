@@ -9,9 +9,9 @@
             </ul>
         </div>
         <div class="separator-breadcrumb border-top"></div>
-        @if (session()->has('message'))
+        @if (session()->has('success'))
             <div class="alert alert-success">
-                {{ session()->get('message') }}
+                {{ session()->get('success') }}
             </div>
         @endif
         <div class="row mb-4">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Services\Concrete\RoleService;
 use App\Services\Concrete\SupplierService;
@@ -52,6 +53,7 @@ class UserController extends Controller
         // abort_if(Gate::denies('users_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $validator = Validator::make($request->all(), [
+                'username' => ['required', 'max:100', 'string', 'unique:users,username,' . $request->id],
                 'email' => ['required', 'email', 'max:100', 'string', 'unique:users,email,' . $request->id],
                 'name' => ['required', 'string', 'max:50'],
                 'password' => ['required', 'string', 'min:8', 'max:16', 'confirmed'],
@@ -72,9 +74,10 @@ class UserController extends Controller
             $obj = [
                 "id"        => $request->id,
                 "name"      => $request->name,
+                "username"  => $request->username,
                 "email"     => $request->email,
-                "password"  => Hash::make($request->password),
-                "supplier_id"=> $request->supplier_id??null,
+                "phone"     => $request->phone??null,
+                "password"  => Hash::make($request->password)
             ];
 
             $user = $this->user_service->save($obj);
@@ -84,7 +87,7 @@ class UserController extends Controller
                 return redirect()->back()->with('error', config('enum.error'));
 
 
-            return redirect('users')->with('success', config('enum.saved'));
+            return redirect('users')->with('message', ResponseMessage::SAVE);
         } catch (Exception $e) {
             return redirect()->back()->with('error',  $e->getMessage());
         }
@@ -95,8 +98,7 @@ class UserController extends Controller
         // abort_if(Gate::denies('users_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $user = $this->user_service->getById($id);
         $roles = $this->role_service->getAll();
-        $suppliers = $this->supplier_service->getAllActiveSupplier();
-        return view('users.create', compact('user', 'roles','suppliers'));
+        return view('users.create', compact('user', 'roles'));
     }
 
 
