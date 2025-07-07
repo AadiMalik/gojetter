@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
 
         // Create Admin user
         $admin = User::create([
+            'username' => 'super',
             'name' => 'Super Admin',
             'email' => 'admin@admin.com',
             'password' => Hash::make('12345678'), // Change this in production!
@@ -29,6 +30,7 @@ class UserSeeder extends Seeder
 
         // Create Normal user
         $user = User::create([
+            'username' => 'user',
             'name' => 'User',
             'email' => 'user@user.com',
             'password' => Hash::make('12345678'),

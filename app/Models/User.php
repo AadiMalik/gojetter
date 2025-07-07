@@ -22,6 +22,22 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+        'phone',
+        'paypal_email',
+        'is_show_email_phone',
+        'about_yourself',
+        'avatar',
+        'home_airport',
+        'address',
+        'city',
+        'state',
+        'zip_code',
+        'country',
+        'created_at',
+        'updated_at',
+        'is_deleted',
+        'date_deleted',
+        'deletedby_id'
     ];
 
     /**
@@ -43,6 +59,7 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
+    
     public function getJWTIdentifier()
     {
         return $this->getKey();
