@@ -10,25 +10,17 @@ class Currency extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'phone',
-        'paypal_email',
-        'is_show_email_phone',
-        'about_yourself',
-        'avatar',
-        'home_airport',
-        'address',
-        'city',
-        'state',
-        'zip_code',
-        'country',
-        'created_at',
-        'updated_at',
+        'code',
+        'symbol',
+        'rate',
+        'is_default',
         'is_deleted',
+        'createdby_id',
+        'updatedby_id',
+        'deletedby_id',
         'date_deleted',
-        'deletedby_id'
+        'created_at',
+        'updated_at'
     ];
 
     protected $hidden = [

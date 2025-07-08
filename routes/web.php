@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,5 +56,25 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('update', [UserController::class, 'update']);
         // Route::get('destroy/{id}', [UserController::class,'destroy']);
         Route::get('status/{id}', [UserController::class, 'status']);
+    });
+
+    Route::group(['prefix' => 'currency'], function () {
+        Route::get('/', [CurrencyController::class, 'index']);
+        Route::post('data', [CurrencyController::class, 'getData'])->name('currency.data');
+        Route::get('create', [CurrencyController::class, 'create']);
+        Route::post('store', [CurrencyController::class, 'store']);
+        Route::get('edit/{id}', [CurrencyController::class, 'edit']);
+        Route::post('update', [CurrencyController::class, 'update']);
+        Route::get('destroy/{id}', [CurrencyController::class, 'destroy']);
+        Route::get('default/{id}', [CurrencyController::class, 'default']);
+        Route::get('/js/currency.js', function () {
+            $path = resource_path('views/currency/js/currency.js');
+            if (file_exists($path)) {
+                return Response::file($path, [
+                    'Content-Type' => 'application/javascript',
+                ]);
+            }
+            abort(404);
+        });
     });
 });

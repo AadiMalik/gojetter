@@ -36,9 +36,9 @@
                         </ul>
                     </li>
                     {{--@endcan--}}
-                    <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="i-Bar-Chart text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Dashboard</span></a>
+                    <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="fa fa-box text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Common</span></a>
                         <ul class="mm-collapse">
-                            <li class="item-name"><a href="dashboard.v1.html"><i class="i-Circular-Point mr-2 text-muted"></i><span class="text-muted">Version 1</span></a></li>
+                            <li class="item-name"><a href="{{url('currency')}}"><i class="fa fa-circle mr-2 text-muted"></i><span class="text-muted">Currency</span></a></li>
                             <li class="item-name"><a href="dashboard.v2.html"><i class="i-Circular-Point mr-2 text-muted"></i><span class="text-muted">Version 2 </span></a></li>
                             <li class="item-name"><a href="dashboard.v3.html"><i class="i-Circular-Point mr-2 text-muted"></i><span class="text-muted">Version 3</span></a></li>
                             <li class="item-name"><a href="dashboard.v4.html"><i class="i-Circular-Point mr-2 text-muted"></i><span class="text-muted">Version 4</span></a></li>
