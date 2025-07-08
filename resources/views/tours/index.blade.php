@@ -2,7 +2,7 @@
 @section('content')
     <div class="main-content pt-4">
         <div class="breadcrumb">
-            <h1>Users</h1>
+            <h1>Tours</h1>
             <ul>
                 <li>List</li>
                 <li>All</li>
@@ -18,18 +18,21 @@
             <div class="col-md-12 mb-3">
                 <div class="card text-left">
                     <div class="card-header text-right bg-transparent">
-                        <a class="btn btn-primary btn-md m-1" href="{{ url('users/create') }}" id="createNewProject"><i
-                                class="fa fa-plus text-white mr-2"></i> Add User</a>
+                        <a class="btn btn-primary btn-md m-1" href="{{ url('tours/create') }}" id="createNewProject"><i
+                                class="fa fa-plus text-white mr-2"></i> Add Tour</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="user_table" class="table table-striped display" style="width:100%">
+                            <table id="tour_table" class="table table-striped display" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Username</th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Role</th>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Type</th>
+                                        <th scope="col">Days</th>
+                                        <th scope="col">Night</th>
+                                        <th scope="col">Location</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Status</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -49,15 +52,88 @@
 @section('js')
     @include('includes.datatable', [
         'columns' => "
-                 {data: 'username' , name: 'username'},
-                 {data: 'name' , name: 'name'},
-                 {data: 'email' , name: 'email'},
-                 {data: 'role' , name: 'role'},
+                 {data: 'title' , name: 'title'},
+                 {data: 'tour_type' , name: 'tour_type'},
+                 {data: 'duration_days' , name: 'duration_days'},
+                 {data: 'duration_nights' , name: 'duration_nights'},
+                 {data: 'location' , name: 'location'},
+                 {data: 'price' , name: 'price'},
+                 {data: 'is_active' , name: 'is_active' , 'sortable': false , searchable: false},
                 {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
-        'route' => 'users/data',
+        'route' => 'tours/data',
         'buttons' => false,
         'pageLength' => 10,
-        'class' => 'user_table',
-        'variable' => 'user_table',
+        'class' => 'tour_table',
+        'variable' => 'tour_table',
     ])
+    <script>
+        function errorMessage(message) {
+
+            toastr.error(message, "Error", {
+                showMethod: "slideDown",
+                hideMethod: "slideUp",
+                timeOut: 2e3,
+            });
+
+        }
+
+        function successMessage(message) {
+
+            toastr.success(message, "Success", {
+                showMethod: "slideDown",
+                hideMethod: "slideUp",
+                timeOut: 2e3,
+            });
+
+        }
+        $("body").on("click", "#active", function() {
+            var tour_id = $(this).data("id");
+            $.ajax({
+                    type: "get",
+                    url: "{{ url('tours/status') }}/" + tour_id,
+                })
+                .done(function(data) {
+                    console.log(data);
+                    if (data.Success) {
+                        successMessage(data.Message);
+                        initDataTabletour_table();
+                    } else {
+                        errorMessage(data.Message);
+                    }
+                })
+                .catch(function(err) {
+                    errorMessage(err.Message);
+                });
+        });
+        $("body").on("click", "#deleteTour", function() {
+            var tour_id = $(this).data("id");
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                            type: "get",
+                            url: "{{ url('tours/destroy') }}/" + tour_id,
+                        })
+                        .done(function(data) {
+                            if (data.Success) {
+                                successMessage(data.Message);
+                                initDataTabletour_table();
+                            } else {
+                                errorMessage(data.Message);
+                            }
+                        })
+                        .catch(function(err) {
+                            errorMessage(err.Message);
+                        });
+                }
+            });
+        });
+    </script>
 @endsection

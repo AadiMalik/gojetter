@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -83,5 +84,17 @@ Route::group(['middleware' => ['auth']], function () {
             }
             abort(404);
         });
+    });
+
+    Route::group(['prefix' => 'tours'], function () {
+        Route::get('/', [TourController::class, 'index']);
+        Route::post('data', [TourController::class, 'getData'])->name('tour.data');
+        Route::get('create', [TourController::class, 'create']);
+        Route::post('store', [TourController::class, 'store']);
+        Route::get('edit/{id}', [TourController::class, 'edit']);
+        Route::post('update', [TourController::class, 'update']);
+        Route::get('view/{id}', [TourController::class, 'view']);
+        Route::get('destroy/{id}', [TourController::class,'destroy']);
+        Route::get('status/{id}', [TourController::class, 'status']);
     });
 });

@@ -12,6 +12,7 @@
     <link href="{{ asset('public/dist-assets/css/plugins/perfect-scrollbar.css') }}" rel="stylesheet" />
     <link href="{{ asset('public/dist-assets/css/plugins/fontawesome-5.css') }}" rel="stylesheet" />
     <link href="{{ asset('public/dist-assets/css/plugins/metisMenu.min.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('public/dist-assets/css/vendor/toastr.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.1/sweetalert2.min.css"

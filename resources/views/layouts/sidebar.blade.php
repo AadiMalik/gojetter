@@ -36,6 +36,11 @@
                         </ul>
                     </li>
                     {{--@endcan--}}
+                    <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="fa fa-plane text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Product Management</span></a>
+                        <ul class="mm-collapse">
+                            <li class="item-name"><a href="{{url('tours')}}"><i class="fa fa-circle mr-2 text-muted"></i><span class="text-muted">Tours</span></a></li>
+                        </ul>
+                    </li>
                     <li class="Ul_li--hover"><a class="has-arrow" href="#"><i class="fa fa-box text-20 mr-2 text-muted"></i><span class="item-name text-15 text-muted">Common</span></a>
                         <ul class="mm-collapse">
                             <li class="item-name"><a href="{{url('currency')}}"><i class="fa fa-circle mr-2 text-muted"></i><span class="text-muted">Currency</span></a></li>

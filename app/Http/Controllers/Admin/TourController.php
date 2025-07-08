@@ -48,7 +48,7 @@ class TourController extends Controller
             $request->all(),
             [
                 'title' => 'required|string|max:255',
-                'slug' => 'required|string|unique:tours,slug,' . $request->id,
+                'slug' => 'required|string|unique:tours,slug,' . ($request->id ?? 'null') . ',id',
                 'thumbnail' => 'nullable|image',
                 'overview' => 'nullable|string',
                 'short_description' => 'nullable|string',
@@ -58,8 +58,7 @@ class TourController extends Controller
                 'tour_type' => 'nullable|string|max:255',
                 'group_size' => 'nullable|integer|min:1',
                 'languages' => 'nullable|string',
-
-                'adult_price' => 'nullable|string|min:0',
+                'adult_price' => 'nullable|numeric|min:0',
                 'min_adults' => 'nullable|integer|min:0',
                 'location' => 'nullable|string|max:255',
             ],
@@ -69,15 +68,19 @@ class TourController extends Controller
         if ($validation->fails()) {
             return redirect()->back()->withErrors($validation)->withInput();
         }
+
         try {
             $obj = $request->all();
+
             if ($request->hasFile('thumbnail')) {
                 $obj['thumbnail'] = $request->file('thumbnail')->store('tours', 'public');
             }
-            $response = $this->tour_service->save($obj);
-            if (!$response)
-                return redirect()->back()->with('error', ResponseMessage::ERROR);
 
+            $response = $this->tour_service->save($obj);
+
+            if (!$response) {
+                return redirect()->back()->with('error', ResponseMessage::ERROR);
+            }
 
             return redirect('tours')->with('message', ResponseMessage::SAVE);
         } catch (Exception $e) {
@@ -90,6 +93,13 @@ class TourController extends Controller
         // abort_if(Gate::denies('tour_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tour = $this->tour_service->getById($id);
         return view('tours.create', compact('tour'));
+    }
+
+    public function view($id)
+    {
+        // abort_if(Gate::denies('tour_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $tour = $this->tour_service->getById($id);
+        return view('tours.view', compact('tour'));
     }
 
     public function status($id)

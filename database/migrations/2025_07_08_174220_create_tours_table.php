@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('tours', function (Blueprint $table) {
+            $table->id();
             $table->string('title');
             $table->string('slug')->unique();
             $table->string('thumbnail')->nullable();
@@ -29,7 +30,7 @@ return new class extends Migration
             $table->integer('min_adults')->nullable();
             $table->string('location')->nullable();
 
-            $table->boolean('is_active')->default(0);
+            $table->boolean('is_active')->default(1);
             $table->boolean('is_deleted')->default(0);
             $table->integer('createdby_id')->nullable();
             $table->integer('updatedby_id')->nullable();

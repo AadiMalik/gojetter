@@ -30,10 +30,6 @@ class Tour extends Model
         'date_deleted',
         'is_deleted'
     ];
-    protected $casts = [
-        'start_date' => 'date',
-        'end_date' => 'date',
-    ];
 
     protected $hidden = [
         'createdby_id',
