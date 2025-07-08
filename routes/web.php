@@ -32,10 +32,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'permissions'], function () {
         Route::get('/', [PermissionController::class, 'index']);
         Route::post('data', [PermissionController::class, 'getData'])->name('permission.data');
-        Route::get('create', [PermissionController::class, 'create']);
         Route::post('store', [PermissionController::class, 'store']);
         Route::get('edit/{id}', [PermissionController::class, 'edit']);
-        Route::post('update', [PermissionController::class, 'update']);
+        Route::get('/js/permission.js', function () {
+            $path = resource_path('views/permissions/js/permission.js');
+            if (file_exists($path)) {
+                return Response::file($path, [
+                    'Content-Type' => 'application/javascript',
+                ]);
+            }
+            abort(404);
+        });
     });
 
     Route::group(['prefix' => 'roles'], function () {

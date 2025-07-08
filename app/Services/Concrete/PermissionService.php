@@ -28,7 +28,7 @@ class PermissionService
         $data = DataTables::of($model)
             ->addColumn('action', function ($item) {
                 $action_column = '';
-                $edit_column    = "<a class='text-success mr-2' href='permissions/edit/" . $item->id . "'><i title='Add' class='nav-icon mr-2 fa fa-edit'></i>Edit</a>";
+                $edit_column    = "<a class='text-success mr-2' id='editPermission' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='Edit'><i title='Add' class='nav-icon mr-2 fa fa-edit'></i>Edit</a>";
 
                 // if(Auth::user()->can('permissions_edit'))
                 $action_column .= $edit_column;
@@ -43,9 +43,11 @@ class PermissionService
     public function save($obj)
     {
         if ($obj['id'] != null && $obj['id'] != '') {
+            $obj['updatedby_id'] = Auth::User()->id;
             $this->model_permission->update($obj, $obj['id']);
             $saved_obj = $this->model_permission->find($obj['id']);
         } else {
+            $obj['createdby_id'] = Auth::User()->id;
             $saved_obj = $this->model_permission->create($obj);
         }
 

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Services\Concrete\PermissionService;
+use App\Traits\ResponseAPI;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -12,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PermissionController extends Controller
 {
+    use ResponseAPI;
     protected $permission_service;
     public function __construct(
         PermissionService  $permission_service
@@ -32,46 +35,50 @@ class PermissionController extends Controller
         return $this->permission_service->getPermissionSource();
     }
 
-    public function create()
-    {
-        // abort_if(Gate::denies('permissions_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('permissions.create');
-    }
-
     public function store(Request $request)
     {
         // abort_if(Gate::denies('permissions_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        try {
-            $validator = Validator::make($request->all(), [
-                'name' => ['required', 'max:50', 'string', 'unique:permissions,name,'.$request->id]
-            ]);
+        $validation = Validator::make($request->all(), [
+            'name' => ['required', 'max:50', 'string', 'unique:permissions,name,' . $request->id]
+        ]);
 
-            if ($validator->fails()) {
-
-                return redirect()->back()->withErrors($validator)->withInput();
+        if ($validation->fails()) {
+            $validation_error = "";
+            foreach ($validation->errors()->all() as $message) {
+                $validation_error .= $message;
             }
-
-            $obj = [
-                "id"    => $request->id,
-                "name"  => $request->name
-            ];
-
-            $permission = $this->permission_service->save($obj);
-
-            if (!$permission)
-                return redirect()->back()->with('error', config('enum.error'));
-
-
-            return redirect('permissions')->with('success', config('enum.saved'));
-        } catch (Exception $e) {
-            return redirect()->back()->with('error',  $e->getMessage());
+            return $this->validationResponse(
+                $validation_error
+            );
         }
+        // try {
+        $obj = [
+            'id' => $request->id,
+            'name' => $request->name
+        ];
+        $response = $this->permission_service->save($obj);
+        return  $this->success(
+            $response,
+            ResponseMessage::SAVE,
+            true
+        );
+        // } catch (Exception $e) {
+        //     return $this->error(ResponseMessage::ERROR);
+        // }
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         // abort_if(Gate::denies('permissions_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $permission = $this->permission_service->getById($id);
-        return view('permissions.create',compact('permission'));
+        try {
+            return  $this->success(
+                $this->permission_service->getById($id),
+                ResponseMessage::SUCCESS,
+                false
+            );
+        } catch (Exception $e) {
+            return $this->error(ResponseMessage::ERROR);
+        }
     }
 
     public function update(Request $request, $id) {}

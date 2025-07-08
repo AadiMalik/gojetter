@@ -2,6 +2,7 @@
 
 namespace App\Services\Concrete;
 
+use App\Enums\Roles;
 use App\Repository\Repository;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -67,17 +68,9 @@ class UserService
         return $this->model_user->getModel()::with(['roles','permissions'])->find($id);
     }
 
-    public function getUserWithoutSupplier(){
-        return User::with('roles')
-        ->whereDoesntHave('roles', function ($query) {
-            $query->where('name', 'Supplier/Karigar User');
-        })
-        ->get();
-    }
-
     public function getAdminIdsOnly(){
         return User::whereHas('roles', function ($query) {
-            $query->where('name', config('enum.superAdmin'));
+            $query->where('name', Roles::ADMIN);
         })->pluck('id')->toArray();
     }
 }

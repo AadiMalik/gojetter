@@ -10,6 +10,7 @@ class ResponseMessage
     const SAVE                  = "Record saved successfully.";
     const UPDATE                = "Record updated successfully.";
     const DELETE                = "Record deleted successfully.";
+    const STATUS                = "Record status updated successfully.";
     const FETCHED               = "Records retrieved successfully.";
     const FETCHED_DETAIL        = "Record details retrieved successfully.";
     const SUCCESS               = "Operation completed successfully.";
