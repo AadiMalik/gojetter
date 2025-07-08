@@ -23,7 +23,7 @@ class TourController extends Controller
     public function index()
     {
         // abort_if(Gate::denies('tour_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('tour.index');
+        return view('tours.index');
     }
 
     public function getData()
@@ -38,7 +38,7 @@ class TourController extends Controller
     public function create()
     {
         // abort_if(Gate::denies('tour_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('tour.create');
+        return view('tours.create');
     }
     public function store(Request $request)
     {
@@ -47,37 +47,41 @@ class TourController extends Controller
         $validation = Validator::make(
             $request->all(),
             [
-                'code' => 'required',
-                'symbol' => 'required',
-                'rate' => 'required',
+                'title' => 'required|string|max:255',
+                'slug' => 'required|string|unique:tours,slug,' . $request->id,
+                'thumbnail' => 'nullable|image',
+                'overview' => 'nullable|string',
+                'short_description' => 'nullable|string',
+                'full_description' => 'nullable|string',
+                'duration_days' => 'nullable|integer',
+                'duration_nights' => 'nullable|integer',
+                'tour_type' => 'nullable|string|max:255',
+                'group_size' => 'nullable|integer|min:1',
+                'languages' => 'nullable|string',
+
+                'adult_price' => 'nullable|string|min:0',
+                'min_adults' => 'nullable|integer|min:0',
+                'location' => 'nullable|string|max:255',
             ],
             $this->validationMessage()
         );
 
         if ($validation->fails()) {
-            $validation_error = "";
-            foreach ($validation->errors()->all() as $message) {
-                $validation_error .= $message;
-            }
-            return $this->validationResponse(
-                $validation_error
-            );
+            return redirect()->back()->withErrors($validation)->withInput();
         }
         try {
-            $obj = [
-                'id' => $request->id,
-                'code' => $request->code,
-                'symbol' => $request->symbol,
-                'rate' => $request->rate,
-            ];
+            $obj = $request->all();
+            if ($request->hasFile('thumbnail')) {
+                $obj['thumbnail'] = $request->file('thumbnail')->store('tours', 'public');
+            }
             $response = $this->tour_service->save($obj);
-            return  $this->success(
-                $response,
-                ResponseMessage::SAVE,
-                true
-            );
+            if (!$response)
+                return redirect()->back()->with('error', ResponseMessage::ERROR);
+
+
+            return redirect('tours')->with('message', ResponseMessage::SAVE);
         } catch (Exception $e) {
-            return $this->error(ResponseMessage::ERROR);
+            return redirect()->back()->with('error', ResponseMessage::ERROR);
         }
     }
 
@@ -85,7 +89,7 @@ class TourController extends Controller
     {
         // abort_if(Gate::denies('tour_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tour = $this->tour_service->getById($id);
-        return view('tour.create', compact('tour'));
+        return view('tours.create', compact('tour'));
     }
 
     public function status($id)

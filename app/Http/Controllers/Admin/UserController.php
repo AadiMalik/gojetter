@@ -84,12 +84,12 @@ class UserController extends Controller
             $user->syncRoles([$request->role]);
 
             if (!$user)
-                return redirect()->back()->with('error', config('enum.error'));
+                return redirect()->back()->with('error', ResponseMessage::ERROR);
 
 
             return redirect('users')->with('message', ResponseMessage::SAVE);
         } catch (Exception $e) {
-            return redirect()->back()->with('error',  $e->getMessage());
+            return redirect()->back()->with('error', ResponseMessage::ERROR);
         }
     }
 
