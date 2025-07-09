@@ -18,6 +18,12 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.1/sweetalert2.min.css"
         rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote.min.css" rel="stylesheet">
+    <style>
+        .sidebar_active {
+            background: #b8b8c5;
+            border-radius: 20px;
+        }
+    </style>
     @yield('css')
 </head>
 

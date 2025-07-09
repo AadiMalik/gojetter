@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\CurrencyController;
+use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\TermAndConditionController;
 use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +32,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['middleware' => ['auth']], function () {
 
+    //permissions
     Route::group(['prefix' => 'permissions'], function () {
         Route::get('/', [PermissionController::class, 'index']);
         Route::post('data', [PermissionController::class, 'getData'])->name('permission.data');
@@ -46,6 +49,7 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 
+    //roles
     Route::group(['prefix' => 'roles'], function () {
         Route::get('/', [RoleController::class, 'index']);
         Route::post('data', [RoleController::class, 'getData'])->name('role.data');
@@ -55,6 +59,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('update', [RoleController::class, 'update']);
     });
 
+    //users
     Route::group(['prefix' => 'users'], function () {
         Route::get('/', [UserController::class, 'index']);
         Route::post('data', [UserController::class, 'getData'])->name('user.data');
@@ -66,6 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('status/{id}', [UserController::class, 'status']);
     });
 
+    //currency
     Route::group(['prefix' => 'currency'], function () {
         Route::get('/', [CurrencyController::class, 'index']);
         Route::post('data', [CurrencyController::class, 'getData'])->name('currency.data');
@@ -86,15 +92,37 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 
+    //tours
     Route::group(['prefix' => 'tours'], function () {
         Route::get('/', [TourController::class, 'index']);
         Route::post('data', [TourController::class, 'getData'])->name('tour.data');
         Route::get('create', [TourController::class, 'create']);
         Route::post('store', [TourController::class, 'store']);
         Route::get('edit/{id}', [TourController::class, 'edit']);
-        Route::post('update', [TourController::class, 'update']);
         Route::get('view/{id}', [TourController::class, 'view']);
         Route::get('destroy/{id}', [TourController::class,'destroy']);
         Route::get('status/{id}', [TourController::class, 'status']);
+    });
+
+    //faqs
+    Route::group(['prefix' => 'faqs'], function () {
+        Route::get('/', [FaqController::class, 'index']);
+        Route::post('data', [FaqController::class, 'getData'])->name('faq.data');
+        Route::get('create', [FaqController::class, 'create']);
+        Route::post('store', [FaqController::class, 'store']);
+        Route::get('edit/{id}', [FaqController::class, 'edit']);
+        Route::get('destroy/{id}', [FaqController::class,'destroy']);
+        Route::get('status/{id}', [FaqController::class, 'status']);
+    });
+
+    //term & condition
+    Route::group(['prefix' => 'terms'], function () {
+        Route::get('/', [TermAndConditionController::class, 'index']);
+        Route::post('data', [TermAndConditionController::class, 'getData'])->name('term.data');
+        Route::post('store', [TermAndConditionController::class, 'store']);
+        Route::get('edit/{id}', [TermAndConditionController::class, 'edit']);
+        Route::post('update', [TermAndConditionController::class, 'update']);
+        Route::get('destroy/{id}', [TermAndConditionController::class,'destroy']);
+        Route::get('status/{id}', [TermAndConditionController::class, 'status']);
     });
 });
