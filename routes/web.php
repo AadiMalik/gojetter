@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PolicyController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\SocialMediaController;
 use App\Http\Controllers\Admin\TermAndConditionController;
 use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\UserController;
@@ -132,5 +133,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('store', [PolicyController::class, 'store']);
         Route::get('edit/{id}', [PolicyController::class, 'edit']);
         Route::post('update', [PolicyController::class, 'update']);
+    });
+
+    //social media
+    Route::group(['prefix' => 'social-media'], function () {
+        Route::get('/', [SocialMediaController::class, 'index']);
+        Route::post('data', [SocialMediaController::class, 'getData'])->name('social-media.data');
+        Route::get('create', [SocialMediaController::class, 'create']);
+        Route::post('store', [SocialMediaController::class, 'store']);
+        Route::get('edit/{id}', [SocialMediaController::class, 'edit']);
+        Route::get('view/{id}', [SocialMediaController::class, 'view']);
+        Route::get('destroy/{id}', [SocialMediaController::class,'destroy']);
+        Route::get('status/{id}', [SocialMediaController::class, 'status']);
     });
 });
