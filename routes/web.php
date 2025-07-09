@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\PolicyController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\TermAndConditionController;
 use App\Http\Controllers\Admin\TourController;
@@ -122,7 +123,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('store', [TermAndConditionController::class, 'store']);
         Route::get('edit/{id}', [TermAndConditionController::class, 'edit']);
         Route::post('update', [TermAndConditionController::class, 'update']);
-        Route::get('destroy/{id}', [TermAndConditionController::class,'destroy']);
-        Route::get('status/{id}', [TermAndConditionController::class, 'status']);
+    });
+
+    //policy
+    Route::group(['prefix' => 'policy'], function () {
+        Route::get('/', [PolicyController::class, 'index']);
+        Route::post('data', [PolicyController::class, 'getData'])->name('policy.data');
+        Route::post('store', [PolicyController::class, 'store']);
+        Route::get('edit/{id}', [PolicyController::class, 'edit']);
+        Route::post('update', [PolicyController::class, 'update']);
     });
 });

@@ -66,7 +66,7 @@
                     </li>
                     {{-- @endcan --}}
                     {{-- @can('legel_access') --}}
-                    <li class="Ul_li--hover {{ Request::is('faqs*')|| Request::is('terms*') ? 'mm-active' : '' }}"><a class="has-arrow" href="#"><i
+                    <li class="Ul_li--hover {{ Request::is('faqs*') || Request::is('terms*') || Request::is('policy*') ? 'mm-active' : '' }}"><a class="has-arrow" href="#"><i
                                 class="i-Library text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Legel</span></a>
                         <ul class="mm-collapse">
@@ -74,10 +74,14 @@
                             <li class="item-name"><a class="{{ Request::is('faqs*') ? 'sidebar_active' : '' }}" href="{{ url('faqs') }}"><i
                                         class="nav-icon fa fa-circle"></i><span class="item-name">FAQs</span></a></li>
                             {{-- @endcan --}}
-                            {{-- @can('term_access') --}}
+                            {{-- @can('term_and_condition_access') --}}
                             <li class="item-name"><a class="{{ Request::is('terms*') ? 'sidebar_active' : '' }}" href="{{ url('terms') }}"><i
-                                class="nav-icon fa fa-circle"></i><span class="item-name">Terms & Conditions</span></a></li>
-                    {{-- @endcan --}}
+                                        class="nav-icon fa fa-circle"></i><span class="item-name">Terms & Conditions</span></a></li>
+                            {{-- @endcan --}}
+                            {{-- @can('private_policy_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('policy*') ? 'sidebar_active' : '' }}" href="{{ url('policy') }}"><i
+                                        class="nav-icon fa fa-circle"></i><span class="item-name">Private Policy</span></a></li>
+                            {{-- @endcan --}}
                         </ul>
                     </li>
                     <li class="Ul_li--hover"><a class="has-arrow" href="#"><i

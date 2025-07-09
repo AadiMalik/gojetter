@@ -2,7 +2,7 @@
 @section('content')
     <div class="main-content pt-4">
         <div class="breadcrumb">
-            <h1>Terms & Conditions</h1>
+            <h1>Private Policy</h1>
             <ul>
                 <li>List</li>
                 <li>All</li>
@@ -21,7 +21,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="term_table" class="table table-striped display" style="width:100%">
+                            <table id="policy_table" class="table table-striped display" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th scope="col">Description</th>
@@ -46,10 +46,10 @@
         'columns' => "
                      {data: 'description' , name: 'description'},
                     {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
-        'route' => 'terms/data',
+        'route' => 'policy/data',
         'buttons' => false,
         'pageLength' => 10,
-        'class' => 'term_table',
-        'variable' => 'term_table',
+        'class' => 'policy_table',
+        'variable' => 'policy_table',
     ])
 @endsection

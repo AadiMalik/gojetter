@@ -2,8 +2,8 @@
 @section('content')
 <div class="main-content pt-4">
     <div class="breadcrumb">
-        <h1>Terms & Conditions</h1>
-        @if (isset($term))
+        <h1>Private Policy</h1>
+        @if (isset($policy))
         <ul>
             <li>Update</li>
             <li>Edit</li>
@@ -24,9 +24,9 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card mb-4">
-                <form action="{{ url('terms/store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ url('policy/store') }}" method="post" enctype="multipart/form-data">
                     @csrf
-                    <input type="hidden" name="id" value="{{ isset($term) ? $term->id : '' }}" />
+                    <input type="hidden" name="id" value="{{ isset($policy) ? $policy->id : '' }}" />
 
                     @if ($errors->any())
                     <div class="alert alert-danger">
@@ -42,14 +42,14 @@
                             {{-- Answer --}}
                             <div class="col-md-12 form-group mb-3">
                                 <label for="description">Description <span class="text-danger">*</span></label>
-                                <textarea class="form-control summernote" name="description" required>{{ old('description', $term->description ?? '') }}</textarea>
+                                <textarea class="form-control summernote" name="description" required>{{ old('description', $policy->description ?? '') }}</textarea>
                                 @error('description') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>
 
                     <div class="card-footer">
-                        <a href="{{ url('terms') }}" class="btn btn-danger">Cancel</a>
+                        <a href="{{ url('policy') }}" class="btn btn-danger">Cancel</a>
                         <button class="btn btn-primary">Save</button>
                     </div>
                 </form>
