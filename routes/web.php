@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AboutUsController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -145,5 +146,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('view/{id}', [SocialMediaController::class, 'view']);
         Route::get('destroy/{id}', [SocialMediaController::class,'destroy']);
         Route::get('status/{id}', [SocialMediaController::class, 'status']);
+    });
+
+    //about us
+    Route::group(['prefix' => 'about-us'], function () {
+        Route::get('/', [AboutUsController::class, 'index']);
+        Route::post('data', [AboutUsController::class, 'getData'])->name('about-us.data');
+        Route::post('store', [AboutUsController::class, 'store']);
+        Route::get('edit/{id}', [AboutUsController::class, 'edit']);
+        Route::post('update', [AboutUsController::class, 'update']);
     });
 });

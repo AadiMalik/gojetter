@@ -17,7 +17,7 @@
                         class="Ul_li--hover {{ Request::is('permissions*') || Request::is('roles*') || Request::is('users*') ? 'mm-active' : '' }}">
                         <a class="has-arrow" href="#"><i class="fa fa-users text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">User
-                                Management</span></a>
+                                Manage..</span></a>
                         <ul class="mm-collapse">
                             {{-- @can('permissions_access') --}}
                             <li class="item-name"><a class="{{ Request::is('permissions*') ? 'sidebar_active' : '' }}"
@@ -40,55 +40,76 @@
                     </li>
                     {{-- @endcan --}}
                     {{-- @can('product_management') --}}
-                    <li class="Ul_li--hover {{ Request::is('tours*') ? 'mm-active' : '' }}"><a class="has-arrow" href="#"><i
-                                class="fa fa-plane text-20 mr-2 text-muted"></i><span
-                                class="item-name text-15 text-muted">Product Management</span></a>
+                    <li class="Ul_li--hover {{ Request::is('tours*') ? 'mm-active' : '' }}"><a class="has-arrow"
+                            href="#"><i class="fa fa-plane text-20 mr-2 text-muted"></i><span
+                                class="item-name text-15 text-muted">Product Manage..</span></a>
                         <ul class="mm-collapse">
                             {{-- @can('tours_access') --}}
-                            <li class="item-name"><a class="{{ Request::is('tours*') ? 'sidebar_active' : '' }}" href="{{ url('tours') }}"><i
-                                        class="fa fa-circle mr-2 text-muted"></i><span
+                            <li class="item-name"><a class="{{ Request::is('tours*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('tours') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
                                         class="text-muted">Tours</span></a></li>
                             {{-- @endcan --}}
                         </ul>
                     </li>
                     {{-- @endcan --}}
                     {{-- @can('common_access') --}}
-                    <li class="Ul_li--hover {{ Request::is('currency*') || Request::is('social-media*') ? 'mm-active' : '' }}"><a class="has-arrow" href="#"><i
-                                class="fa fa-box text-20 mr-2 text-muted"></i><span
+                    <li
+                        class="Ul_li--hover {{ Request::is('currency*') || Request::is('social-media*') ? 'mm-active' : '' }}">
+                        <a class="has-arrow" href="#"><i class="fa fa-box text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Common</span></a>
                         <ul class="mm-collapse">
                             {{-- @can('currency_access') --}}
-                            <li class="item-name"><a class="{{ Request::is('currency*') ? 'sidebar_active' : '' }}" href="{{ url('currency') }}"><i
-                                        class="fa fa-circle mr-2 text-muted"></i><span
+                            <li class="item-name"><a class="{{ Request::is('currency*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('currency') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
                                         class="text-muted">Currency</span></a></li>
                             {{-- @endcan --}}
                             {{-- @can('social_media_access') --}}
-                            <li class="item-name"><a class="{{ Request::is('social-media*') ? 'sidebar_active' : '' }}" href="{{ url('social-media') }}"><i
-                                        class="fa fa-circle mr-2 text-muted"></i><span
+                            <li class="item-name"><a class="{{ Request::is('social-media*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('social-media') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
                                         class="text-muted">Social Media</span></a></li>
                             {{-- @endcan --}}
                         </ul>
                     </li>
                     {{-- @endcan --}}
+                    {{-- @can('content_management_access') --}}
+                    <li
+                        class="Ul_li--hover {{ Request::is('about-us*') ? 'mm-active' : '' }}">
+                        <a class="has-arrow" href="#"><i class="fa fa-plug text-20 mr-2 text-muted"></i><span
+                                class="item-name text-15 text-muted">Content Manage..</span></a>
+                        <ul class="mm-collapse">
+                            {{-- @can('about_us_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('about-us*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('about-us') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
+                                        class="text-muted">About Us</span></a></li>
+                            {{-- @endcan --}}
+                            
+                        </ul>
+                    </li>
+                    {{-- @endcan --}}
                     {{-- @can('legel_access') --}}
-                    <li class="Ul_li--hover {{ Request::is('faqs*') || Request::is('terms*') || Request::is('policy*') ? 'mm-active' : '' }}"><a class="has-arrow" href="#"><i
-                                class="i-Library text-20 mr-2 text-muted"></i><span
+                    <li
+                        class="Ul_li--hover {{ Request::is('faqs*') || Request::is('terms*') || Request::is('policy*') ? 'mm-active' : '' }}">
+                        <a class="has-arrow" href="#"><i class="fa fa-gavel text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Legel</span></a>
                         <ul class="mm-collapse">
                             {{-- @can('faq_access') --}}
-                            <li class="item-name"><a class="{{ Request::is('faqs*') ? 'sidebar_active' : '' }}" href="{{ url('faqs') }}"><i
-                                        class="nav-icon fa fa-circle"></i><span class="item-name">FAQs</span></a></li>
+                            <li class="item-name"><a class="{{ Request::is('faqs*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('faqs') }}"><i class="nav-icon fa fa-circle"></i><span
+                                        class="item-name">FAQs</span></a></li>
                             {{-- @endcan --}}
                             {{-- @can('term_and_condition_access') --}}
-                            <li class="item-name"><a class="{{ Request::is('terms*') ? 'sidebar_active' : '' }}" href="{{ url('terms') }}"><i
-                                        class="nav-icon fa fa-circle"></i><span class="item-name">Terms & Conditions</span></a></li>
+                            <li class="item-name"><a class="{{ Request::is('terms*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('terms') }}"><i class="nav-icon fa fa-circle"></i><span
+                                        class="item-name">Terms & Conditions</span></a></li>
                             {{-- @endcan --}}
                             {{-- @can('private_policy_access') --}}
-                            <li class="item-name"><a class="{{ Request::is('policy*') ? 'sidebar_active' : '' }}" href="{{ url('policy') }}"><i
-                                        class="nav-icon fa fa-circle"></i><span class="item-name">Private Policy</span></a></li>
+                            <li class="item-name"><a class="{{ Request::is('policy*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('policy') }}"><i class="nav-icon fa fa-circle"></i><span
+                                        class="item-name">Private Policy</span></a></li>
                             {{-- @endcan --}}
                         </ul>
                     </li>
+                    {{-- @endcan --}}
                 </ul>
             </div>
         </div>

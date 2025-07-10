@@ -23,7 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RolePermissionSeeder::class,
             UserSeeder::class,
-            TermAndConditionSeeder::class
+            TermAndConditionSeeder::class,
+            PolicySeeder::class,
+            AboutUsSeeder::class
         ]);
     }
 }
