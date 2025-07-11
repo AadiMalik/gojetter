@@ -23,6 +23,7 @@ return new class extends Migration
             $table->enum('type',['message','reply'])->default('message');
             $table->integer('parent_id')->nullable();
             $table->integer('user_id')->nullable();
+            $table->boolean('is_read')->default(0);
             $table->boolean('is_deleted')->default(0);
             $table->integer('createdby_id')->nullable();
             $table->integer('updatedby_id')->nullable();

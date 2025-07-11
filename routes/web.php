@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AboutUsController;
+use App\Http\Controllers\Admin\ContactUsMessageController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -155,5 +156,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('store', [AboutUsController::class, 'store']);
         Route::get('edit/{id}', [AboutUsController::class, 'edit']);
         Route::post('update', [AboutUsController::class, 'update']);
+    });
+
+    //contact us message
+    Route::group(['prefix' => 'contact-us-message'], function () {
+        Route::get('/', [ContactUsMessageController::class, 'index']);
+        Route::get('show/{id}', [ContactUsMessageController::class, 'show']);
+        Route::post('reply', [ContactUsMessageController::class, 'reply']);
+        Route::post('mark-read/{id}', [ContactUsMessageController::class, 'markAsRead']);
+        Route::get('destroy/{id}', [SocialMediaController::class,'destroy']);
     });
 });

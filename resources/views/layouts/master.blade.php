@@ -68,6 +68,7 @@
     <script src="{{ asset('public/dist-assets/js/scripts/script.min.js') }}"></script>
     <script src="{{ asset('public/dist-assets/js/scripts/script_2.min.js') }}"></script>
     <script src="{{ asset('public/dist-assets/js/scripts/sidebar.large.script.min.js') }}"></script>
+    <script src="{{ asset('public/dist-assets/js/scripts/sidebar.script.min.js') }}"></script>
     <script src="{{ asset('public/dist-assets/js/plugins/feather.min.js') }}"></script>
     <script src="{{ asset('public/dist-assets/js/plugins/metisMenu.min.js') }}"></script>
     <script src="{{ asset('public/dist-assets/js/scripts/layout-sidebar-vertical.min.js') }}"></script>

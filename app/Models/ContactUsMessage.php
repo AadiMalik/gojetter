@@ -18,6 +18,7 @@ class ContactUsMessage extends Model
         'type',
         'parent_id',
         'user_id',
+        'is_read',
         'is_deleted',
         'createdby_id',
         'updatedby_id',

@@ -16,38 +16,20 @@ class ContactUsMessageService
         // set the model
         $this->model_contact_us_message = new Repository(new ContactUsMessage);
     }
-    //Bead type
-    public function getSource()
-    {
-        $model = $this->model_contact_us_message->getModel()::where('is_deleted', 0);
-        $data = DataTables::of($model)
-            ->addColumn('action', function ($item) {
-                $action_column = '';
-                $edit_column    = "<a class='text-success mr-2' href='contact-us-message/reply/" . $item->id . "'><i title='Add' class='nav-icon mr-2 fa fa-edit'></i>Edit</a>";
-                $delete_column    = "<a class='text-danger mr-2' id='deleteContactUsMessage' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
-                // if (Auth::user()->can('contact_us_message_edit'))
-                $action_column .= $edit_column;
-                // if (Auth::user()->can('contact_us_message_delete'))
-                $action_column .= $delete_column;
-
-                return $action_column;
-            })
-            ->rawColumns(['action'])
-            ->make(true);
-        return $data;
-    }
-    // get all
+    //data
     public function getAll()
     {
-        return $this->model_contact_us_message->getModel()::get();
+        return $this->model_contact_us_message->getModel()::where('is_deleted', 0)
+            ->orderBy('is_read', 'ASC')
+            ->orderBy('created_at')
+            ->get();
     }
-    // update
-    public function update($obj)
+    // reply
+    public function reply($obj)
     {
 
-        $obj['updatedby_id'] = Auth::User()->id;
-        $this->model_contact_us_message->update($obj, $obj['id']);
-        $saved_obj = $this->model_contact_us_message->find($obj['id']);
+        $obj['createdby_id'] = Auth::User()->id;
+        $saved_obj = $this->model_contact_us_message->create($obj);
 
         if (!$saved_obj)
             return false;
@@ -58,7 +40,7 @@ class ContactUsMessageService
     // get by id
     public function getById($id)
     {
-        $contact_us_message = $this->model_contact_us_message->getModel()::find($id);
+        $contact_us_message = $this->model_contact_us_message->getModel()::with(['reply','user'])->find($id);
 
         if (!$contact_us_message)
             return false;
@@ -69,16 +51,15 @@ class ContactUsMessageService
     // delete by id
     public function deleteById($id)
     {
-          $contact_us_message = $this->model_contact_us_message->getModel()::find($id);
-          $contact_us_message->is_deleted = 1;
-          $contact_us_message->deletedby_id = Auth::user()->id;
-          $contact_us_message->date_deleted = Carbon::now();
-          $contact_us_message->update();
+        $contact_us_message = $this->model_contact_us_message->getModel()::find($id);
+        $contact_us_message->is_deleted = 1;
+        $contact_us_message->deletedby_id = Auth::user()->id;
+        $contact_us_message->date_deleted = Carbon::now();
+        $contact_us_message->update();
 
-          if (!$contact_us_message)
-                return false;
+        if (!$contact_us_message)
+            return false;
 
-          return $contact_us_message;
+        return $contact_us_message;
     }
-
 }
