@@ -25,9 +25,9 @@ class AuthController extends Controller
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successful Registration",
+     *         description="OTP sent after successful registration",
      *         @OA\JsonContent(
-     *             @OA\Property(property="Message", type="string", example="User registered successfully."),
+     *             @OA\Property(property="Message", type="string", example="OTP sent successfully."),
      *             @OA\Property(property="Success", type="boolean", example=true),
      *             @OA\Property(property="Status", type="integer", example=200),
      *             @OA\Property(
@@ -36,11 +36,12 @@ class AuthController extends Controller
      *                 @OA\Property(
      *                     property="user",
      *                     type="object",
-     *                     @OA\Property(property="id", type="integer", example=3),
+     *                     @OA\Property(property="id", type="integer", example=14),
      *                     @OA\Property(property="name", type="string", example="new user"),
-     *                     @OA\Property(property="email", type="string", example="user1@gmail.com"),
-     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2025-07-07T14:34:38.000000Z"),
-     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-07-07T14:34:38.000000Z"),
+     *                     @OA\Property(property="username", type="string", example="user7"),
+     *                     @OA\Property(property="email", type="string", example="user7@gmail.com"),
+     *                     @OA\Property(property="created_at", type="string", format="date-time", example="2025-07-14T12:26:07.000000Z"),
+     *                     @OA\Property(property="updated_at", type="string", format="date-time", example="2025-07-14T12:26:07.000000Z"),
      *                     @OA\Property(
      *                         property="roles",
      *                         type="array",
@@ -54,7 +55,7 @@ class AuthController extends Controller
      *                             @OA\Property(
      *                                 property="pivot",
      *                                 type="object",
-     *                                 @OA\Property(property="model_id", type="integer", example=3),
+     *                                 @OA\Property(property="model_id", type="integer", example=14),
      *                                 @OA\Property(property="role_id", type="integer", example=2),
      *                                 @OA\Property(property="model_type", type="string", example="App\\Models\\User")
      *                             )
@@ -72,33 +73,30 @@ class AuthController extends Controller
     /**
      * @OA\Post(
      *     path="/api/login",
-     *     summary="Login a customer user",
-     *     tags={"Customer Auth"},
+     *     summary="Login user",
+     *     tags={"Auth"},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(
      *             required={"login", "password"},
-     *             @OA\Property(property="login", type="string", example="user@user.com or username"),
-     *             @OA\Property(property="password", type="string", format="password", example="secret123")
+     *             @OA\Property(property="login", type="string", example="user6@gmail.com"),
+     *             @OA\Property(property="password", type="string", example="password123")
      *         )
      *     ),
      *     @OA\Response(
      *         response=200,
-     *         description="Successful Login",
+     *         description="Successful login",
      *         @OA\JsonContent(
      *             @OA\Property(property="Message", type="string", example="User logged in successfully."),
      *             @OA\Property(property="Success", type="boolean", example=true),
-     *             @OA\Property(property="Status", type="integer", example=200),
-     *             @OA\Property(
-     *                 property="Data",
-     *                 type="object",
-     *                 @OA\Property(property="id", type="integer", example=2),
-     *                 @OA\Property(property="name", type="string", example="User"),
-     *                 @OA\Property(property="email", type="string", example="user@user.com"),
-     *                 @OA\Property(property="email_verified_at", type="string", nullable=true, example=null),
-     *                 @OA\Property(property="created_at", type="string", format="date-time", example="2025-07-07T13:41:26.000000Z"),
-     *                 @OA\Property(property="updated_at", type="string", format="date-time", example="2025-07-07T13:41:26.000000Z"),
-     *                 @OA\Property(property="username", type="string", example="user"),
+     *             @OA\Property(property="Data", type="object",
+     *                 @OA\Property(property="id", type="integer", example=13),
+     *                 @OA\Property(property="name", type="string", example="new user"),
+     *                 @OA\Property(property="email", type="string", example="user6@gmail.com"),
+     *                 @OA\Property(property="email_verified_at", type="string", format="date-time", example="2025-07-14T12:40:21.000000Z"),
+     *                 @OA\Property(property="created_at", type="string", format="date-time", example="2025-07-14T12:21:22.000000Z"),
+     *                 @OA\Property(property="updated_at", type="string", format="date-time", example="2025-07-14T12:40:21.000000Z"),
+     *                 @OA\Property(property="username", type="string", example="user6"),
      *                 @OA\Property(property="phone", type="string", nullable=true, example=null),
      *                 @OA\Property(property="paypal_email", type="string", nullable=true, example=null),
      *                 @OA\Property(property="is_show_email_phone", type="integer", example=0),
@@ -110,27 +108,27 @@ class AuthController extends Controller
      *                 @OA\Property(property="state", type="string", nullable=true, example=null),
      *                 @OA\Property(property="zip_code", type="string", nullable=true, example=null),
      *                 @OA\Property(property="country", type="string", nullable=true, example=null),
-     *                 @OA\Property(property="token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."),
-     *                 @OA\Property(
-     *                     property="roles",
-     *                     type="array",
+     *                 @OA\Property(property="token", type="string", example="your_jwt_token_here"),
+     *                 @OA\Property(property="roles", type="array",
      *                     @OA\Items(
-     *                         type="object",
      *                         @OA\Property(property="id", type="integer", example=2),
      *                         @OA\Property(property="name", type="string", example="user"),
      *                         @OA\Property(property="guard_name", type="string", example="web"),
      *                         @OA\Property(property="created_at", type="string", format="date-time", example="2025-07-07T13:41:26.000000Z"),
      *                         @OA\Property(property="updated_at", type="string", format="date-time", example="2025-07-07T13:41:26.000000Z"),
-     *                         @OA\Property(
-     *                             property="pivot",
-     *                             type="object",
-     *                             @OA\Property(property="model_id", type="integer", example=2),
-     *                             @OA\Property(property="role_id", type="integer", example=2),
-     *                             @OA\Property(property="model_type", type="string", example="App\\Models\\User")
-     *                         )
      *                     )
      *                 )
-     *             )
+     *             ),
+     *             @OA\Property(property="Status", type="integer", example=200)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Email not verified",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="Message", type="string", example="Email not verified. OTP has been sent to your email."),
+     *             @OA\Property(property="Success", type="boolean", example=false),
+     *             @OA\Property(property="Status", type="integer", example=422)
      *         )
      *     )
      * )
@@ -156,4 +154,195 @@ class AuthController extends Controller
      * )
      */
     public function logout() {}
+
+    /**
+     * @OA\Post(
+     *     path="/api/resend-email-otp",
+     *     summary="Resend email OTP to an existing user",
+     *     tags={"Customer Auth"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email"},
+     *             @OA\Property(property="email", type="string", format="email", example="user7@gmail.com")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OTP resent successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="Message", type="string", example="OTP sent successfully."),
+     *             @OA\Property(property="Success", type="boolean", example=true),
+     *             @OA\Property(property="Data", type="boolean", example=true),
+     *             @OA\Property(property="Status", type="integer", example=200)
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error (email required or not found)",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="message", type="string", example="The email field is required."),
+     *             @OA\Property(property="errors", type="object",
+     *                 @OA\Property(property="email", type="array",
+     *                     @OA\Items(type="string", example="The selected email is invalid.")
+     *                 )
+     *             )
+     *         )
+     *     )
+     * )
+     */
+    public function resendEmailOtp() {}
+
+    /**
+     * @OA\Post(
+     *     path="/api/verify-email-otp",
+     *     summary="Verify email OTP for user account activation",
+     *     tags={"Customer Auth"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email", "otp"},
+     *             @OA\Property(property="email", type="string", format="email", example="user6@gmail.com"),
+     *             @OA\Property(property="otp", type="string", example="123456", description="6-digit OTP sent to email")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="OTP verified and email marked as verified",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="Message", type="string", example="OTP verified successfully."),
+     *             @OA\Property(property="Success", type="boolean", example=true),
+     *             @OA\Property(property="Status", type="integer", example=200),
+     *             @OA\Property(
+     *                 property="Data",
+     *                 type="object",
+     *                 @OA\Property(property="id", type="integer", example=13),
+     *                 @OA\Property(property="name", type="string", example="new user"),
+     *                 @OA\Property(property="email", type="string", example="user6@gmail.com"),
+     *                 @OA\Property(property="email_verified_at", type="string", format="date-time", example="2025-07-14T12:40:21.000000Z"),
+     *                 @OA\Property(property="created_at", type="string", format="date-time", example="2025-07-14T12:21:22.000000Z"),
+     *                 @OA\Property(property="updated_at", type="string", format="date-time", example="2025-07-14T12:40:21.000000Z"),
+     *                 @OA\Property(property="username", type="string", example="user6"),
+     *                 @OA\Property(property="phone", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="paypal_email", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="is_show_email_phone", type="integer", example=0),
+     *                 @OA\Property(property="about_yourself", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="avatar", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="home_airport", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="address", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="city", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="state", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="zip_code", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="country", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="token", type="string", example="eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Invalid or expired OTP",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="Message", type="string", example="Invalid OTP or email."),
+     *             @OA\Property(property="Success", type="boolean", example=false),
+     *             @OA\Property(property="Status", type="integer", example=422)
+     *         )
+     *     )
+     * )
+     */
+    public function verifyEmailOtp() {}
+
+    /**
+     * @OA\Post(
+     *     path="/api/forget-password",
+     *     summary="Send OTP to email for password reset",
+     *     tags={"Customer Auth"},
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email"},
+     *             @OA\Property(
+     *                 property="email",
+     *                 type="string",
+     *                 format="email",
+     *                 example="user@example.com",
+     *                 description="Registered user email"
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="OTP sent successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="Message", type="string", example="OTP sent successfully."),
+     *             @OA\Property(property="Success", type="boolean", example=true),
+     *             @OA\Property(property="Data", type="boolean", example=true),
+     *             @OA\Property(property="Status", type="integer", example=200)
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="Message", type="string", example="The given data was invalid."),
+     *             @OA\Property(property="Errors", type="object")
+     *         )
+     *     )
+     * )
+     */
+    public function forgetPassword() {}
+
+    /**
+     * @OA\Post(
+     *     path="/api/change-password",
+     *     summary="Change password for authenticated customer",
+     *     tags={"Customer Auth"},
+     *     security={{"authbearer":{}}},
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"password", "password_confirmation"},
+     *             @OA\Property(
+     *                 property="password",
+     *                 type="string",
+     *                 format="password",
+     *                 minLength=6,
+     *                 example="newpassword123",
+     *                 description="New password (must be confirmed)"
+     *             ),
+     *             @OA\Property(
+     *                 property="password_confirmation",
+     *                 type="string",
+     *                 format="password",
+     *                 example="newpassword123",
+     *                 description="Confirmation of the new password"
+     *             )
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Password changed successfully",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="Message", type="string", example="Password changed successfully."),
+     *             @OA\Property(property="Success", type="boolean", example=true),
+     *             @OA\Property(property="Data", type="boolean", example=true),
+     *             @OA\Property(property="Status", type="integer", example=200)
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="Message", type="string", example="The given data was invalid."),
+     *             @OA\Property(property="Errors", type="object")
+     *         )
+     *     )
+     * )
+     */
+    public function changePassword(){}
 }

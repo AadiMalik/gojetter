@@ -66,10 +66,10 @@
             <h1>{{ config('app.name') }}</h1>
         </div>
         <div class="content">
-            <h2>Hi {{ $user['name'] }},</h2>
+            <h2>Hi {{ $user->name?? 'User' }},</h2>
             <p>We received a request to verify your identity using a one-time password (OTP).</p>
             <div class="otp-box">
-                {{$user['otp'] }}
+                {{$user->email_otp??'******' }}
             </div>
             <p>This OTP is valid for a limited time. Do not share this code with anyone.</p>
         </div>

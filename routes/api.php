@@ -23,7 +23,9 @@ Route::post('register', [AuthController::class, 'signup']);
 Route::post('login', [AuthController::class, 'login']);
 Route::post('verify-email-otp', [AuthController::class, 'verifyEmailOtp']);
 Route::post('resend-email-otp', [AuthController::class, 'resendEmailOtp'])->middleware('throttle:3,1');
+Route::post('forget-password', [AuthController::class, 'forgetPassword'])->middleware('throttle:3,1');
 Route::group(['middleware' => ['auth:api']], function () {
 
     Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('change-password', [AuthController::class, 'changePassword']);
 });

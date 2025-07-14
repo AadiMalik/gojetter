@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\ChangePasswordRequest;
 use App\Http\Requests\Api\CustomerLoginRequest;
 use App\Http\Requests\Api\CustomerSignupRequest;
+use App\Http\Requests\Api\ForgetPasswordRequest;
 use App\Http\Requests\Api\ResendEmailOtpRequest;
 use App\Http\Requests\Api\VerifyEmailOtpRequest;
 use App\Services\Concrete\Api\AuthService;
@@ -62,6 +64,7 @@ class AuthController extends Controller
         );
     }
 
+    //verify email otp
     public function verifyEmailOtp(VerifyEmailOtpRequest $request)
     {
         $result = $this->authService->verifyEmailOtp($request->validated());
@@ -69,6 +72,28 @@ class AuthController extends Controller
         return $this->success(
             $result['user'],
             ResponseMessage::OTP_VERIFIED
+        );
+    }
+
+    //forget password
+    public function forgetPassword(ForgetPasswordRequest $request)
+    {
+        $result = $this->authService->forgetPassword($request->validated());
+
+        return $this->success(
+            $result,
+            ResponseMessage::OTP_SENT
+        );
+    }
+
+    //change password
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $result = $this->authService->changePassword($request->validated());
+
+        return $this->success(
+            $result,
+            ResponseMessage::PASSWORD_CHANGED
         );
     }
 }

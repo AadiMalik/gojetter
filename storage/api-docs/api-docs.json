@@ -72,14 +72,14 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful Registration",
+                        "description": "OTP sent after successful registration",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "Message": {
                                             "type": "string",
-                                            "example": "User registered successfully."
+                                            "example": "OTP sent successfully."
                                         },
                                         "Success": {
                                             "type": "boolean",
@@ -95,25 +95,29 @@
                                                     "properties": {
                                                         "id": {
                                                             "type": "integer",
-                                                            "example": 3
+                                                            "example": 14
                                                         },
                                                         "name": {
                                                             "type": "string",
                                                             "example": "new user"
                                                         },
+                                                        "username": {
+                                                            "type": "string",
+                                                            "example": "user7"
+                                                        },
                                                         "email": {
                                                             "type": "string",
-                                                            "example": "user1@gmail.com"
+                                                            "example": "user7@gmail.com"
                                                         },
                                                         "created_at": {
                                                             "type": "string",
                                                             "format": "date-time",
-                                                            "example": "2025-07-07T14:34:38.000000Z"
+                                                            "example": "2025-07-14T12:26:07.000000Z"
                                                         },
                                                         "updated_at": {
                                                             "type": "string",
                                                             "format": "date-time",
-                                                            "example": "2025-07-07T14:34:38.000000Z"
+                                                            "example": "2025-07-14T12:26:07.000000Z"
                                                         },
                                                         "roles": {
                                                             "type": "array",
@@ -145,7 +149,7 @@
                                                                         "properties": {
                                                                             "model_id": {
                                                                                 "type": "integer",
-                                                                                "example": 3
+                                                                                "example": 14
                                                                             },
                                                                             "role_id": {
                                                                                 "type": "integer",
@@ -185,9 +189,9 @@
         "/api/login": {
             "post": {
                 "tags": [
-                    "Customer Auth"
+                    "Auth"
                 ],
-                "summary": "Login a customer user",
+                "summary": "Login user",
                 "operationId": "cde6f556d58745c7af1f77e272b41991",
                 "requestBody": {
                     "required": true,
@@ -201,12 +205,11 @@
                                 "properties": {
                                     "login": {
                                         "type": "string",
-                                        "example": "user@user.com or username"
+                                        "example": "user6@gmail.com"
                                     },
                                     "password": {
                                         "type": "string",
-                                        "format": "password",
-                                        "example": "secret123"
+                                        "example": "password123"
                                     }
                                 },
                                 "type": "object"
@@ -216,7 +219,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful Login",
+                        "description": "Successful login",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -224,6 +227,349 @@
                                         "Message": {
                                             "type": "string",
                                             "example": "User logged in successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 13
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "new user"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "user6@gmail.com"
+                                                },
+                                                "email_verified_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-14T12:40:21.000000Z"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-14T12:21:22.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-14T12:40:21.000000Z"
+                                                },
+                                                "username": {
+                                                    "type": "string",
+                                                    "example": "user6"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "paypal_email": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "is_show_email_phone": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "about_yourself": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "avatar": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "home_airport": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "state": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "zip_code": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "country": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "token": {
+                                                    "type": "string",
+                                                    "example": "your_jwt_token_here"
+                                                },
+                                                "roles": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "user"
+                                                            },
+                                                            "guard_name": {
+                                                                "type": "string",
+                                                                "example": "web"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-07-07T13:41:26.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-07-07T13:41:26.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Email not verified",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Email not verified. OTP has been sent to your email."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 422
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Customer Auth"
+                ],
+                "summary": "Logout the authenticated customer user",
+                "operationId": "a575315a0c547a3759c22fc7a2852083",
+                "responses": {
+                    "200": {
+                        "description": "Successful Logout",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "User logged out successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": []
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/resend-email-otp": {
+            "post": {
+                "tags": [
+                    "Customer Auth"
+                ],
+                "summary": "Resend email OTP to an existing user",
+                "operationId": "f10d09fa35facc7f074fe9ff887ff2cf",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user7@gmail.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OTP resent successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "OTP sent successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error (email required or not found)",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The email field is required."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The selected email is invalid."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/verify-email-otp": {
+            "post": {
+                "tags": [
+                    "Customer Auth"
+                ],
+                "summary": "Verify email OTP for user account activation",
+                "operationId": "ddd4fdc1461f3fc3f003baa6f87552b7",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "otp"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user6@gmail.com"
+                                    },
+                                    "otp": {
+                                        "description": "6-digit OTP sent to email",
+                                        "type": "string",
+                                        "example": "123456"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OTP verified and email marked as verified",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "OTP verified successfully."
                                         },
                                         "Success": {
                                             "type": "boolean",
@@ -237,34 +583,34 @@
                                             "properties": {
                                                 "id": {
                                                     "type": "integer",
-                                                    "example": 2
+                                                    "example": 13
                                                 },
                                                 "name": {
                                                     "type": "string",
-                                                    "example": "User"
+                                                    "example": "new user"
                                                 },
                                                 "email": {
                                                     "type": "string",
-                                                    "example": "user@user.com"
+                                                    "example": "user6@gmail.com"
                                                 },
                                                 "email_verified_at": {
                                                     "type": "string",
-                                                    "example": null,
-                                                    "nullable": true
+                                                    "format": "date-time",
+                                                    "example": "2025-07-14T12:40:21.000000Z"
                                                 },
                                                 "created_at": {
                                                     "type": "string",
                                                     "format": "date-time",
-                                                    "example": "2025-07-07T13:41:26.000000Z"
+                                                    "example": "2025-07-14T12:21:22.000000Z"
                                                 },
                                                 "updated_at": {
                                                     "type": "string",
                                                     "format": "date-time",
-                                                    "example": "2025-07-07T13:41:26.000000Z"
+                                                    "example": "2025-07-14T12:40:21.000000Z"
                                                 },
                                                 "username": {
                                                     "type": "string",
-                                                    "example": "user"
+                                                    "example": "user6"
                                                 },
                                                 "phone": {
                                                     "type": "string",
@@ -323,55 +669,111 @@
                                                 "token": {
                                                     "type": "string",
                                                     "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9..."
-                                                },
-                                                "roles": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "properties": {
-                                                            "id": {
-                                                                "type": "integer",
-                                                                "example": 2
-                                                            },
-                                                            "name": {
-                                                                "type": "string",
-                                                                "example": "user"
-                                                            },
-                                                            "guard_name": {
-                                                                "type": "string",
-                                                                "example": "web"
-                                                            },
-                                                            "created_at": {
-                                                                "type": "string",
-                                                                "format": "date-time",
-                                                                "example": "2025-07-07T13:41:26.000000Z"
-                                                            },
-                                                            "updated_at": {
-                                                                "type": "string",
-                                                                "format": "date-time",
-                                                                "example": "2025-07-07T13:41:26.000000Z"
-                                                            },
-                                                            "pivot": {
-                                                                "properties": {
-                                                                    "model_id": {
-                                                                        "type": "integer",
-                                                                        "example": 2
-                                                                    },
-                                                                    "role_id": {
-                                                                        "type": "integer",
-                                                                        "example": 2
-                                                                    },
-                                                                    "model_type": {
-                                                                        "type": "string",
-                                                                        "example": "App\\\\Models\\\\User"
-                                                                    }
-                                                                },
-                                                                "type": "object"
-                                                            }
-                                                        },
-                                                        "type": "object"
-                                                    }
                                                 }
                                             },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Invalid or expired OTP",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Invalid OTP or email."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 422
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/forget-password": {
+            "post": {
+                "tags": [
+                    "Customer Auth"
+                ],
+                "summary": "Send OTP to email for password reset",
+                "operationId": "d810648d68d0622b4216c9e8cc283f6e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Registered user email",
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user@example.com"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OTP sent successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "OTP sent successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "Errors": {
                                             "type": "object"
                                         }
                                     },
@@ -383,34 +785,60 @@
                 }
             }
         },
-        "/api/logout": {
+        "/api/change-password": {
             "post": {
                 "tags": [
                     "Customer Auth"
                 ],
-                "summary": "Logout the authenticated customer user",
-                "operationId": "a575315a0c547a3759c22fc7a2852083",
+                "summary": "Change password for authenticated customer",
+                "operationId": "d10e823954cf3543e5041fee759a0f92",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "password": {
+                                        "description": "New password (must be confirmed)",
+                                        "type": "string",
+                                        "format": "password",
+                                        "minLength": 6,
+                                        "example": "newpassword123"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Confirmation of the new password",
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "newpassword123"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
-                        "description": "Successful Logout",
+                        "description": "Password changed successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "Message": {
                                             "type": "string",
-                                            "example": "User logged out successfully."
+                                            "example": "Password changed successfully."
                                         },
                                         "Success": {
                                             "type": "boolean",
                                             "example": true
                                         },
                                         "Data": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "string"
-                                            },
-                                            "example": []
+                                            "type": "boolean",
+                                            "example": true
                                         },
                                         "Status": {
                                             "type": "integer",
@@ -421,11 +849,30 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "Errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "authbearer": []
                     }
                 ]
             }
@@ -450,6 +897,10 @@
         {
             "name": "Customer Auth",
             "description": "Customer Auth"
+        },
+        {
+            "name": "Auth",
+            "description": "Auth"
         }
     ],
     "security": [

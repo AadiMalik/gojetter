@@ -4,6 +4,9 @@ namespace App\Services\Concrete\Api;
 
 use App\Mail\SendOtpMail;
 use App\Models\User;
+use Exception;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
@@ -13,21 +16,29 @@ class AuthService
 {
     public function signup(array $data): array
     {
-        $otp = rand(100000, 999999);
-        $user = User::create([
-            'name'     => $data['name'],
-            'username' => $data['username'],
-            'email'    => $data['email'],
-            'password' => bcrypt($data['password']),
-            'email_otp' => $otp,
-            'email_otp_expires_at' => now()->addMinutes(config('auth.otp_expiry_minutes'))
-        ]);
+        try {
+            DB::beginTransaction();
+            $otp = rand(100000, 999999);
+            $user = User::create([
+                'name'     => $data['name'],
+                'username' => $data['username'],
+                'email'    => $data['email'],
+                'password' => bcrypt($data['password']),
+                'email_otp' => $otp,
+                'email_otp_expires_at' => now()->addMinutes(config('auth.otp_expiry_minutes'))
+            ]);
 
-        $user->assignRole('user');
+            $user->assignRole('user');
 
-        $token = auth()->login($user);
-        Mail::to($user->email)->send(new SendOtpMail($otp));
+            $token = auth()->login($user);
+            Mail::to($user->email)->send(new SendOtpMail($user));
 
+            DB::commit();
+        } catch (Exception $e) {
+
+            DB::rollback();
+            throw $e;
+        }
         return ['user' => $user, 'token' => $token];
     }
 
@@ -58,7 +69,7 @@ class AuthService
                 'email_otp_expires_at' => now()->addMinutes(config('auth.otp_expiry_minutes')),
             ]);
 
-            Mail::to($user->email)->send(new SendOtpMail($otp));
+            Mail::to($user->email)->send(new SendOtpMail($user));
 
             throw ValidationException::withMessages([
                 'login' => ['Email not verified. OTP has been sent to your email.'],
@@ -120,5 +131,30 @@ class AuthService
         return [
             'user' => $user
         ];
+    }
+
+    //forget password
+    public function forgetPassword($data)
+    {
+        $user = User::where('email', $data['email'])->first();
+        $otp = rand(100000, 999999);
+        $user->update([
+            'email_otp' => $otp,
+            'email_otp_expires_at' => now()->addMinutes(config('auth.otp_expiry_minutes')),
+        ]);
+
+        // Send email
+        Mail::to($user->email)->send(new SendOtpMail($user));
+        return true;
+    }
+
+    //change password
+    public function changePassword($data)
+    {
+        $user = User::find(Auth::user()->id);
+        $user->update([
+            'password' => Hash::make($data['password'])
+        ]);
+        return true;
     }
 }

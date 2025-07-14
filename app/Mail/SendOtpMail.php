@@ -32,7 +32,7 @@ class SendOtpMail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Send Otp Mail',
+            subject: 'Email OTP Verification',
         );
     }
 
@@ -44,7 +44,8 @@ class SendOtpMail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.otp',
+            with: ['user' => $this->user],
         );
     }
 
@@ -56,14 +57,5 @@ class SendOtpMail extends Mailable
     public function attachments()
     {
         return [];
-    }
-
-    public function build()
-    {
-        return $this->subject('Email OTP Verification')
-            ->view('emails.otp')
-            ->with([
-                'user' => $this->user
-            ]);
     }
 }
