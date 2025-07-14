@@ -74,7 +74,7 @@ class AuthController extends Controller
      * @OA\Post(
      *     path="/api/login",
      *     summary="Login user",
-     *     tags={"Auth"},
+     *     tags={"Customer Auth"},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(

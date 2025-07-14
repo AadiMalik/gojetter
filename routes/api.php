@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CommonController;
+use App\Http\Controllers\Api\SocialMediaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,6 +26,13 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('verify-email-otp', [AuthController::class, 'verifyEmailOtp']);
 Route::post('resend-email-otp', [AuthController::class, 'resendEmailOtp'])->middleware('throttle:3,1');
 Route::post('forget-password', [AuthController::class, 'forgetPassword'])->middleware('throttle:3,1');
+// social media
+Route::get('social-media-list',[SocialMediaController::class,'index']);
+// common
+Route::get('term-and-condition',[CommonController::class,'termAndCondition']);
+Route::get('privacy-policy',[CommonController::class,'privacyPolicy']);
+Route::get('faqs',[CommonController::class,'faqs']);
+
 Route::group(['middleware' => ['auth:api']], function () {
 
     Route::post('logout', [AuthController::class, 'logout']);

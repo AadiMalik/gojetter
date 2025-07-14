@@ -50,7 +50,10 @@ class SocialMediaService
       // get all
       public function getAll()
       {
-            return $this->model_social_media->getModel()::where('is_deleted', 0)->get();
+            return $this->model_social_media->getModel()::where('is_deleted', 0)->get()->map(function ($item) {
+                  $item->icon = url('storage/app/public/' . $item->icon);
+                  return $item;
+            });
       }
       // save
       public function save($obj)

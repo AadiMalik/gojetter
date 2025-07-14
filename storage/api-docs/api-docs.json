@@ -189,7 +189,7 @@
         "/api/login": {
             "post": {
                 "tags": [
-                    "Auth"
+                    "Customer Auth"
                 ],
                 "summary": "Login user",
                 "operationId": "cde6f556d58745c7af1f77e272b41991",
@@ -876,6 +876,266 @@
                     }
                 ]
             }
+        },
+        "/api/term-and-condition": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Get Terms and Conditions",
+                "operationId": "18ab1fc6498e047a5be77dc82b38b3b3",
+                "responses": {
+                    "200": {
+                        "description": "Records retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "<b>Terms and conditions</b> for a tours website and mobile app should outline user responsibilities..."
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-09T17:01:21.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-09T17:02:15.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/privacy-policy": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Get Privacy Policy",
+                "operationId": "c123257fe17a8f3e6f84ba4d23d56670",
+                "responses": {
+                    "200": {
+                        "description": "Records retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "<b>Privacy Policy</b> outlines how we collect, use, and protect your personal information..."
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-09T17:01:21.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-09T17:02:15.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/faqs": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Get list of FAQs",
+                "operationId": "47ff3028c30655293e0fad66c8fc3a9c",
+                "responses": {
+                    "200": {
+                        "description": "Records retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "question": {
+                                                        "type": "string",
+                                                        "example": "What is this?"
+                                                    },
+                                                    "answer": {
+                                                        "type": "string",
+                                                        "example": "<p>This is a tour website and applications.</p>"
+                                                    },
+                                                    "is_active": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-09T13:09:54.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-09T13:09:54.000000Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/social-media-list": {
+            "get": {
+                "tags": [
+                    "Social Media"
+                ],
+                "summary": "Get list of active social media links",
+                "operationId": "c70d68eab29519eb5d53badb9753a1b5",
+                "responses": {
+                    "200": {
+                        "description": "Records retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Facebook"
+                                                    },
+                                                    "icon": {
+                                                        "type": "string",
+                                                        "format": "uri",
+                                                        "example": "http://localhost/gojetter/storage/app/public/social_media/DmsGSwZthvpfmuQ9IlYvcpoPlI8vy7kraAadk4vB.svg"
+                                                    },
+                                                    "url": {
+                                                        "type": "string",
+                                                        "format": "uri",
+                                                        "example": "https://www.facebook.com/"
+                                                    },
+                                                    "is_active": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-14T18:39:13.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-14T18:39:13.000000Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -899,8 +1159,12 @@
             "description": "Customer Auth"
         },
         {
-            "name": "Auth",
-            "description": "Auth"
+            "name": "Common",
+            "description": "Common"
+        },
+        {
+            "name": "Social Media",
+            "description": "Social Media"
         }
     ],
     "security": [

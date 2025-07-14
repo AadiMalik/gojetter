@@ -32,10 +32,10 @@ class TermAndConditionService
             ->make(true);
         return $data;
     }
-    // get all
-    public function getAll()
+    // get latest
+    public function getLatest()
     {
-        return $this->model_term->getModel()::get();
+        return $this->model_term->getModel()::orderBy('created_at','DESC')->first();
     }
     // update
     public function update($obj)
