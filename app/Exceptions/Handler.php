@@ -59,39 +59,46 @@ class Handler extends ExceptionHandler
     }
     public function render($request, Throwable $exception)
     {
+        // Handle API-specific formatting
+        if ($request->is('api/*')) {
 
-        if (
-            !$exception instanceof ValidationException
-            && !$exception instanceof NotFoundHttpException
-            && !$exception instanceof AuthenticationException
-        ) {
-
-            if ($request->is('api/*')) {
-
-                Log::error([
-                    'url' => request()->fullUrl(),
-                    'user_id' => auth()->id() ?? null,
-                    'exception_type' => get_class($exception),
-                    'message' => $exception->getMessage(),
-                ]);
-
-                return $this->error(
-                    ResponseMessage::ERROR,
-                    Response::HTTP_INTERNAL_SERVER_ERROR
-                );
+            if ($exception instanceof ValidationException) {
+                $errorMessages = collect($exception->errors())->flatten()->implode(' ');
+                return $this->validationResponse($errorMessages);
             }
-        }
-        if ($exception instanceof ValidationException) {
-            $errorMessages = collect($exception->errors())->flatten()->implode(' ');
-            return $this->validationResponse($errorMessages);
-        }
-        if ($exception instanceof NotFoundHttpException) {
-            return $this->error(ResponseMessage::NOT_FOUND, 404);
-        }
-        if ($exception instanceof AuthenticationException) {
-            if ($request->is('api/*'))
+
+            if ($exception instanceof NotFoundHttpException) {
+                return $this->error(ResponseMessage::NOT_FOUND, 404);
+            }
+
+            if ($exception instanceof AuthenticationException) {
                 return $this->error('UnAuthorized', 401);
-        } else if ($request->is('api/*') || $request->is('v2/api/*'))
-            return $this->error($exception->getMessage(), 400);
+            }
+
+            // Fallback for API errors
+            Log::error([
+                'url' => $request->fullUrl(),
+                'user_id' => auth()->id() ?? null,
+                'exception_type' => get_class($exception),
+                'message' => $exception->getMessage(),
+            ]);
+
+            return $this->error(
+                ResponseMessage::ERROR,
+                Response::HTTP_INTERNAL_SERVER_ERROR
+            );
+        }
+
+        // For non-API (web), use Laravel's default behavior
+        return parent::render($request, $exception);
+    }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if ($request->expectsJson() || $request->is('api/*')) {
+            return $this->error('UnAuthorized', 401);
+        }
+
+        return redirect()->guest(route('login'));
     }
 }
