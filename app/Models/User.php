@@ -38,7 +38,9 @@ class User extends Authenticatable implements JWTSubject
         'updated_at',
         'is_deleted',
         'date_deleted',
-        'deletedby_id'
+        'deletedby_id',
+        'email_otp',
+        'email_otp_expires_at'
     ];
 
     /**
@@ -52,6 +54,8 @@ class User extends Authenticatable implements JWTSubject
         'is_deleted',
         'date_deleted',
         'deletedby_id',
+        'email_otp',
+        'email_otp_expires_at',
     ];
 
     /**
