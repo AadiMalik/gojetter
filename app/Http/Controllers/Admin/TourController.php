@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
+use App\Services\Concrete\TourCategoryService;
 use App\Services\Concrete\TourService;
 use App\Traits\ResponseAPI;
 use Exception;
@@ -13,10 +14,14 @@ use Illuminate\Support\Facades\Validator;
 class TourController extends Controller
 {
     use ResponseAPI;
+    protected $tour_category_service;
     protected $tour_service;
 
-    public function __construct(TourService $tour_service)
-    {
+    public function __construct(
+        TourCategoryService $tour_category_service,
+        TourService $tour_service
+    ) {
+        $this->tour_category_service = $tour_category_service;
         $this->tour_service = $tour_service;
     }
 
@@ -38,7 +43,8 @@ class TourController extends Controller
     public function create()
     {
         // abort_if(Gate::denies('tour_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('tours.create');
+        $tour_category = $this->tour_category_service->getAllActive();
+        return view('tours.create',compact('tour_category'));
     }
     public function store(Request $request)
     {
@@ -49,6 +55,7 @@ class TourController extends Controller
             [
                 'title' => 'required|string|max:255',
                 'slug' => 'required|string|unique:tours,slug,' . ($request->id ?? 'null') . ',id',
+                'tour_category_id' => 'required',
                 'thumbnail' => 'nullable|image',
                 'overview' => 'nullable|string',
                 'short_description' => 'nullable|string',
@@ -91,8 +98,9 @@ class TourController extends Controller
     public function edit($id)
     {
         // abort_if(Gate::denies('tour_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $tour_category = $this->tour_category_service->getAllActive();
         $tour = $this->tour_service->getById($id);
-        return view('tours.create', compact('tour'));
+        return view('tours.create', compact('tour_category','tour'));
     }
 
     public function view($id)

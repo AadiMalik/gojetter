@@ -27,11 +27,15 @@
                     <div class="mb-4 border-bottom pb-3">
                         <h5 class="mb-3">Basic Info</h5>
                         <div class="row">
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
                                 <label><strong>Title:</strong></label>
                                 <p>{{ $tour->title }}</p>
                             </div>
-                            <div class="col-md-6 mb-2">
+                            <div class="col-md-4 mb-2">
+                                <label><strong>Category:</strong></label>
+                                <p>{{ $tour->tour_category->name??'' }}</p>
+                            </div>
+                            <div class="col-md-4 mb-2">
                                 <label><strong>Slug:</strong></label>
                                 <p>{{ $tour->slug }}</p>
                             </div>

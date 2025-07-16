@@ -19,8 +19,12 @@ class TourService
     //Bead type
     public function getSource()
     {
-        $model = $this->model_tour->getModel()::where('is_deleted', 0);
+        $model = $this->model_tour->getModel()::with('tour_category')->where('is_deleted', 0);
         $data = DataTables::of($model)
+            ->addColumn('category', function ($item) {
+                
+                return $item->tour_category->name??'';
+            })
             ->addColumn('is_active', function ($item) {
                 if ($item->is_active == 1) {
                     $active = '<label class="switch pr-5 switch-primary mr-3"><input type="checkbox" checked="checked" id="active" data-id="' . $item->id . '"><span class="slider"></span></label>';
@@ -43,7 +47,7 @@ class TourService
 
                 return $action_column;
             })
-            ->rawColumns(['is_active', 'action'])
+            ->rawColumns(['category','is_active', 'action'])
             ->make(true);
         return $data;
     }

@@ -43,7 +43,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="title">Title <span class="text-danger">*</span></label>
                                 <input id="title" class="form-control" type="text" name="title"
-                                    value="{{ old('title', $tour->title ?? '') }}" required>
+                                    value="{{ old('title', isset($tour) ?$tour->title : '') }}" required>
                                 @error('title') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
@@ -51,8 +51,20 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label for="slug">Slug <span class="text-danger">*</span></label>
                                 <input id="slug" class="form-control" type="text" name="slug"
-                                    value="{{ old('slug', $tour->slug ?? '') }}" readonly required>
+                                    value="{{ old('slug',isset($tour) ? $tour->slug : '') }}" readonly required>
                                 @error('slug') <span class="text-danger">{{ $message }}</span> @enderror
+                            </div>
+
+                            {{-- Category --}}
+                            <div class="col-md-6 form-group mb-3">
+                                <label for="tour_category_id">Category <span class="text-danger">*</span></label>
+                                <select name="tour_category_id" class="form-control" id="tour_category_id" required>
+                                    <option value="" selected disabled>--Select Category--</option>
+                                    @foreach($tour_category as $item)
+                                    <option value="{{$item->id}}" @if(isset($tour)) {{($item->id==$tour->tour_category_id)? 'selected':''}} @endif>{{$item->name??''}}</option>
+                                    @endforeach
+                                </select>
+                                @error('tour_category_id') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
                             {{-- Thumbnail --}}
@@ -68,21 +80,21 @@
                             {{-- Overview --}}
                             <div class="col-md-12 form-group mb-3">
                                 <label for="overview">Overview</label>
-                                <textarea class="form-control summernote" name="overview">{{ old('overview', $tour->overview ?? '') }}</textarea>
+                                <textarea class="form-control summernote" name="overview">{{ old('overview',isset($tour) ? $tour->overview : '') }}</textarea>
                                 @error('overview') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
                             {{-- Short Description --}}
                             <div class="col-md-12 form-group mb-3">
                                 <label for="short_description">Short Description</label>
-                                <textarea class="form-control summernote" name="short_description">{{ old('short_description', $tour->short_description ?? '') }}</textarea>
+                                <textarea class="form-control summernote" name="short_description">{{ old('short_description',isset($tour) ? $tour->short_description : '') }}</textarea>
                                 @error('short_description') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
                             {{-- Full Description --}}
                             <div class="col-md-12 form-group mb-3">
                                 <label for="full_description">Full Description</label>
-                                <textarea class="form-control summernote" name="full_description">{{ old('full_description', $tour->full_description ?? '') }}</textarea>
+                                <textarea class="form-control summernote" name="full_description">{{ old('full_description',isset($tour) ? $tour->full_description : '') }}</textarea>
                                 @error('full_description') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
@@ -90,7 +102,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label>Duration Days</label>
                                 <input class="form-control" type="number" name="duration_days"
-                                    value="{{ old('duration_days', $tour->duration_days ?? '') }}">
+                                    value="{{ old('duration_days',isset($tour) ? $tour->duration_days : '') }}">
                                 @error('duration_days') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
@@ -98,7 +110,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label>Duration Nights</label>
                                 <input class="form-control" type="number" name="duration_nights"
-                                    value="{{ old('duration_nights', $tour->duration_nights ?? '') }}">
+                                    value="{{ old('duration_nights',isset($tour) ? $tour->duration_nights : '') }}">
                                 @error('duration_nights') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
@@ -106,7 +118,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label>Tour Type</label>
                                 <input class="form-control" type="text" name="tour_type"
-                                    value="{{ old('tour_type', $tour->tour_type ?? '') }}">
+                                    value="{{ old('tour_type',isset($tour) ? $tour->tour_type : '') }}">
                                 @error('tour_type') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
@@ -114,7 +126,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label>Group Size</label>
                                 <input class="form-control" type="number" name="group_size"
-                                    value="{{ old('group_size', $tour->group_size ?? '') }}">
+                                    value="{{ old('group_size',isset($tour) ? $tour->group_size : '') }}">
                                 @error('group_size') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
@@ -122,7 +134,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label>Languages</label>
                                 <input class="form-control" type="text" name="languages"
-                                    value="{{ old('languages', $tour->languages ?? '') }}">
+                                    value="{{ old('languages',isset($tour) ? $tour->languages : '') }}">
                                 @error('languages') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
@@ -130,7 +142,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label>Location</label>
                                 <input class="form-control" type="text" name="location"
-                                    value="{{ old('location', $tour->location ?? '') }}">
+                                    value="{{ old('location',isset($tour) ? $tour->location : '') }}">
                                 @error('location') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
@@ -138,7 +150,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label>Price</label>
                                 <input class="form-control" type="number" step="0.01" name="price"
-                                    value="{{ old('price', $tour->price ?? '') }}">
+                                    value="{{ old('price',isset($tour) ? $tour->price : '') }}">
                                 @error('price') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
 
@@ -146,7 +158,7 @@
                             <div class="col-md-6 form-group mb-3">
                                 <label>Min Adults</label>
                                 <input class="form-control" type="number" name="min_adults"
-                                    value="{{ old('min_adults', $tour->min_adults ?? '') }}">
+                                    value="{{ old('min_adults',isset($tour) ? $tour->min_adults : '') }}">
                                 @error('min_adults') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
@@ -169,6 +181,7 @@
         $('.summernote').summernote({
             height: 150,
         });
+        $('#tour_category_id').select2();
     });
 
     function slugify(text) {

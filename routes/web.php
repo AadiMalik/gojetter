@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\PolicyController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\SocialMediaController;
 use App\Http\Controllers\Admin\TermAndConditionController;
+use App\Http\Controllers\Admin\TourCategoryController;
 use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -166,5 +167,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('reply', [ContactUsMessageController::class, 'reply']);
         Route::post('mark-read/{id}', [ContactUsMessageController::class, 'markAsRead']);
         Route::get('destroy/{id}', [SocialMediaController::class,'destroy']);
+    });
+
+    //tour category
+    Route::group(['prefix' => 'tour-category'], function () {
+        Route::get('/', [TourCategoryController::class, 'index']);
+        Route::post('data', [TourCategoryController::class, 'getData'])->name('tour-category.data');
+        Route::get('create', [TourCategoryController::class, 'create']);
+        Route::post('store', [TourCategoryController::class, 'store']);
+        Route::get('edit/{id}', [TourCategoryController::class, 'edit']);
+        Route::get('destroy/{id}', [TourCategoryController::class,'destroy']);
+        Route::get('status/{id}', [TourCategoryController::class, 'status']);
     });
 });

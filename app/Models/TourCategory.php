@@ -5,25 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tour extends Model
+class TourCategory extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'title',
-        'slug',
+        'name',
         'thumbnail',
-        'tour_category_id',
-        'overview',
-        'short_description',
-        'full_description',
-        'duration_days',
-        'duration_nights',
-        'tour_type',
-        'group_size',
-        'languages',
-        'location',
-        'price',
-        'min_adults',
         'is_active',
         'createdby_id',
         'updatedby_id',
@@ -39,8 +26,7 @@ class Tour extends Model
         'is_deleted',
         'date_deleted'
     ];
-    public function tour_category()
-    {
-        return $this->belongsTo(TourCategory::class, 'tour_category_id');
+    public function tourCategory() {
+        return $this->hasMany(TourCategory::class, 'tour_category_id', 'id');
     }
 }

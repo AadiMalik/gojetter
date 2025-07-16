@@ -40,10 +40,15 @@
                     </li>
                     {{-- @endcan --}}
                     {{-- @can('product_management') --}}
-                    <li class="Ul_li--hover {{ Request::is('tours*') ? 'mm-active' : '' }}"><a class="has-arrow"
+                    <li class="Ul_li--hover {{ Request::is('tours*') || Request::is('tour-category*') ? 'mm-active' : '' }}"><a class="has-arrow"
                             href="#"><i class="fa fa-plane text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Product Manage..</span></a>
                         <ul class="mm-collapse">
+                            {{-- @can('tour_category_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('tour-category*') ? 'sidebar_active' : '' }}"
+                                href="{{ url('tour-category') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
+                                    class="text-muted">Tour Category</span></a></li>
+                        {{-- @endcan --}}
                             {{-- @can('tours_access') --}}
                             <li class="item-name"><a class="{{ Request::is('tours*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('tours') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
