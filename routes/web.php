@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AboutUsController;
 use App\Http\Controllers\Admin\ContactUsMessageController;
+use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -178,5 +179,26 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('edit/{id}', [TourCategoryController::class, 'edit']);
         Route::get('destroy/{id}', [TourCategoryController::class,'destroy']);
         Route::get('status/{id}', [TourCategoryController::class, 'status']);
+    });
+
+    //country
+    Route::group(['prefix' => 'country'], function () {
+        Route::get('/', [CountryController::class, 'index']);
+        Route::post('data', [CountryController::class, 'getData'])->name('country.data');
+        Route::get('create', [CountryController::class, 'create']);
+        Route::post('store', [CountryController::class, 'store']);
+        Route::get('edit/{id}', [CountryController::class, 'edit']);
+        Route::post('update', [CountryController::class, 'update']);
+        Route::get('destroy/{id}', [CountryController::class, 'destroy']);
+        Route::get('status/{id}', [CountryController::class, 'status']);
+        Route::get('/js/country.js', function () {
+            $path = resource_path('views/country/js/country.js');
+            if (file_exists($path)) {
+                return Response::file($path, [
+                    'Content-Type' => 'application/javascript',
+                ]);
+            }
+            abort(404);
+        });
     });
 });

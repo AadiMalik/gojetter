@@ -66,8 +66,13 @@
                             {{-- @can('currency_access') --}}
                             <li class="item-name"><a class="{{ Request::is('currency*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('currency') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
-                                        class="text-muted">Currency</span></a></li>
+                                        class="text-muted">Currencies</span></a></li>
                             {{-- @endcan --}}
+                            {{-- @can('country_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('country*') ? 'sidebar_active' : '' }}"
+                                href="{{ url('country') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
+                                    class="text-muted">Countries</span></a></li>
+                        {{-- @endcan --}}
                             {{-- @can('social_media_access') --}}
                             <li class="item-name"><a class="{{ Request::is('social-media*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('social-media') }}"><i class="fa fa-circle mr-2 text-muted"></i><span

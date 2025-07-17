@@ -32,9 +32,13 @@ Route::get('social-media-list',[SocialMediaController::class,'index']);
 Route::get('term-and-condition',[CommonController::class,'termAndCondition']);
 Route::get('privacy-policy',[CommonController::class,'privacyPolicy']);
 Route::get('faqs',[CommonController::class,'faqs']);
+Route::get('currency-list',[CommonController::class,'currency']);
+Route::get('country-list',[CommonController::class,'country']);
 
 Route::group(['middleware' => ['auth:api']], function () {
 
     Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('update-profile', [AuthController::class, 'updateProfile']);
     Route::post('change-password', [AuthController::class, 'changePassword']);
+    Route::post('delete-account', [AuthController::class, 'deleteAccount']);
 });

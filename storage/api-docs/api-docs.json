@@ -877,6 +877,419 @@
                 ]
             }
         },
+        "/api/update-profile": {
+            "post": {
+                "tags": [
+                    "Customer Auth"
+                ],
+                "summary": "Update customer profile",
+                "description": "Allows authenticated customers to update their profile information.",
+                "operationId": "updateProfile",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "phone",
+                                    "gender",
+                                    "country_id",
+                                    "is_show_email_phone",
+                                    "home_airport"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "03001234567"
+                                    },
+                                    "gender": {
+                                        "type": "string",
+                                        "example": "Male"
+                                    },
+                                    "country_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "avatar": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "is_show_email_phone": {
+                                        "type": "integer",
+                                        "enum": [
+                                            0,
+                                            1
+                                        ],
+                                        "example": 0
+                                    },
+                                    "home_airport": {
+                                        "type": "string",
+                                        "example": "Lahore"
+                                    },
+                                    "state": {
+                                        "type": "string",
+                                        "example": "Punjab",
+                                        "nullable": true
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Lahore",
+                                        "nullable": true
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "123 Main Street",
+                                        "nullable": true
+                                    },
+                                    "zip_code": {
+                                        "type": "string",
+                                        "example": "54000",
+                                        "nullable": true
+                                    },
+                                    "paypal_email": {
+                                        "type": "string",
+                                        "example": "paypal@example.com",
+                                        "nullable": true
+                                    },
+                                    "alternative_phone": {
+                                        "type": "string",
+                                        "example": "03009998888",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Record updated successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Record updated successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 13
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "new user 6"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "user6@gmail.com"
+                                                },
+                                                "email_verified_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-14T17:30:12.000000Z"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-14T12:21:22.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-17T15:21:49.000000Z"
+                                                },
+                                                "username": {
+                                                    "type": "string",
+                                                    "example": "user6"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "03000000001"
+                                                },
+                                                "paypal_email": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "is_show_email_phone": {
+                                                    "type": "string",
+                                                    "example": "0"
+                                                },
+                                                "about_yourself": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "avatar": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "home_airport": {
+                                                    "type": "string",
+                                                    "example": "lahore"
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "state": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "zip_code": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "country_id": {
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "alternative_phone": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "gender": {
+                                                    "type": "string",
+                                                    "example": "Male"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/delete-account": {
+            "post": {
+                "tags": [
+                    "Customer Auth"
+                ],
+                "summary": "Delete user account",
+                "description": "Permanently deletes the authenticated user's account.",
+                "operationId": "deleteAccount",
+                "responses": {
+                    "200": {
+                        "description": "Account deleted successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Account deleted successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/currency-list": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Get list of currencies",
+                "description": "Returns a list of supported currencies with their code, symbol, rate, and default status.",
+                "operationId": "getCurrencyList",
+                "responses": {
+                    "200": {
+                        "description": "Records retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "code": {
+                                                        "type": "string",
+                                                        "example": "USD"
+                                                    },
+                                                    "symbol": {
+                                                        "type": "string",
+                                                        "example": "$"
+                                                    },
+                                                    "rate": {
+                                                        "type": "string",
+                                                        "example": "1.0000"
+                                                    },
+                                                    "is_default": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-08T16:36:49.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-08T16:38:17.000000Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/country-list": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Get list of countries",
+                "description": "Returns a list of all countries.",
+                "operationId": "getCountryList",
+                "responses": {
+                    "200": {
+                        "description": "Records retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Pakistan"
+                                                    },
+                                                    "is_active": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-17T14:08:35.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-17T14:17:14.000000Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/term-and-condition": {
             "get": {
                 "tags": [

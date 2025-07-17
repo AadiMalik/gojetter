@@ -4,6 +4,7 @@ namespace App\Services\Concrete\Api;
 
 use App\Mail\SendOtpMail;
 use App\Models\User;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -47,7 +48,7 @@ class AuthService
         // Determine if login is email or username only (no phone)
         $loginField = filter_var($data['login'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        $user = User::where($loginField, $data['login'])->first();
+        $user = User::where($loginField, $data['login'])->where('is_deleted', 0)->first();
 
         if (!$user || !Hash::check($data['password'], $user->password)) {
             throw ValidationException::withMessages([
@@ -154,6 +155,26 @@ class AuthService
         $user = User::find(Auth::user()->id);
         $user->update([
             'password' => Hash::make($data['password'])
+        ]);
+        return true;
+    }
+    // update profile
+    public function updateProfile($data)
+    {
+        $user = Auth::user();
+        $user->fill($data); 
+        $user->save();
+
+        return $user;
+    }
+    //delete account
+    public function deleteAccount()
+    {
+        $user = User::find(Auth::user()->id);
+        $user->update([
+            'is_deleted' => 1,
+            'date_deleted' => Carbon::now(),
+            'deletedby_id' => Auth::user()->id
         ]);
         return true;
     }

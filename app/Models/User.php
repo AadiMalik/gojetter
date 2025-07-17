@@ -33,7 +33,7 @@ class User extends Authenticatable implements JWTSubject
         'city',
         'state',
         'zip_code',
-        'country',
+        'country_id',
         'created_at',
         'updated_at',
         'is_deleted',
@@ -41,7 +41,9 @@ class User extends Authenticatable implements JWTSubject
         'deletedby_id',
         'email_otp',
         'email_otp_expires_at',
-        'email_verified_at'
+        'email_verified_at',
+        'alternative_phone',
+        'gender'
     ];
 
     /**
@@ -78,4 +80,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function country()
+{
+    return $this->belongsTo(Country::class,'country_id');
+}
 }

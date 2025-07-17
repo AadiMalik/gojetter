@@ -9,6 +9,7 @@ use App\Http\Requests\Api\CustomerLoginRequest;
 use App\Http\Requests\Api\CustomerSignupRequest;
 use App\Http\Requests\Api\ForgetPasswordRequest;
 use App\Http\Requests\Api\ResendEmailOtpRequest;
+use App\Http\Requests\Api\UpdateProfileRequest;
 use App\Http\Requests\Api\VerifyEmailOtpRequest;
 use App\Services\Concrete\Api\AuthService;
 use App\Traits\ResponseAPI;
@@ -94,6 +95,32 @@ class AuthController extends Controller
         return $this->success(
             $result,
             ResponseMessage::PASSWORD_CHANGED
+        );
+    }
+
+    //update profile
+    public function updateProfile(UpdateProfileRequest $request)
+    {
+
+        $obj = $request->validated();
+        if ($request->hasFile('avatar')) {
+            $obj['avatar'] = $request->file('avatar')->store('users', 'public');
+        }
+        $result = $this->authService->updateProfile($obj);
+        return $this->success(
+            $result,
+            ResponseMessage::UPDATE
+        );
+    }
+
+    //delete account
+    public function deleteAccount()
+    {
+        $result = $this->authService->deleteAccount();
+
+        return $this->success(
+            $result,
+            ResponseMessage::ACCOUNT_DELETED
         );
     }
 }

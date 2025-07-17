@@ -344,5 +344,106 @@ class AuthController extends Controller
      *     )
      * )
      */
-    public function changePassword(){}
+    public function changePassword() {}
+
+    /**
+     * @OA\Post(
+     *     path="/api/update-profile",
+     *     summary="Update customer profile",
+     *     description="Allows authenticated customers to update their profile information.",
+     *     operationId="updateProfile",
+     *     tags={"Customer Auth"},
+     *     security={{"bearerAuth":{}}},
+     *
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"name", "phone", "gender", "country_id", "is_show_email_phone", "home_airport"},
+     *             @OA\Property(property="name", type="string", example="John Doe"),
+     *             @OA\Property(property="phone", type="string", example="03001234567"),
+     *             @OA\Property(property="gender", type="string", example="Male"),
+     *             @OA\Property(property="country_id", type="integer", example=1),
+     *             @OA\Property(property="avatar", type="string", format="binary"),
+     *             @OA\Property(property="is_show_email_phone", type="integer", enum={0,1}, example=0),
+     *             @OA\Property(property="home_airport", type="string", example="Lahore"),
+     *             @OA\Property(property="state", type="string", nullable=true, example="Punjab"),
+     *             @OA\Property(property="city", type="string", nullable=true, example="Lahore"),
+     *             @OA\Property(property="address", type="string", nullable=true, example="123 Main Street"),
+     *             @OA\Property(property="zip_code", type="string", nullable=true, example="54000"),
+     *             @OA\Property(property="paypal_email", type="string", nullable=true, example="paypal@example.com"),
+     *             @OA\Property(property="alternative_phone", type="string", nullable=true, example="03009998888")
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=200,
+     *         description="Record updated successfully.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="Message", type="string", example="Record updated successfully."),
+     *             @OA\Property(property="Success", type="boolean", example=true),
+     *             @OA\Property(property="Data", type="object",
+     *                 @OA\Property(property="id", type="integer", example=13),
+     *                 @OA\Property(property="name", type="string", example="new user 6"),
+     *                 @OA\Property(property="email", type="string", example="user6@gmail.com"),
+     *                 @OA\Property(property="email_verified_at", type="string", format="date-time", example="2025-07-14T17:30:12.000000Z"),
+     *                 @OA\Property(property="created_at", type="string", format="date-time", example="2025-07-14T12:21:22.000000Z"),
+     *                 @OA\Property(property="updated_at", type="string", format="date-time", example="2025-07-17T15:21:49.000000Z"),
+     *                 @OA\Property(property="username", type="string", example="user6"),
+     *                 @OA\Property(property="phone", type="string", example="03000000001"),
+     *                 @OA\Property(property="paypal_email", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="is_show_email_phone", type="string", example="0"),
+     *                 @OA\Property(property="about_yourself", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="avatar", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="home_airport", type="string", example="lahore"),
+     *                 @OA\Property(property="address", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="city", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="state", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="zip_code", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="country_id", type="string", example="1"),
+     *                 @OA\Property(property="alternative_phone", type="string", nullable=true, example=null),
+     *                 @OA\Property(property="gender", type="string", example="Male")
+     *             ),
+     *             @OA\Property(property="Status", type="integer", example=200)
+     *         )
+     *     ),
+     *
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation error"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated"
+     *     )
+     * )
+     */
+    public function updateProfile() {}
+
+    /**
+     * @OA\Post(
+     *     path="/api/delete-account",
+     *     summary="Delete user account",
+     *     description="Permanently deletes the authenticated user's account.",
+     *     operationId="deleteAccount",
+     *     tags={"Customer Auth"},
+     *     security={{"bearerAuth":{}}},
+     *     
+     *     @OA\Response(
+     *         response=200,
+     *         description="Account deleted successfully.",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="Message", type="string", example="Account deleted successfully."),
+     *             @OA\Property(property="Success", type="boolean", example=true),
+     *             @OA\Property(property="Data", type="boolean", example=true),
+     *             @OA\Property(property="Status", type="integer", example=200)
+     *         )
+     *     ),
+     *     
+     *     @OA\Response(
+     *         response=401,
+     *         description="Unauthenticated"
+     *     )
+     * )
+     */
+    public function deleteAccount() {}
 }
