@@ -39,6 +39,16 @@ class Tour extends Model
         'is_deleted',
         'date_deleted'
     ];
+    protected $appends = ['thumbnail_url'];
+
+    public function getThumbnailUrlAttribute()
+    {
+        if ($this->thumbnail) {
+            return asset('storage/app/public/' .  $this->thumbnail);
+        }
+
+        return null;
+    }
     public function tour_category()
     {
         return $this->belongsTo(TourCategory::class, 'tour_category_id');
@@ -46,5 +56,9 @@ class Tour extends Model
 
     public function tourImages() {
         return $this->hasMany(TourImage::class, 'tour_id', 'id');
+    }
+
+    public function tourReviews() {
+        return $this->hasMany(TourReview::class, 'tour_id', 'id');
     }
 }

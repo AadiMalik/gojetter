@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\TermAndConditionController;
 use App\Http\Controllers\Admin\TourCategoryController;
 use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\TourImageController;
+use App\Http\Controllers\Admin\TourReviewController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -209,5 +210,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('data', [TourImageController::class, 'getData'])->name('tour-image.data');
         Route::post('store', [TourImageController::class, 'store']);
         Route::get('destroy/{id}', [TourImageController::class,'destroy']);
+    });
+
+    //tour review
+    Route::group(['prefix' => 'tour-review'], function () {
+        Route::get('/', [TourReviewController::class, 'index']);
+        Route::post('data', [TourReviewController::class, 'getData'])->name('tour-review.data');
+        Route::get('destroy/{id}', [TourReviewController::class,'destroy']);
+        Route::get('status/{id}', [TourReviewController::class, 'status']);
     });
 });

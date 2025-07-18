@@ -70,7 +70,7 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
@@ -82,7 +82,7 @@ class User extends Authenticatable implements JWTSubject
     }
 
     public function country()
-{
-    return $this->belongsTo(Country::class,'country_id');
-}
+    {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
 }

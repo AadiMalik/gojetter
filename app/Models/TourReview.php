@@ -5,18 +5,22 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TourCategory extends Model
+class TourReview extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name',
-        'thumbnail',
+        'user_id',
+        'tour_id',
+        'rating',
+        'comment',
         'is_active',
+        'is_deleted',
         'createdby_id',
         'updatedby_id',
         'deletedby_id',
         'date_deleted',
-        'is_deleted'
+        'created_at',
+        'updated_at'
     ];
 
     protected $hidden = [
@@ -26,18 +30,13 @@ class TourCategory extends Model
         'is_deleted',
         'date_deleted'
     ];
-    protected $appends = ['thumbnail_url'];
 
-    public function getThumbnailUrlAttribute()
+    public function user()
     {
-        if ($this->thumbnail) {
-            return asset('storage/app/public/' .  $this->thumbnail);
-        }
-
-        return null;
+        return $this->belongsTo(User::class, 'user_id');
     }
-    public function tourCategory()
+    public function tour()
     {
-        return $this->hasMany(TourCategory::class, 'tour_category_id', 'id');
+        return $this->belongsTo(Tour::class, 'tour_id');
     }
 }

@@ -20,6 +20,18 @@ class TourImage extends Model
         'createdby_id',
         'updatedby_id'
     ];
+
+    protected $appends = ['full_url'];
+
+    public function getFullUrlAttribute()
+    {
+        if ($this->image) {
+            return asset('storage/app/public/' .  $this->image);
+        }
+
+        return null;
+    }
+
     public function tour()
     {
         return $this->belongsTo(Tour::class, 'tour_id');

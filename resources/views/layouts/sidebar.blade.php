@@ -54,6 +54,11 @@
                                     href="{{ url('tours') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
                                         class="text-muted">Tours</span></a></li>
                             {{-- @endcan --}}
+                            {{-- @can('tour_review_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('tour-review*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('tour-review') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
+                                        class="text-muted">Tour Reviews</span></a></li>
+                            {{-- @endcan --}}
                         </ul>
                     </li>
                     {{-- @endcan --}}

@@ -10,7 +10,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost/gojetter",
+            "url": "http://my-default-host.com",
             "description": "GoJetter API Server"
         }
     ],
@@ -1549,6 +1549,653 @@
                     }
                 }
             }
+        },
+        "/api/tour-category-list": {
+            "get": {
+                "tags": [
+                    "Tour"
+                ],
+                "summary": "Get list of active tour categories",
+                "description": "Returns a list of active tour categories with thumbnail URLs",
+                "operationId": "getTourCategoryList",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Adventure"
+                                                    },
+                                                    "thumbnail": {
+                                                        "type": "string",
+                                                        "example": "tour_category/DpLGO0CO1yHcH2kdIBYmOaMCgmTD0lhj5h4CLHDX.webp"
+                                                    },
+                                                    "is_active": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-18T18:16:30.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-18T18:16:30.000000Z"
+                                                    },
+                                                    "thumbnail_url": {
+                                                        "type": "string",
+                                                        "example": "http://localhost/gojetter/storage/app/public/tour_category/DpLGO0CO1yHcH2kdIBYmOaMCgmTD0lhj5h4CLHDX.webp"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tour-list": {
+            "get": {
+                "tags": [
+                    "Tour"
+                ],
+                "summary": "Get list of active tours",
+                "description": "Returns a list of active tours filtered by search, category_id, and sorted by price if specified.",
+                "operationId": "getTourList",
+                "parameters": [
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search keyword for tour title or description",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "maxLength": 255
+                        }
+                    },
+                    {
+                        "name": "category_id",
+                        "in": "query",
+                        "description": "Filter tours by category ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Sort by price_low_high or price_high_low",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "maxLength": 255,
+                            "enum": [
+                                "price_low_high",
+                                "price_high_low"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Dubai and Cairo Combo Tour"
+                                                    },
+                                                    "slug": {
+                                                        "type": "string",
+                                                        "example": "dubai-and-cairo-combo-tour"
+                                                    },
+                                                    "thumbnail": {
+                                                        "type": "string",
+                                                        "example": "tours/9iGOlgbNCuCdxj3QTnlvL1Vqntysz3oFxwTKcwGJ.png"
+                                                    },
+                                                    "thumbnail_url": {
+                                                        "type": "string",
+                                                        "example": "http://localhost/gojetter/storage/app/public/tours/9iGOlgbNCuCdxj3QTnlvL1Vqntysz3oFxwTKcwGJ.png"
+                                                    },
+                                                    "overview": {
+                                                        "type": "string",
+                                                        "example": "<h2 class='st-heading-section'>About this tour</h2>"
+                                                    },
+                                                    "short_description": {
+                                                        "type": "string",
+                                                        "nullable": true
+                                                    },
+                                                    "full_description": {
+                                                        "type": "string",
+                                                        "nullable": true
+                                                    },
+                                                    "duration_days": {
+                                                        "type": "integer",
+                                                        "example": 13
+                                                    },
+                                                    "duration_nights": {
+                                                        "type": "integer",
+                                                        "example": 12
+                                                    },
+                                                    "tour_type": {
+                                                        "type": "string",
+                                                        "example": "Adventure"
+                                                    },
+                                                    "group_size": {
+                                                        "type": "integer",
+                                                        "example": 72
+                                                    },
+                                                    "languages": {
+                                                        "type": "string",
+                                                        "example": "English, Arabic"
+                                                    },
+                                                    "price": {
+                                                        "type": "string",
+                                                        "example": "1898.00"
+                                                    },
+                                                    "min_adults": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "location": {
+                                                        "type": "string",
+                                                        "example": "Dubai"
+                                                    },
+                                                    "is_active": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-08T22:49:38.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-18T18:16:49.000000Z"
+                                                    },
+                                                    "tour_category_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "average_rating": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "example": 4.5,
+                                                        "nullable": true
+                                                    },
+                                                    "tour_category": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Adventure"
+                                                            },
+                                                            "thumbnail": {
+                                                                "type": "string",
+                                                                "example": "tour_category/DpLGO0CO1yHcH2kdIBYmOaMCgmTD0lhj5h4CLHDX.webp"
+                                                            },
+                                                            "thumbnail_url": {
+                                                                "type": "string",
+                                                                "example": "http://localhost/gojetter/storage/app/public/tour_category/DpLGO0CO1yHcH2kdIBYmOaMCgmTD0lhj5h4CLHDX.webp"
+                                                            },
+                                                            "is_active": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/tour-by-slug/{slug}": {
+            "get": {
+                "tags": [
+                    "Tour"
+                ],
+                "summary": "Get tour detail by slug",
+                "description": "Returns a single tour detail with category, reviews, images, and rating",
+                "operationId": "getTourBySlug",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Tour slug",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "dubai-and-cairo-combo-tour"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Dubai and Cairo Combo Tour"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "example": "dubai-and-cairo-combo-tour"
+                                                },
+                                                "thumbnail": {
+                                                    "type": "string",
+                                                    "example": "tours/image.png"
+                                                },
+                                                "thumbnail_url": {
+                                                    "type": "string",
+                                                    "example": "http://localhost/gojetter/storage/app/public/tours/image.png"
+                                                },
+                                                "overview": {
+                                                    "type": "string",
+                                                    "example": "<h2>About this tour</h2>"
+                                                },
+                                                "short_description": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "full_description": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "duration_days": {
+                                                    "type": "integer",
+                                                    "example": 13
+                                                },
+                                                "duration_nights": {
+                                                    "type": "integer",
+                                                    "example": 12
+                                                },
+                                                "tour_type": {
+                                                    "type": "string",
+                                                    "example": "Adventure"
+                                                },
+                                                "group_size": {
+                                                    "type": "integer",
+                                                    "example": 72
+                                                },
+                                                "languages": {
+                                                    "type": "string",
+                                                    "example": "English, Arabic"
+                                                },
+                                                "price": {
+                                                    "type": "string",
+                                                    "example": "1898.00"
+                                                },
+                                                "min_adults": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "location": {
+                                                    "type": "string",
+                                                    "example": "Dubai"
+                                                },
+                                                "is_active": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "tour_category_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "average_rating": {
+                                                    "type": "number",
+                                                    "format": "float",
+                                                    "example": 4.3,
+                                                    "nullable": true
+                                                },
+                                                "tour_category": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Adventure"
+                                                        },
+                                                        "thumbnail": {
+                                                            "type": "string",
+                                                            "example": "tour_category/image.webp"
+                                                        },
+                                                        "thumbnail_url": {
+                                                            "type": "string",
+                                                            "example": "http://localhost/gojetter/storage/app/public/tour_category/image.webp"
+                                                        },
+                                                        "is_active": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "tour_reviews": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "user_id": {
+                                                                "type": "integer",
+                                                                "example": 5
+                                                            },
+                                                            "rating": {
+                                                                "type": "number",
+                                                                "format": "float",
+                                                                "example": 4.5
+                                                            },
+                                                            "comment": {
+                                                                "type": "string",
+                                                                "example": "Amazing tour experience!"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "tour_images": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Main Image"
+                                                            },
+                                                            "image": {
+                                                                "type": "string",
+                                                                "example": "tour_images/sample.jpg"
+                                                            },
+                                                            "full_url": {
+                                                                "type": "string",
+                                                                "example": "http://localhost/gojetter/storage/app/public/tour_images/sample.jpg"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Tour not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Tour not found"
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 404
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/save-tour-review": {
+            "post": {
+                "tags": [
+                    "Tour Review"
+                ],
+                "summary": "Submit a review for a tour",
+                "operationId": "560cb3abaa3554c308310b6e8120d01f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "tour_id",
+                                    "rating",
+                                    "comment"
+                                ],
+                                "properties": {
+                                    "tour_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "rating": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 5
+                                    },
+                                    "comment": {
+                                        "type": "string",
+                                        "example": "good"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Review successfully saved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Record saved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "tour_id": {
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "rating": {
+                                                    "type": "string",
+                                                    "example": "5"
+                                                },
+                                                "comment": {
+                                                    "type": "string",
+                                                    "example": "good"
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-18T19:05:53.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-18T19:05:53.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -1578,6 +2225,14 @@
         {
             "name": "Social Media",
             "description": "Social Media"
+        },
+        {
+            "name": "Tour",
+            "description": "Tour"
+        },
+        {
+            "name": "Tour Review",
+            "description": "Tour Review"
         }
     ],
     "security": [
