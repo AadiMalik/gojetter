@@ -43,4 +43,8 @@ class Tour extends Model
     {
         return $this->belongsTo(TourCategory::class, 'tour_category_id');
     }
+
+    public function tourImages() {
+        return $this->hasMany(TourImage::class, 'tour_id', 'id');
+    }
 }

@@ -97,7 +97,7 @@
                     errorMessage(err.Message);
                 });
         });
-        $("body").on("click", "#deleteFaq", function() {
+        $("body").on("click", "#deleteTourCategory", function() {
             var tour_category_id = $(this).data("id");
             Swal.fire({
                 title: "Are you sure?",
