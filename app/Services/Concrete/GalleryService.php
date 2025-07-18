@@ -2,42 +2,38 @@
 
 namespace App\Services\Concrete;
 
-use App\Models\TourImage;
+use App\Models\Gallery;
 use App\Repository\Repository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
-class TourImageService
+class GalleryService
 {
-    protected $model_tour_image;
+    protected $model_gallery;
     public function __construct()
     {
         // set the model
-        $this->model_tour_image = new Repository(new TourImage);
+        $this->model_gallery = new Repository(new Gallery);
     }
     //Bead type
-    public function getSource($data)
+    public function getSource()
     {
-        $model = $this->model_tour_image->getModel()::with('tour')->where('tour_id', $data['tour_id']);
+        $model = $this->model_gallery->getModel()::query();
         $data = DataTables::of($model)
-            ->addColumn('tour', function ($item) {
-
-                return $item->tour->name ?? '';
-            })
             ->addColumn('image', function ($item) {
                 $imageUrl = asset('storage/app/public/' . $item->image); // Correct path
                 return '<img src="' . $imageUrl . '" style="width:100px;" />';
             })
             ->addColumn('action', function ($item) {
                 $action_column = '';
-                $delete_column    = "<a class='text-danger mr-2' id='deleteTourImage' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
-                // if (Auth::user()->can('tour_image_delete'))
+                $delete_column    = "<a class='text-danger mr-2' id='deleteGallery' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
+                // if (Auth::user()->can('gallery_delete'))
                 $action_column .= $delete_column;
 
                 return $action_column;
             })
-            ->rawColumns(['tour', 'image', 'action'])
+            ->rawColumns(['image', 'action'])
             ->make(true);
         return $data;
     }
@@ -46,7 +42,7 @@ class TourImageService
     {
 
         $obj['createdby_id'] = Auth::User()->id;
-        $saved_obj = $this->model_tour_image->create($obj);
+        $saved_obj = $this->model_gallery->create($obj);
 
         if (!$saved_obj)
             return false;
@@ -54,24 +50,35 @@ class TourImageService
         return $saved_obj;
     }
 
+    // get all
+    public function getAll()
+    {
+        $gallery = $this->model_gallery->getModel()::get();
+
+        if (!$gallery)
+            return false;
+
+        return $gallery;
+    }
+
     // get by id
     public function getById($id)
     {
-        $tour_image = $this->model_tour_image->getModel()::find($id);
+        $gallery = $this->model_gallery->getModel()::find($id);
 
-        if (!$tour_image)
+        if (!$gallery)
             return false;
 
-        return $tour_image;
+        return $gallery;
     }
 
     // delete by id
     public function deleteById($id)
     {
-        $tour_image = $this->model_tour_image->getModel()::find($id);
-        $tour_image->delete();
+        $gallery = $this->model_gallery->getModel()::find($id);
+        $gallery->delete();
 
-        if (!$tour_image)
+        if (!$gallery)
             return false;
 
         return true;

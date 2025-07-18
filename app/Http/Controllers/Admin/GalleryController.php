@@ -2,48 +2,43 @@
 
 namespace App\Http\Controllers\Admin;
 
+
 use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
-use App\Services\Concrete\TourImageService;
-use App\Services\Concrete\TourService;
+use App\Services\Concrete\GalleryService;
 use App\Traits\ResponseAPI;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class TourImageController extends Controller
+class GalleryController extends Controller
 {
     use ResponseAPI;
-    protected $tour_image_service;
-    protected $tour_service;
+    protected $gallery_service;
 
     public function __construct(
-        TourImageService $tour_image_service,
-        TourService $tour_service
+        GalleryService $gallery_service
     ) {
-        $this->tour_image_service = $tour_image_service;
-        $this->tour_service = $tour_service;
+        $this->gallery_service = $gallery_service;
     }
 
-    public function index($tour_id)
+    public function index()
     {
-        // abort_if(Gate::denies('tour_image_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $tour = $this->tour_service->getById($tour_id);
-        return view('tour_image.index', compact('tour'));
+        // abort_if(Gate::denies('gallery_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return view('gallery.index');
     }
 
-    public function getData(Request $request)
+    public function getData()
     {
-        // abort_if(Gate::denies('tour_image_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return $this->tour_image_service->getSource($request->all());
+        // abort_if(Gate::denies('gallery_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return $this->gallery_service->getSource();
     }
     public function store(Request $request)
     {
-        // abort_if(Gate::denies('tour_image_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('gallery_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
-                'tour_id' => 'required',
                 'name' => 'required|string|max:255',
                 'image' => 'nullable|image'
             ],
@@ -67,7 +62,7 @@ class TourImageController extends Controller
                 $obj['image'] = $request->file('image')->store('tours', 'public');
             }
 
-            $response = $this->tour_image_service->save($obj);
+            $response = $this->gallery_service->save($obj);
 
             if (!$response) {
                 return $this->error(ResponseMessage::ERROR);
@@ -86,11 +81,11 @@ class TourImageController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('tour_image_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('gallery_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
-            $tour_image = $this->tour_image_service->deleteById($id);
+            $gallery = $this->gallery_service->deleteById($id);
             return $this->success(
-                $tour_image,
+                $gallery,
                 ResponseMessage::DELETE,
                 true
             );

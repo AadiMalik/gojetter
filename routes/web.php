@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ContactUsMessageController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PolicyController;
 use App\Http\Controllers\Admin\RoleController;
@@ -218,5 +219,13 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('data', [TourReviewController::class, 'getData'])->name('tour-review.data');
         Route::get('destroy/{id}', [TourReviewController::class,'destroy']);
         Route::get('status/{id}', [TourReviewController::class, 'status']);
+    });
+
+    //tour image
+    Route::group(['prefix' => 'gallery'], function () {
+        Route::get('/', [GalleryController::class, 'index']);
+        Route::post('data', [GalleryController::class, 'getData'])->name('gallery.data');
+        Route::post('store', [GalleryController::class, 'store']);
+        Route::get('destroy/{id}', [GalleryController::class,'destroy']);
     });
 });

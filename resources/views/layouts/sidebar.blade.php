@@ -40,7 +40,7 @@
                     </li>
                     {{-- @endcan --}}
                     {{-- @can('product_management') --}}
-                    <li class="Ul_li--hover {{ Request::is('tours*') || Request::is('tour-category*') ? 'mm-active' : '' }}"><a class="has-arrow"
+                    <li class="Ul_li--hover {{ Request::is('tours*') || Request::is('tour-category*') || Request::is('tour-review*') ? 'mm-active' : '' }}"><a class="has-arrow"
                             href="#"><i class="fa fa-plane text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Product Manage..</span></a>
                         <ul class="mm-collapse">
@@ -88,7 +88,7 @@
                     {{-- @endcan --}}
                     {{-- @can('content_management_access') --}}
                     <li
-                        class="Ul_li--hover {{ Request::is('about-us*') ? 'mm-active' : '' }}">
+                        class="Ul_li--hover {{ Request::is('about-us*') | Request::is('gallery*') ? 'mm-active' : '' }}">
                         <a class="has-arrow" href="#"><i class="fa fa-plug text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Content Manage..</span></a>
                         <ul class="mm-collapse">
@@ -96,6 +96,11 @@
                             <li class="item-name"><a class="{{ Request::is('about-us*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('about-us') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
                                         class="text-muted">About Us</span></a></li>
+                            {{-- @endcan --}}
+                            {{-- @can('gallery_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('gallery*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('gallery') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
+                                        class="text-muted">Gallery</span></a></li>
                             {{-- @endcan --}}
                             
                         </ul>
