@@ -36,9 +36,9 @@ class ContactUsMessage extends Model
         'date_deleted'
     ];
 
-    public function parent()
+    public function replies()
     {
-        return $this->belongsTo(ContactUsMessage::class, 'parent_id');
+        return $this->hasMany(ContactUsMessage::class, 'parent_id');
     }
 
     public function user()

@@ -170,7 +170,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('show/{id}', [ContactUsMessageController::class, 'show']);
         Route::post('reply', [ContactUsMessageController::class, 'reply']);
         Route::post('mark-read/{id}', [ContactUsMessageController::class, 'markAsRead']);
-        Route::get('destroy/{id}', [SocialMediaController::class,'destroy']);
+        Route::get('destroy/{id}', [ContactUsMessageController::class,'destroy']);
     });
 
     //tour category

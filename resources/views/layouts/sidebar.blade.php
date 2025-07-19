@@ -130,6 +130,22 @@
                         </ul>
                     </li>
                     {{-- @endcan --}}
+
+                    {{-- @can('contact_us_message_access') --}}
+                    <li
+                        class="Ul_li--hover {{ Request::is('contact-us-message*') ? 'mm-active' : '' }}">
+                        <a class="has-arrow" href="#"><i class="fa fa-envelope text-20 mr-2 text-muted"></i><span
+                                class="item-name text-15 text-muted">Contact Us</span></a>
+                        <ul class="mm-collapse">
+                            {{-- @can('contact_us_message_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('contact-us-message*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('contact-us-message') }}"><i class="nav-icon fa fa-circle"></i><span
+                                        class="item-name">Messages</span></a></li>
+                            {{-- @endcan --}}
+                            
+                        </ul>
+                    </li>
+                    {{-- @endcan --}}
                 </ul>
             </div>
         </div>
