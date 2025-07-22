@@ -113,4 +113,29 @@ class CouponService
 
         return $coupon;
     }
+
+    public function applyCoupon($data)
+    {
+
+        $coupon = $this->model_coupon->getModel()::select(
+            'id',
+            'code',
+            'type',
+            'value',
+            'valid_from',
+            'valid_until',
+            'is_active',
+            'created_at'
+        )
+            ->where('code', $data['code'])
+            ->where('is_active', 1)
+            ->whereDate('valid_from', '<=', now())
+            ->whereDate('valid_until', '>=', now())
+            ->first();
+        if (!$coupon) {
+            return false;
+        }
+
+        return $coupon;
+    }
 }

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CommonController;
 use App\Http\Controllers\Api\ContactUsMessageController;
+use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\SocialMediaController;
 use App\Http\Controllers\Api\TourController;
@@ -43,6 +44,9 @@ Route::get('country-list', [CommonController::class, 'country']);
 Route::get('tour-category-list', [TourController::class, 'tourCategory']);
 Route::get('tour-list', [TourController::class, 'tourList']);
 Route::get('tour-by-slug/{slug}', [TourController::class, 'tourBySlug']);
+
+//coupon
+Route::post('apply-coupon', [CouponController::class, 'applyCoupon']);
 
 // contact us message
 
