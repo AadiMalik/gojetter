@@ -62,7 +62,7 @@ class PolicyController extends Controller
                 return redirect()->back()->with('error', ResponseMessage::ERROR);
             }
 
-            return redirect('policy')->with('message', ResponseMessage::UPDATE);
+            return redirect('policy')->with('success', ResponseMessage::UPDATE);
         } catch (Exception $e) {
             return redirect()->back()->with('error', ResponseMessage::ERROR);
         }

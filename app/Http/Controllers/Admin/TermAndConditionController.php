@@ -62,7 +62,7 @@ class TermAndConditionController extends Controller
                 return redirect()->back()->with('error', ResponseMessage::ERROR);
             }
 
-            return redirect('terms')->with('message', ResponseMessage::UPDATE);
+            return redirect('terms')->with('success', ResponseMessage::UPDATE);
         } catch (Exception $e) {
             return redirect()->back()->with('error', ResponseMessage::ERROR);
         }

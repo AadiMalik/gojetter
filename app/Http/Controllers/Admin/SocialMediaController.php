@@ -72,7 +72,7 @@ class SocialMediaController extends Controller
                 return redirect()->back()->with('error', ResponseMessage::ERROR);
             }
 
-            return redirect('social-media')->with('message', ResponseMessage::SAVE);
+            return redirect('social-media')->with('success', ResponseMessage::SAVE);
         } catch (Exception $e) {
             return redirect()->back()->with('error', ResponseMessage::ERROR);
         }

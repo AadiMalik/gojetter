@@ -70,7 +70,7 @@ class TourCategoryController extends Controller
                 return redirect()->back()->with('error', ResponseMessage::ERROR);
             }
 
-            return redirect('tour-category')->with('message', ResponseMessage::SAVE);
+            return redirect('tour-category')->with('success', ResponseMessage::SAVE);
         } catch (Exception $e) {
             return redirect()->back()->with('error', ResponseMessage::ERROR);
         }

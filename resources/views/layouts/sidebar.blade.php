@@ -146,6 +146,22 @@
                         </ul>
                     </li>
                     {{-- @endcan --}}
+
+                    {{-- @can('coupon_access') --}}
+                    <li
+                        class="Ul_li--hover {{ Request::is('coupon*') ? 'mm-active' : '' }}">
+                        <a class="has-arrow" href="#"><i class="fa fa-envelope text-20 mr-2 text-muted"></i><span
+                                class="item-name text-15 text-muted">Coupon Manage..</span></a>
+                        <ul class="mm-collapse">
+                            {{-- @can('coupon_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('coupon*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('coupon') }}"><i class="nav-icon fa fa-circle"></i><span
+                                        class="item-name">Coupons</span></a></li>
+                            {{-- @endcan --}}
+                            
+                        </ul>
+                    </li>
+                    {{-- @endcan --}}
                 </ul>
             </div>
         </div>

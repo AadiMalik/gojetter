@@ -66,7 +66,7 @@ class FaqController extends Controller
                 return redirect()->back()->with('error', ResponseMessage::ERROR);
             }
 
-            return redirect('faqs')->with('message', ResponseMessage::SAVE);
+            return redirect('faqs')->with('success', ResponseMessage::SAVE);
         } catch (Exception $e) {
             return redirect()->back()->with('error', ResponseMessage::ERROR);
         }

@@ -62,7 +62,7 @@ class AboutUsController extends Controller
                 return redirect()->back()->with('error', ResponseMessage::ERROR);
             }
 
-            return redirect('about-us')->with('message', ResponseMessage::UPDATE);
+            return redirect('about-us')->with('success', ResponseMessage::UPDATE);
         } catch (Exception $e) {
             return redirect()->back()->with('error', ResponseMessage::ERROR);
         }

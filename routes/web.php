@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AboutUsController;
 use App\Http\Controllers\Admin\ContactUsMessageController;
 use App\Http\Controllers\Admin\CountryController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\GalleryController;
@@ -227,5 +228,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('data', [GalleryController::class, 'getData'])->name('gallery.data');
         Route::post('store', [GalleryController::class, 'store']);
         Route::get('destroy/{id}', [GalleryController::class,'destroy']);
+    });
+
+    //coupon
+    Route::group(['prefix' => 'coupon'], function () {
+        Route::get('/', [CouponController::class, 'index']);
+        Route::post('data', [CouponController::class, 'getData'])->name('coupon.data');
+        Route::get('create', [CouponController::class, 'create']);
+        Route::post('store', [CouponController::class, 'store']);
+        Route::get('edit/{id}', [CouponController::class, 'edit']);
+        Route::get('destroy/{id}', [CouponController::class,'destroy']);
+        Route::get('status/{id}', [CouponController::class, 'status']);
     });
 });
