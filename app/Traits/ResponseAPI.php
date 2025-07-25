@@ -34,6 +34,7 @@ trait ResponseAPI
             return response()->json([
                 'Message'   => $message,
                 'Success'   => $isSuccess,
+                'Data'      => [],
                 'Status'    => $statusCode,
             ], $httpResponseCode);
         }
