@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AboutUsController;
+use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\ContactUsMessageController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CouponController;
@@ -239,5 +240,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('edit/{id}', [CouponController::class, 'edit']);
         Route::get('destroy/{id}', [CouponController::class,'destroy']);
         Route::get('status/{id}', [CouponController::class, 'status']);
+    });
+
+    //booking
+    Route::group(['prefix' => 'booking'], function () {
+        Route::get('/', [BookingController::class, 'index']);
+        Route::post('data', [BookingController::class, 'getData'])->name('booking.data');
+        Route::get('view/{id}', [BookingController::class, 'view']);
+        Route::get('destroy/{id}', [BookingController::class,'destroy']);
+        Route::post('status', [BookingController::class, 'status']);
     });
 });

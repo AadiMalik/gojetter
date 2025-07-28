@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\CommonController;
 use App\Http\Controllers\Api\ContactUsMessageController;
 use App\Http\Controllers\Api\CouponController;
@@ -69,4 +70,8 @@ Route::group(['middleware' => ['auth:api']], function () {
     Route::get('wishlist-list', [WishlistController::class, 'index']);
     Route::post('save-wishlist', [WishlistController::class, 'store']);
     Route::post('delete-wishlist/{id}', [WishlistController::class, 'destroy']);
+
+    //booking
+    Route::get('booking-list', [BookingController::class, 'index']);
+    Route::post('save-booking', [BookingController::class, 'store']);
 });
