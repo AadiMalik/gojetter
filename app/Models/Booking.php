@@ -28,6 +28,7 @@ class Booking extends Model
         'discount',
         'total',
         'payment_method',
+        'currency',
         'coupon_id',
         'status',
         'createdby_id',

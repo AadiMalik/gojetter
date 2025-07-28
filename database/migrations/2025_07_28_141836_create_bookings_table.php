@@ -34,6 +34,7 @@ return new class extends Migration
             $table->decimal('discount',18,2)->default(0);
             $table->decimal('total',18,2)->default(0);
             $table->string('payment_method')->nullable();
+            $table->string('currency')->nullable();
             $table->integer('coupon_id')->nullable();
 
             $table->enum('status',['pending','confirmed','paid','rejected','completed','refunded','no_show','canceled'])->default('pending');
