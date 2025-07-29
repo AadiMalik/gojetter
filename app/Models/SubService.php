@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Service extends Model
+class SubService extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'service_id',
         'name',
         'slug',
         'image',
         'description',
-        'has_contact_form',
+        'has_customer_form',
         'is_active',
         'createdby_id',
         'updatedby_id',
@@ -41,8 +42,8 @@ class Service extends Model
         return null;
     }
 
-    public function subService()
+    public function service()
     {
-        return $this->hasMany(SubService::class);
+        return $this->belongsTo(Service::class, 'service_id');
     }
 }

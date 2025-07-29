@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\PolicyController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SocialMediaController;
+use App\Http\Controllers\Admin\SubServiceController;
 use App\Http\Controllers\Admin\TermAndConditionController;
 use App\Http\Controllers\Admin\TourCategoryController;
 use App\Http\Controllers\Admin\TourController;
@@ -297,6 +298,18 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('view/{id}', [ServiceController::class, 'view']);
         Route::get('destroy/{id}', [ServiceController::class,'destroy']);
         Route::get('status/{id}', [ServiceController::class, 'status']);
+    });
+
+    //sub service
+    Route::group(['prefix' => 'sub-services'], function () {
+        Route::get('/', [SubServiceController::class, 'index']);
+        Route::post('data', [SubServiceController::class, 'getData'])->name('sub-services.data');
+        Route::get('create', [SubServiceController::class, 'create']);
+        Route::post('store', [SubServiceController::class, 'store']);
+        Route::get('edit/{id}', [SubServiceController::class, 'edit']);
+        Route::get('view/{id}', [SubServiceController::class, 'view']);
+        Route::get('destroy/{id}', [SubServiceController::class,'destroy']);
+        Route::get('status/{id}', [SubServiceController::class, 'status']);
     });
 
 });

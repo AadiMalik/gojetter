@@ -55,9 +55,11 @@ class ServicesService
             return $data;
       }
       // get all
-      public function getAll()
+      public function getActiveAll()
       {
-            return $this->model_service->getModel()::where('is_deleted', 0)->get();
+            return $this->model_service->getModel()::where('is_deleted', 0)
+            ->where('is_active', 1)
+            ->get();
       }
       // save
       public function save($obj)
@@ -82,6 +84,17 @@ class ServicesService
       public function getById($id)
       {
             $service = $this->model_service->getModel()::find($id);
+
+            if (!$service)
+                  return false;
+
+            return $service;
+      }
+
+      // get by slug
+      public function getBySlug($slug)
+      {
+            $service = $this->model_service->getModel()::where('slug',$slug)->first();
 
             if (!$service)
                   return false;

@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ContactUsMessageController;
 use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\CustomerCardController;
 use App\Http\Controllers\Api\GalleryController;
+use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\SocialMediaController;
 use App\Http\Controllers\Api\TourController;
 use App\Http\Controllers\Api\WishlistController;
@@ -55,6 +56,14 @@ Route::post('apply-coupon', [CouponController::class, 'applyCoupon']);
 Route::get('blog-category-list', [BlogController::class, 'blogCategoryList']);
 Route::get('blog-list', [BlogController::class, 'blogList']);
 Route::get('blog-by-slug/{slug}', [BlogController::class, 'blogBySlug']);
+
+//service
+Route::get('service-list', [ServiceController::class, 'serviceList']);
+Route::get('service-by-slug/{slug}', [ServiceController::class, 'serviceBySlug']);
+
+//sub service
+Route::get('sub-service-list', [ServiceController::class, 'subServiceList']);
+Route::get('sub-service-by-slug/{slug}', [ServiceController::class, 'subServiceBySlug']);
 
 // contact us message
 

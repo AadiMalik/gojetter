@@ -109,6 +109,11 @@
                                     href="{{ url('services') }}"><i class="nav-icon fa fa-circle"></i><span
                                         class="item-name">Services</span></a></li>
                             {{-- @endcan --}}
+                            {{-- @can('sub_service_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('sub-services*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('sub-services') }}"><i class="nav-icon fa fa-circle"></i><span
+                                        class="item-name">Sub Services</span></a></li>
+                            {{-- @endcan --}}
 
                         </ul>
                     </li>
