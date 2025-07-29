@@ -28,6 +28,7 @@ class Booking extends Model
         'discount',
         'total',
         'payment_method',
+        'card_id',
         'currency',
         'coupon_id',
         'status',
@@ -59,5 +60,10 @@ class Booking extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function card()
+    {
+        return $this->belongsTo(CustomerCard::class, 'card_id');
     }
 }

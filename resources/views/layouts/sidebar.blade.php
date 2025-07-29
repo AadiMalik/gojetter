@@ -65,7 +65,7 @@
                     {{-- @can('booking_access') --}}
                     <li
                         class="Ul_li--hover {{ Request::is('booking*') ? 'mm-active' : '' }}">
-                        <a class="has-arrow" href="#"><i class="fa fa-envelope text-20 mr-2 text-muted"></i><span
+                        <a class="has-arrow" href="#"><i class="fa fa-bus text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Booking Manage..</span></a>
                         <ul class="mm-collapse">
                             {{-- @can('booking_access') --}}

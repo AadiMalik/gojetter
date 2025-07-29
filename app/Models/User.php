@@ -43,7 +43,8 @@ class User extends Authenticatable implements JWTSubject
         'email_otp_expires_at',
         'email_verified_at',
         'alternative_phone',
-        'gender'
+        'gender',
+        'stripe_customer_id'
     ];
 
     /**

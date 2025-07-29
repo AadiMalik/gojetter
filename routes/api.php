@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\CommonController;
 use App\Http\Controllers\Api\ContactUsMessageController;
 use App\Http\Controllers\Api\CouponController;
+use App\Http\Controllers\Api\CustomerCardController;
 use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\SocialMediaController;
 use App\Http\Controllers\Api\TourController;
@@ -74,4 +75,8 @@ Route::group(['middleware' => ['auth:api']], function () {
     //booking
     Route::get('booking-list', [BookingController::class, 'index']);
     Route::post('save-booking', [BookingController::class, 'store']);
+
+    //customer card
+    Route::get('customer-card-list', [CustomerCardController::class, 'index']);
+    Route::post('save-customer-card', [CustomerCardController::class, 'store']);
 });

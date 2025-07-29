@@ -34,6 +34,7 @@ return new class extends Migration
             $table->decimal('discount',18,2)->default(0);
             $table->decimal('total',18,2)->default(0);
             $table->string('payment_method')->nullable();
+            $table->integer('card_id')->nullable();
             $table->string('currency')->nullable();
             $table->integer('coupon_id')->nullable();
 
