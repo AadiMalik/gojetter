@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PolicyController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SocialMediaController;
 use App\Http\Controllers\Admin\TermAndConditionController;
 use App\Http\Controllers\Admin\TourCategoryController;
@@ -285,4 +286,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('destroy/{id}', [BlogController::class,'destroy']);
         Route::get('status/{id}', [BlogController::class, 'status']);
     });
+
+    //service
+    Route::group(['prefix' => 'services'], function () {
+        Route::get('/', [ServiceController::class, 'index']);
+        Route::post('data', [ServiceController::class, 'getData'])->name('services.data');
+        Route::get('create', [ServiceController::class, 'create']);
+        Route::post('store', [ServiceController::class, 'store']);
+        Route::get('edit/{id}', [ServiceController::class, 'edit']);
+        Route::get('view/{id}', [ServiceController::class, 'view']);
+        Route::get('destroy/{id}', [ServiceController::class,'destroy']);
+        Route::get('status/{id}', [ServiceController::class, 'status']);
+    });
+
 });
