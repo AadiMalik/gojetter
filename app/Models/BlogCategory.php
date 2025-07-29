@@ -28,8 +28,8 @@ class BlogCategory extends Model
         'date_deleted'
     ];
 
-    // public function blogs()
-    // {
-    //     return $this->hasMany(Blog::class);
-    // }
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
+    }
 }

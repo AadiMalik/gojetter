@@ -40,15 +40,17 @@
                     </li>
                     {{-- @endcan --}}
                     {{-- @can('product_management') --}}
-                    <li class="Ul_li--hover {{ Request::is('tours*') || Request::is('tour-category*') || Request::is('tour-review*') ? 'mm-active' : '' }}"><a class="has-arrow"
-                            href="#"><i class="fa fa-plane text-20 mr-2 text-muted"></i><span
+                    <li
+                        class="Ul_li--hover {{ Request::is('tours*') || Request::is('tour-category*') || Request::is('tour-review*') ? 'mm-active' : '' }}">
+                        <a class="has-arrow" href="#"><i class="fa fa-plane text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Product Manage..</span></a>
                         <ul class="mm-collapse">
                             {{-- @can('tour_category_access') --}}
-                            <li class="item-name"><a class="{{ Request::is('tour-category*') ? 'sidebar_active' : '' }}"
-                                href="{{ url('tour-category') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
-                                    class="text-muted">Tour Category</span></a></li>
-                        {{-- @endcan --}}
+                            <li class="item-name"><a
+                                    class="{{ Request::is('tour-category*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('tour-category') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
+                                        class="text-muted">Tour Category</span></a></li>
+                            {{-- @endcan --}}
                             {{-- @can('tours_access') --}}
                             <li class="item-name"><a class="{{ Request::is('tours*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('tours') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
@@ -63,8 +65,7 @@
                     </li>
                     {{-- @endcan --}}
                     {{-- @can('booking_access') --}}
-                    <li
-                        class="Ul_li--hover {{ Request::is('booking*') ? 'mm-active' : '' }}">
+                    <li class="Ul_li--hover {{ Request::is('booking*') ? 'mm-active' : '' }}">
                         <a class="has-arrow" href="#"><i class="fa fa-bus text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Booking Manage..</span></a>
                         <ul class="mm-collapse">
@@ -73,22 +74,28 @@
                                     href="{{ url('booking') }}"><i class="nav-icon fa fa-circle"></i><span
                                         class="item-name">Bookings</span></a></li>
                             {{-- @endcan --}}
-                            
+
                         </ul>
                     </li>
                     {{-- @endcan --}}
                     {{-- @can('blog_management_access') --}}
-                    <li
-                        class="Ul_li--hover {{ Request::is('blog-category*') ? 'mm-active' : '' }}">
+                    <li class="Ul_li--hover {{ Request::is('blog-category*') ? 'mm-active' : '' }}">
                         <a class="has-arrow" href="#"><i class="fa fa-rss text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Blog Manage..</span></a>
                         <ul class="mm-collapse">
                             {{-- @can('blog_category_access') --}}
-                            <li class="item-name"><a class="{{ Request::is('blog-category*') ? 'sidebar_active' : '' }}"
+                            <li class="item-name"><a
+                                    class="{{ Request::is('blog-category*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('blog-category') }}"><i class="nav-icon fa fa-circle"></i><span
                                         class="item-name">Blog Category</span></a></li>
                             {{-- @endcan --}}
-                            
+                            {{-- @can('blog_access') --}}
+                            <li class="item-name"><a
+                                    class="{{ Request::is('blogs*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('blogs') }}"><i class="nav-icon fa fa-circle"></i><span
+                                        class="item-name">Blogs</span></a></li>
+                            {{-- @endcan --}}
+
                         </ul>
                     </li>
                     {{-- @endcan --}}
@@ -105,13 +112,15 @@
                             {{-- @endcan --}}
                             {{-- @can('country_access') --}}
                             <li class="item-name"><a class="{{ Request::is('country*') ? 'sidebar_active' : '' }}"
-                                href="{{ url('country') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
-                                    class="text-muted">Countries</span></a></li>
-                        {{-- @endcan --}}
+                                    href="{{ url('country') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
+                                        class="text-muted">Countries</span></a></li>
+                            {{-- @endcan --}}
                             {{-- @can('social_media_access') --}}
-                            <li class="item-name"><a class="{{ Request::is('social-media*') ? 'sidebar_active' : '' }}"
-                                    href="{{ url('social-media') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
-                                        class="text-muted">Social Media</span></a></li>
+                            <li class="item-name"><a
+                                    class="{{ Request::is('social-media*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('social-media') }}"><i
+                                        class="fa fa-circle mr-2 text-muted"></i><span class="text-muted">Social
+                                        Media</span></a></li>
                             {{-- @endcan --}}
                         </ul>
                     </li>
@@ -132,7 +141,7 @@
                                     href="{{ url('gallery') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
                                         class="text-muted">Gallery</span></a></li>
                             {{-- @endcan --}}
-                            
+
                         </ul>
                     </li>
                     {{-- @endcan --}}
@@ -162,25 +171,26 @@
                     {{-- @endcan --}}
 
                     {{-- @can('contact_us_message_access') --}}
-                    <li
-                        class="Ul_li--hover {{ Request::is('contact-us-message*') ? 'mm-active' : '' }}">
-                        <a class="has-arrow" href="#"><i class="fa fa-envelope text-20 mr-2 text-muted"></i><span
+                    <li class="Ul_li--hover {{ Request::is('contact-us-message*') ? 'mm-active' : '' }}">
+                        <a class="has-arrow" href="#"><i
+                                class="fa fa-envelope text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Contact Us</span></a>
                         <ul class="mm-collapse">
                             {{-- @can('contact_us_message_access') --}}
-                            <li class="item-name"><a class="{{ Request::is('contact-us-message*') ? 'sidebar_active' : '' }}"
+                            <li class="item-name"><a
+                                    class="{{ Request::is('contact-us-message*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('contact-us-message') }}"><i class="nav-icon fa fa-circle"></i><span
                                         class="item-name">Messages</span></a></li>
                             {{-- @endcan --}}
-                            
+
                         </ul>
                     </li>
                     {{-- @endcan --}}
 
                     {{-- @can('coupon_access') --}}
-                    <li
-                        class="Ul_li--hover {{ Request::is('coupon*') ? 'mm-active' : '' }}">
-                        <a class="has-arrow" href="#"><i class="fa fa-envelope text-20 mr-2 text-muted"></i><span
+                    <li class="Ul_li--hover {{ Request::is('coupon*') ? 'mm-active' : '' }}">
+                        <a class="has-arrow" href="#"><i
+                                class="fa fa-envelope text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Coupon Manage..</span></a>
                         <ul class="mm-collapse">
                             {{-- @can('coupon_access') --}}
@@ -188,7 +198,7 @@
                                     href="{{ url('coupon') }}"><i class="nav-icon fa fa-circle"></i><span
                                         class="item-name">Coupons</span></a></li>
                             {{-- @endcan --}}
-                            
+
                         </ul>
                     </li>
                     {{-- @endcan --}}

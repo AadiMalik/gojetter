@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AboutUsController;
 use App\Http\Controllers\Admin\BlogCategoryController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\ContactUsMessageController;
 use App\Http\Controllers\Admin\CountryController;
@@ -271,5 +272,17 @@ Route::group(['middleware' => ['auth']], function () {
             }
             abort(404);
         });
+    });
+
+    //blogs
+    Route::group(['prefix' => 'blogs'], function () {
+        Route::get('/', [BlogController::class, 'index']);
+        Route::post('data', [BlogController::class, 'getData'])->name('blogs.data');
+        Route::get('create', [BlogController::class, 'create']);
+        Route::post('store', [BlogController::class, 'store']);
+        Route::get('edit/{id}', [BlogController::class, 'edit']);
+        Route::get('view/{id}', [BlogController::class, 'view']);
+        Route::get('destroy/{id}', [BlogController::class,'destroy']);
+        Route::get('status/{id}', [BlogController::class, 'status']);
     });
 });

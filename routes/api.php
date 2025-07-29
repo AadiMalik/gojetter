@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\CommonController;
 use App\Http\Controllers\Api\ContactUsMessageController;
@@ -49,6 +50,11 @@ Route::get('tour-by-slug/{slug}', [TourController::class, 'tourBySlug']);
 
 //coupon
 Route::post('apply-coupon', [CouponController::class, 'applyCoupon']);
+
+// blogs
+Route::get('blog-category-list', [BlogController::class, 'blogCategoryList']);
+Route::get('blog-list', [BlogController::class, 'blogList']);
+Route::get('blog-by-slug/{slug}', [BlogController::class, 'blogBySlug']);
 
 // contact us message
 
