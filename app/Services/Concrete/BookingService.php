@@ -9,20 +9,30 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 use App\Enums\BookingStatus;
+use App\Mail\BookingPaidMail;
+use App\Models\CustomerCard;
+use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use ReflectionClass;
+use Stripe\PaymentIntent;
+use Stripe\Stripe;
 
 class BookingService
 {
     protected $model_booking;
     protected $model_booking_detail;
+    protected $model_customer_card;
+    protected $model_user;
     public function __construct()
     {
         // set the model
         $this->model_booking = new Repository(new Booking);
         $this->model_booking_detail = new Repository(new BookingDetail);
+        $this->model_customer_card = new Repository(new CustomerCard);
+        $this->model_user = new Repository(new User);
     }
     //booking
     public function getSource()
@@ -92,6 +102,47 @@ class BookingService
     public function statusById($data)
     {
         $booking = $this->model_booking->getModel()::findOrFail($data['booking_id']);
+        if (!$booking) {
+            return false;
+        }
+        // If status is being set to "paid", charge the customer via Stripe
+        if ($data['status'] === 'paid') {
+            // Get the payment method from card_id
+            $customer_card = $this->model_customer_card->getModel()::findOrFail($booking->card_id);
+
+            if (!$customer_card || !$customer_card->stripe_payment_method_id) {
+                throw new \Exception("No valid card found for payment.");
+            }
+
+            // Set your Stripe secret key
+            Stripe::setApiKey(config('services.stripe.secret_key'));
+
+            // Retrieve the Stripe customer ID from your User model (assumed)
+            $user = $this->model_user->getModel()::findOrFail($booking->user_id);
+
+            if (!$user || !$user->stripe_customer_id) {
+                throw new \Exception("Stripe customer not found.");
+            }
+
+            // Create a PaymentIntent and confirm it
+            $paymentIntent = PaymentIntent::create([
+                'amount' => intval($booking->total * 100), // amount in cents
+                'currency' => strtolower($booking->currency ?? 'usd'),
+                'customer' => $user->stripe_customer_id,
+                'payment_method' => $customer_card->stripe_payment_method_id,
+                'off_session' => true,
+                'confirm' => true,
+                'description' => 'Tour Booking Payment for Booking #' . $booking->id,
+            ]);
+
+            if ($paymentIntent->status !== 'succeeded') {
+                throw new \Exception("Payment failed. Status: " . $paymentIntent->status);
+            }
+
+            // Send email to customer after successful payment
+            Mail::to($booking->email)->send(new BookingPaidMail($booking));
+        }
+
         $booking->status = $data['status'];
         $booking->update();
 

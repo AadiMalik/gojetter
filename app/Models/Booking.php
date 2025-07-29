@@ -29,7 +29,7 @@ class Booking extends Model
         'total',
         'payment_method',
         'card_id',
-        'currency',
+        'currency_id',
         'coupon_id',
         'status',
         'createdby_id',
@@ -54,16 +54,21 @@ class Booking extends Model
 
     public function tour()
     {
-        return $this->belongsTo(Tour::class, 'tour_id');
+        return $this->belongsTo(Tour::class, 'tour_id')->where('is_deleted', 0);
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->where('is_deleted', 0);
     }
 
     public function card()
     {
-        return $this->belongsTo(CustomerCard::class, 'card_id');
+        return $this->belongsTo(CustomerCard::class, 'card_id')->where('is_deleted', 0);
     }
+
+    public function currency()
+{
+    return $this->belongsTo(Currency::class, 'currency_id')->where('is_deleted', 0);
+}
 }
