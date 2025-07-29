@@ -77,6 +77,21 @@
                         </ul>
                     </li>
                     {{-- @endcan --}}
+                    {{-- @can('blog_management_access') --}}
+                    <li
+                        class="Ul_li--hover {{ Request::is('blog-category*') ? 'mm-active' : '' }}">
+                        <a class="has-arrow" href="#"><i class="fa fa-rss text-20 mr-2 text-muted"></i><span
+                                class="item-name text-15 text-muted">Blog Manage..</span></a>
+                        <ul class="mm-collapse">
+                            {{-- @can('blog_category_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('blog-category*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('blog-category') }}"><i class="nav-icon fa fa-circle"></i><span
+                                        class="item-name">Blog Category</span></a></li>
+                            {{-- @endcan --}}
+                            
+                        </ul>
+                    </li>
+                    {{-- @endcan --}}
                     {{-- @can('common_access') --}}
                     <li
                         class="Ul_li--hover {{ Request::is('currency*') || Request::is('social-media*') ? 'mm-active' : '' }}">

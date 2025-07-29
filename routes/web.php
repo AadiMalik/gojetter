@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AboutUsController;
+use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\ContactUsMessageController;
 use App\Http\Controllers\Admin\CountryController;
@@ -249,5 +250,26 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('view/{id}', [BookingController::class, 'view']);
         Route::get('destroy/{id}', [BookingController::class,'destroy']);
         Route::post('status', [BookingController::class, 'status']);
+    });
+
+    //blog category
+    Route::group(['prefix' => 'blog-category'], function () {
+        Route::get('/', [BlogCategoryController::class, 'index']);
+        Route::post('data', [BlogCategoryController::class, 'getData'])->name('blog-category.data');
+        Route::get('create', [BlogCategoryController::class, 'create']);
+        Route::post('store', [BlogCategoryController::class, 'store']);
+        Route::get('edit/{id}', [BlogCategoryController::class, 'edit']);
+        Route::post('update', [BlogCategoryController::class, 'update']);
+        Route::get('destroy/{id}', [BlogCategoryController::class, 'destroy']);
+        Route::get('status/{id}', [BlogCategoryController::class, 'status']);
+        Route::get('/js/blog_category.js', function () {
+            $path = resource_path('views/blog_category/js/blog_category.js');
+            if (file_exists($path)) {
+                return Response::file($path, [
+                    'Content-Type' => 'application/javascript',
+                ]);
+            }
+            abort(404);
+        });
     });
 });
