@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ContactUsMessageController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CurrencyController;
+use App\Http\Controllers\Admin\CustomerRequestController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\PermissionController;
@@ -310,6 +311,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('view/{id}', [SubServiceController::class, 'view']);
         Route::get('destroy/{id}', [SubServiceController::class,'destroy']);
         Route::get('status/{id}', [SubServiceController::class, 'status']);
+    });
+
+    //customer request
+    Route::group(['prefix' => 'customer-requests'], function () {
+        Route::get('/', [CustomerRequestController::class, 'index']);
+        Route::post('data', [CustomerRequestController::class, 'getData'])->name('customer-requests.data');
+        Route::get('view/{id}', [CustomerRequestController::class, 'view']);
+        Route::get('destroy/{id}', [CustomerRequestController::class,'destroy']);
     });
 
 });

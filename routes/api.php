@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\CommonController;
 use App\Http\Controllers\Api\ContactUsMessageController;
 use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\CustomerCardController;
+use App\Http\Controllers\Api\CustomerRequestController;
 use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\SocialMediaController;
@@ -65,8 +66,10 @@ Route::get('service-by-slug/{slug}', [ServiceController::class, 'serviceBySlug']
 Route::get('sub-service-list', [ServiceController::class, 'subServiceList']);
 Route::get('sub-service-by-slug/{slug}', [ServiceController::class, 'subServiceBySlug']);
 
-// contact us message
+// customer request
+Route::post('save-customer-request', [CustomerRequestController::class, 'store']);
 
+// contact us message
 Route::post('save-contact-us', [ContactUsMessageController::class, 'store']);
 
 // gallery

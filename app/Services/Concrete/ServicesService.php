@@ -3,6 +3,7 @@
 namespace App\Services\Concrete;
 
 use App\Models\Service;
+use App\Models\SubService;
 use App\Repository\Repository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -11,10 +12,12 @@ use Yajra\DataTables\Facades\DataTables;
 class ServicesService
 {
       protected $model_service;
+      protected $model_sub_service;
       public function __construct()
       {
             // set the model
             $this->model_service = new Repository(new Service);
+            $this->model_sub_service = new Repository(new SubService);
       }
       //Bead type
       public function getSource()
@@ -50,7 +53,7 @@ class ServicesService
 
                         return $action_column;
                   })
-                  ->rawColumns(['image','has_contact_form', 'is_active', 'action'])
+                  ->rawColumns(['image', 'has_contact_form', 'is_active', 'action'])
                   ->make(true);
             return $data;
       }
@@ -58,8 +61,8 @@ class ServicesService
       public function getActiveAll()
       {
             return $this->model_service->getModel()::where('is_deleted', 0)
-            ->where('is_active', 1)
-            ->get();
+                  ->where('is_active', 1)
+                  ->get();
       }
       // save
       public function save($obj)
@@ -84,6 +87,9 @@ class ServicesService
       public function getById($id)
       {
             $service = $this->model_service->getModel()::find($id);
+            $sub_services = $this->model_sub_service->getModel()::where('service_id', $id)
+                  ->where('is_active', 1)->where('is_deleted', 0)->get();
+            $service->sub_services = $sub_services;
 
             if (!$service)
                   return false;
@@ -94,7 +100,10 @@ class ServicesService
       // get by slug
       public function getBySlug($slug)
       {
-            $service = $this->model_service->getModel()::where('slug',$slug)->first();
+            $service = $this->model_service->getModel()::where('slug', $slug)->first();
+            $sub_services = $this->model_sub_service->getModel()::where('service_id', $service->id)
+                  ->where('is_active', 1)->where('is_deleted', 0)->get();
+            $service->sub_services = $sub_services;
 
             if (!$service)
                   return false;

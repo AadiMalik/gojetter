@@ -105,7 +105,7 @@
                                 class="item-name text-15 text-muted">Service Manage..</span></a>
                         <ul class="mm-collapse">
                             {{-- @can('service_access') --}}
-                            <li class="item-name"><a class="{{ Request::is('services*') ? 'sidebar_active' : '' }}"
+                            <li class="item-name"><a class="{{ Request::is('services*') | Request::is('sub-services*') | Request::is('customer-requests*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('services') }}"><i class="nav-icon fa fa-circle"></i><span
                                         class="item-name">Services</span></a></li>
                             {{-- @endcan --}}
@@ -113,6 +113,11 @@
                             <li class="item-name"><a class="{{ Request::is('sub-services*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('sub-services') }}"><i class="nav-icon fa fa-circle"></i><span
                                         class="item-name">Sub Services</span></a></li>
+                            {{-- @endcan --}}
+                            {{-- @can('customer_request_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('customer-requests*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('customer-requests') }}"><i class="nav-icon fa fa-circle"></i><span
+                                        class="item-name">Customer Requests</span></a></li>
                             {{-- @endcan --}}
 
                         </ul>

@@ -353,7 +353,7 @@ class AuthController extends Controller
      *     description="Allows authenticated customers to update their profile information.",
      *     operationId="updateProfile",
      *     tags={"Customer Auth"},
-     *     security={{"bearerAuth":{}}},
+     *     security={{"authbearer":{}}},
      *
      *     @OA\RequestBody(
      *         required=true,
@@ -426,7 +426,7 @@ class AuthController extends Controller
      *     description="Permanently deletes the authenticated user's account.",
      *     operationId="deleteAccount",
      *     tags={"Customer Auth"},
-     *     security={{"bearerAuth":{}}},
+     *     security={{"authbearer":{}}},
      *     
      *     @OA\Response(
      *         response=200,
