@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\TourImageController;
 use App\Http\Controllers\Admin\TourReviewController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
@@ -47,7 +48,8 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
     
-    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/dashboard/filter', [HomeController::class, 'filterDashboard'])->name('dashboard.filter');
 
     //permissions
     Route::group(['prefix' => 'permissions'], function () {

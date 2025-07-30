@@ -214,7 +214,7 @@
                     {{-- @can('coupon_access') --}}
                     <li class="Ul_li--hover {{ Request::is('coupon*') ? 'mm-active' : '' }}">
                         <a class="has-arrow" href="#"><i
-                                class="fa fa-envelope text-20 mr-2 text-muted"></i><span
+                                class="fa fa-smile text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Coupon Manage..</span></a>
                         <ul class="mm-collapse">
                             {{-- @can('coupon_access') --}}
