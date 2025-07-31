@@ -64,12 +64,8 @@
                         <h5 class="mb-3">Duration & Type</h5>
                         <div class="row">
                             <div class="col-md-6 mb-2">
-                                <label><strong>Duration Days:</strong></label>
-                                <p>{{ $tour->duration_days }}</p>
-                            </div>
-                            <div class="col-md-6 mb-2">
-                                <label><strong>Duration Nights:</strong></label>
-                                <p>{{ $tour->duration_nights }}</p>
+                                <label><strong>Duration:</strong></label>
+                                <p>{{ $tour->duration??'' }}</p>
                             </div>
                             <div class="col-md-6 mb-2">
                                 <label><strong>Tour Type:</strong></label>

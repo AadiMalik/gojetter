@@ -29,8 +29,7 @@
                                         <th scope="col">Title</th>
                                         <th scope="col">Category</th>
                                         <th scope="col">Type</th>
-                                        <th scope="col">Days</th>
-                                        <th scope="col">Night</th>
+                                        <th scope="col">Duration</th>
                                         <th scope="col">Location</th>
                                         <th scope="col">Price</th>
                                         <th scope="col">Status</th>
@@ -56,8 +55,7 @@
                  {data: 'title' , name: 'title'},
                  {data: 'category' , name: 'category' , 'sortable': false , searchable: false},
                  {data: 'tour_type' , name: 'tour_type'},
-                 {data: 'duration_days' , name: 'duration_days'},
-                 {data: 'duration_nights' , name: 'duration_nights'},
+                 {data: 'duration' , name: 'duration'},
                  {data: 'location' , name: 'location'},
                  {data: 'price' , name: 'price'},
                  {data: 'is_active' , name: 'is_active' , 'sortable': false , searchable: false},

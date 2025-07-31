@@ -127,6 +127,7 @@ class TourService
             ->withAvg(['tourReviews as average_rating' => function ($q) {
                 $q->where('is_active', 1)->where('is_deleted', 0);
             }], 'rating')
+            ->where('tour_type', 'Tour')
             ->where('is_active', 1)
             ->where('is_deleted', 0);
 
