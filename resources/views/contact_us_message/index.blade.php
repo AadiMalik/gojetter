@@ -50,7 +50,7 @@
                             <p class="m-0">{{ $message->subject ?? '' }}</p>
                         </div>
                         <div class="col-xs-3 date">
-                            <span class="text-muted">{{ $message->created_at->format('d M Y') }}</span>
+                            <span class="text-muted">{{ isset($message->created_at)?$message->created_at->format('d M Y'):'' }}</span>
                         </div>
                     </div>
                     @empty
