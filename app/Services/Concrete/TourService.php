@@ -127,10 +127,13 @@ class TourService
             ->withAvg(['tourReviews as average_rating' => function ($q) {
                 $q->where('is_active', 1)->where('is_deleted', 0);
             }], 'rating')
-            ->where('tour_type', 'Tour')
             ->where('is_active', 1)
             ->where('is_deleted', 0);
 
+        // Filter by type
+        if (!empty($data['type'])) {
+            $query->where('tour_type', $data['type']);
+        }
         // Filter by category
         if (!empty($data['category_id'])) {
             $query->where('tour_category_id', $data['category_id']);

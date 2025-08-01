@@ -45,10 +45,17 @@ class TourController extends Controller
        * @OA\Get(
        *     path="/api/tour-list",
        *     tags={"Tour"},
-       *     summary="Get list of active tours",
-       *     description="Returns a list of active tours filtered by search, category_id, and sorted by price if specified.",
+       *     summary="Get list of active tours or activities",
+       *     description="Returns a list of active tours or activities filtered by search, category_id, type, and sorted by price if specified.",
        *     operationId="getTourList",
        *
+       *     @OA\Parameter(
+       *         name="type",
+       *         in="query",
+       *         description="Filter results by type: Tour or Activity",
+       *         required=false,
+       *         @OA\Schema(type="string", enum={"Tour", "Activity"})
+       *     ),
        *     @OA\Parameter(
        *         name="search",
        *         in="query",
@@ -85,8 +92,8 @@ class TourController extends Controller
        *                     @OA\Property(property="id", type="integer", example=1),
        *                     @OA\Property(property="title", type="string", example="Dubai and Cairo Combo Tour"),
        *                     @OA\Property(property="slug", type="string", example="dubai-and-cairo-combo-tour"),
-       *                     @OA\Property(property="thumbnail", type="string", example="tours/9iGOlgbNCuCdxj3QTnlvL1Vqntysz3oFxwTKcwGJ.png"),
-       *                     @OA\Property(property="thumbnail_url", type="string", example="http://localhost/gojetter/storage/app/public/tours/9iGOlgbNCuCdxj3QTnlvL1Vqntysz3oFxwTKcwGJ.png"),
+       *                     @OA\Property(property="thumbnail", type="string", example="tours/sample.png"),
+       *                     @OA\Property(property="thumbnail_url", type="string", example="http://localhost/storage/tours/sample.png"),
        *                     @OA\Property(property="overview", type="string", example="<h2 class='st-heading-section'>About this tour</h2>"),
        *                     @OA\Property(property="short_description", type="string", nullable=true),
        *                     @OA\Property(property="full_description", type="string", nullable=true),
@@ -108,8 +115,8 @@ class TourController extends Controller
        *                         type="object",
        *                         @OA\Property(property="id", type="integer", example=1),
        *                         @OA\Property(property="name", type="string", example="Adventure"),
-       *                         @OA\Property(property="thumbnail", type="string", example="tour_category/DpLGO0CO1yHcH2kdIBYmOaMCgmTD0lhj5h4CLHDX.webp"),
-       *                         @OA\Property(property="thumbnail_url", type="string", example="http://localhost/gojetter/storage/app/public/tour_category/DpLGO0CO1yHcH2kdIBYmOaMCgmTD0lhj5h4CLHDX.webp"),
+       *                         @OA\Property(property="thumbnail", type="string", example="tour_category/sample.webp"),
+       *                         @OA\Property(property="thumbnail_url", type="string", example="http://localhost/storage/tour_category/sample.webp"),
        *                         @OA\Property(property="is_active", type="integer", example=1),
        *                         @OA\Property(property="created_at", type="string", format="date-time"),
        *                         @OA\Property(property="updated_at", type="string", format="date-time")
