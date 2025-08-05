@@ -47,7 +47,7 @@ Auth::routes();
 
 
 Route::group(['middleware' => ['auth']], function () {
-    
+
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/dashboard/filter', [HomeController::class, 'filterDashboard'])->name('dashboard.filter');
 
@@ -119,8 +119,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('store', [TourController::class, 'store']);
         Route::get('edit/{id}', [TourController::class, 'edit']);
         Route::get('view/{id}', [TourController::class, 'view']);
-        Route::get('destroy/{id}', [TourController::class,'destroy']);
+        Route::get('destroy/{id}', [TourController::class, 'destroy']);
         Route::get('status/{id}', [TourController::class, 'status']);
+    });
+
+    Route::group(['prefix' => 'tour-additional'], function () {
+        Route::get('/{id}', [TourController::class, 'additional']);
+        Route::post('tour-image', [TourImageController::class, 'getData'])->name('tour-image');
+        Route::post('tour-image-store', [TourImageController::class, 'store']);
+        Route::get('tour-image-destroy/{id}', [TourImageController::class, 'destroy']);
     });
 
     //faqs
@@ -130,7 +137,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('create', [FaqController::class, 'create']);
         Route::post('store', [FaqController::class, 'store']);
         Route::get('edit/{id}', [FaqController::class, 'edit']);
-        Route::get('destroy/{id}', [FaqController::class,'destroy']);
+        Route::get('destroy/{id}', [FaqController::class, 'destroy']);
         Route::get('status/{id}', [FaqController::class, 'status']);
     });
 
@@ -160,7 +167,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('store', [SocialMediaController::class, 'store']);
         Route::get('edit/{id}', [SocialMediaController::class, 'edit']);
         Route::get('view/{id}', [SocialMediaController::class, 'view']);
-        Route::get('destroy/{id}', [SocialMediaController::class,'destroy']);
+        Route::get('destroy/{id}', [SocialMediaController::class, 'destroy']);
         Route::get('status/{id}', [SocialMediaController::class, 'status']);
     });
 
@@ -179,7 +186,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('show/{id}', [ContactUsMessageController::class, 'show']);
         Route::post('reply', [ContactUsMessageController::class, 'reply']);
         Route::post('mark-read/{id}', [ContactUsMessageController::class, 'markAsRead']);
-        Route::get('destroy/{id}', [ContactUsMessageController::class,'destroy']);
+        Route::get('destroy/{id}', [ContactUsMessageController::class, 'destroy']);
     });
 
     //tour category
@@ -189,7 +196,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('create', [TourCategoryController::class, 'create']);
         Route::post('store', [TourCategoryController::class, 'store']);
         Route::get('edit/{id}', [TourCategoryController::class, 'edit']);
-        Route::get('destroy/{id}', [TourCategoryController::class,'destroy']);
+        Route::get('destroy/{id}', [TourCategoryController::class, 'destroy']);
         Route::get('status/{id}', [TourCategoryController::class, 'status']);
     });
 
@@ -219,14 +226,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/{id}', [TourImageController::class, 'index']);
         Route::post('data', [TourImageController::class, 'getData'])->name('tour-image.data');
         Route::post('store', [TourImageController::class, 'store']);
-        Route::get('destroy/{id}', [TourImageController::class,'destroy']);
+        Route::get('destroy/{id}', [TourImageController::class, 'destroy']);
     });
 
     //tour review
     Route::group(['prefix' => 'tour-review'], function () {
         Route::get('/', [TourReviewController::class, 'index']);
         Route::post('data', [TourReviewController::class, 'getData'])->name('tour-review.data');
-        Route::get('destroy/{id}', [TourReviewController::class,'destroy']);
+        Route::get('destroy/{id}', [TourReviewController::class, 'destroy']);
         Route::get('status/{id}', [TourReviewController::class, 'status']);
     });
 
@@ -235,7 +242,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [GalleryController::class, 'index']);
         Route::post('data', [GalleryController::class, 'getData'])->name('gallery.data');
         Route::post('store', [GalleryController::class, 'store']);
-        Route::get('destroy/{id}', [GalleryController::class,'destroy']);
+        Route::get('destroy/{id}', [GalleryController::class, 'destroy']);
     });
 
     //coupon
@@ -245,7 +252,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('create', [CouponController::class, 'create']);
         Route::post('store', [CouponController::class, 'store']);
         Route::get('edit/{id}', [CouponController::class, 'edit']);
-        Route::get('destroy/{id}', [CouponController::class,'destroy']);
+        Route::get('destroy/{id}', [CouponController::class, 'destroy']);
         Route::get('status/{id}', [CouponController::class, 'status']);
     });
 
@@ -254,7 +261,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [BookingController::class, 'index']);
         Route::post('data', [BookingController::class, 'getData'])->name('booking.data');
         Route::get('view/{id}', [BookingController::class, 'view']);
-        Route::get('destroy/{id}', [BookingController::class,'destroy']);
+        Route::get('destroy/{id}', [BookingController::class, 'destroy']);
         Route::post('status', [BookingController::class, 'status']);
     });
 
@@ -287,7 +294,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('store', [BlogController::class, 'store']);
         Route::get('edit/{id}', [BlogController::class, 'edit']);
         Route::get('view/{id}', [BlogController::class, 'view']);
-        Route::get('destroy/{id}', [BlogController::class,'destroy']);
+        Route::get('destroy/{id}', [BlogController::class, 'destroy']);
         Route::get('status/{id}', [BlogController::class, 'status']);
     });
 
@@ -299,7 +306,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('store', [ServiceController::class, 'store']);
         Route::get('edit/{id}', [ServiceController::class, 'edit']);
         Route::get('view/{id}', [ServiceController::class, 'view']);
-        Route::get('destroy/{id}', [ServiceController::class,'destroy']);
+        Route::get('destroy/{id}', [ServiceController::class, 'destroy']);
         Route::get('status/{id}', [ServiceController::class, 'status']);
     });
 
@@ -311,7 +318,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('store', [SubServiceController::class, 'store']);
         Route::get('edit/{id}', [SubServiceController::class, 'edit']);
         Route::get('view/{id}', [SubServiceController::class, 'view']);
-        Route::get('destroy/{id}', [SubServiceController::class,'destroy']);
+        Route::get('destroy/{id}', [SubServiceController::class, 'destroy']);
         Route::get('status/{id}', [SubServiceController::class, 'status']);
     });
 
@@ -320,7 +327,6 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/', [CustomerRequestController::class, 'index']);
         Route::post('data', [CustomerRequestController::class, 'getData'])->name('customer-requests.data');
         Route::get('view/{id}', [CustomerRequestController::class, 'view']);
-        Route::get('destroy/{id}', [CustomerRequestController::class,'destroy']);
+        Route::get('destroy/{id}', [CustomerRequestController::class, 'destroy']);
     });
-
 });

@@ -39,6 +39,7 @@ class TourService
                 $view_column    = "<a class='text-warning mr-2' href='tours/view/" . $item->id . "'><i title='View' class='nav-icon mr-2 fa fa-eye'></i>View</a>";
                 $delete_column    = "<a class='text-danger mr-2' id='deleteTour' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
                 $image_column    = "<a class='text-info mr-2' href='tour-image/" . $item->id . "'><i title='View' class='nav-icon mr-2 fa fa-image'></i>Images</a>";
+                $additional_column    = "<a class='text-dark mr-2' href='tour-additional/" . $item->id . "'><i title='Additional' class='nav-icon mr-2 fa fa-plus'></i>Additional</a>";
                 // if (Auth::user()->can('tour_edit'))
                 $action_column .= $edit_column;
                 // if (Auth::user()->can('tour_view'))
@@ -47,6 +48,8 @@ class TourService
                 $action_column .= $delete_column;
                 // if (Auth::user()->can('tour_image_access'))
                 $action_column .= $image_column;
+                // if (Auth::user()->can('tour_additional_access'))
+                $action_column .= $additional_column;
 
                 return $action_column;
             })

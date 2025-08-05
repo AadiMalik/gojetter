@@ -101,6 +101,13 @@ class TourController extends Controller
         $tour = $this->tour_service->getById($id);
         return view('tours.create', compact('tour_category','tour'));
     }
+    public function additional($id)
+    {
+        // abort_if(Gate::denies('tour_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $tour_category = $this->tour_category_service->getAllActive();
+        $tour = $this->tour_service->getById($id);
+        return view('tours.additional', compact('tour_category','tour'));
+    }
 
     public function view($id)
     {
