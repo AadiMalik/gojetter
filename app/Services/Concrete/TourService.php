@@ -3,6 +3,7 @@
 namespace App\Services\Concrete;
 
 use App\Models\Tour;
+use App\Models\TourDate;
 use App\Repository\Repository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -11,10 +12,12 @@ use Yajra\DataTables\Facades\DataTables;
 class TourService
 {
     protected $model_tour;
+    protected $model_tour_date;
     public function __construct()
     {
         // set the model
         $this->model_tour = new Repository(new Tour);
+        $this->model_tour_date = new Repository(new TourDate);
     }
     //Bead type
     public function getSource()
@@ -35,23 +38,35 @@ class TourService
             })
             ->addColumn('action', function ($item) {
                 $action_column = '';
-                $edit_column    = "<a class='text-success mr-2' href='tours/edit/" . $item->id . "'><i title='Add' class='nav-icon mr-2 fa fa-edit'></i>Edit</a>";
-                $view_column    = "<a class='text-warning mr-2' href='tours/view/" . $item->id . "'><i title='View' class='nav-icon mr-2 fa fa-eye'></i>View</a>";
-                $delete_column    = "<a class='text-danger mr-2' id='deleteTour' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
-                $image_column    = "<a class='text-info mr-2' href='tour-image/" . $item->id . "'><i title='View' class='nav-icon mr-2 fa fa-image'></i>Images</a>";
-                $additional_column    = "<a class='text-dark mr-2' href='tour-additional/" . $item->id . "'><i title='Additional' class='nav-icon mr-2 fa fa-plus'></i>Additional</a>";
+                $additional_column = '';
+
+                $edit_column = "<a class='mr-2 btn-sm btn btn-success' href='tours/edit/" . $item->id . "'><i class='fa fa-edit mr-1'></i> Edit</a>";
+                $view_column = "<a class='mr-2 btn-sm btn btn-warning' href='tours/view/" . $item->id . "'><i class='fa fa-eye mr-1'></i> View</a>";
+                $delete_column = "<a class='mr-2 btn-sm btn btn-danger' href='javascript:void(0)' id='deleteTour' data-id='" . $item->id . "'><i class='fa fa-trash mr-1'></i> Delete</a>";
+                $additional = "<a class='dropdown-item  text-dark' style='padding: 1px 10px;' href='tour-additional/" . $item->id . "'><i class='fa fa-plus mr-1'></i> Additional</a>";
+                $image = "<a class='dropdown-item text-success' style='padding: 1px 10px;' href='tour-image/" . $item->id . "'><i class='fa fa-edit mr-1'></i> Edit</a>";
                 // if (Auth::user()->can('tour_edit'))
                 $action_column .= $edit_column;
                 // if (Auth::user()->can('tour_view'))
                 $action_column .= $view_column;
                 // if (Auth::user()->can('tour_delete'))
                 $action_column .= $delete_column;
-                // if (Auth::user()->can('tour_image_access'))
-                $action_column .= $image_column;
-                // if (Auth::user()->can('tour_additional_access'))
-                $action_column .= $additional_column;
 
-                return $action_column;
+                $additional_column .=$additional;
+                $additional_column .=$image;
+                // Main button with dropdown    
+                $dropdown = '
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-sm btn-dark dropdown-toggle"  data-toggle="dropdown" aria-expanded="false">
+                            Other
+                        </button>
+                        <div class="dropdown-menu">
+                            ' . $additional_column . '
+                        </div>
+                    </div>
+                ';
+
+                return $action_column. $dropdown;
             })
             ->rawColumns(['category', 'is_active', 'action'])
             ->make(true);
@@ -120,6 +135,102 @@ class TourService
             return false;
 
         return $tour;
+    }
+
+    //tour date
+    public function getSourceTourDate()
+    {
+        $model = $this->model_tour_date->getModel()::with('tour')->where('is_deleted', 0);
+        $data = DataTables::of($model)
+            ->addColumn('price_type', function ($item) {
+
+                return ($item->price_type == 'per_person') ? 'Per Person' : 'Per Group';
+            })
+            ->addColumn('action', function ($item) {
+                $action_column = '';
+                $delete_column    = "<a class='text-danger mr-2' id='deleteTourDate' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
+                // if (Auth::user()->can('tour_date_delete'))
+                $action_column .= $delete_column;
+
+                return $action_column;
+            })
+            ->rawColumns(['price_type', 'action'])
+            ->make(true);
+        return $data;
+    }
+
+    // save tour date
+    public function saveTourDate($obj)
+    {
+
+        $obj['createdby_id'] = Auth::User()->id;
+        $saved_obj = $this->model_tour_date->create($obj);
+
+        if (!$saved_obj)
+            return false;
+
+        return $saved_obj;
+    }
+
+    // delete tour date by id
+    public function deleteTourDateById($id)
+    {
+        $tour_date = $this->model_tour_date->getModel()::find($id);
+        $tour_date->is_deleted = 1;
+        $tour_date->deletedby_id = Auth::user()->id;
+        $tour_date->date_deleted = Carbon::now();
+        $tour_date->update();
+
+        if (!$tour_date)
+            return false;
+
+        return $tour_date;
+    }
+
+    ////////////////////////
+    //tour itinerary
+    public function getSourceTourItinerary()
+    {
+        $model = $this->model_tour_date->getModel()::with('tour');
+        $data = DataTables::of($model)
+            ->addColumn('image', function ($item) {
+                $imageUrl = asset('storage/app/public/' . $item->image); // Correct path
+                return '<img src="' . $imageUrl . '" style="width:100px;" />';
+            })
+            ->addColumn('action', function ($item) {
+                $action_column = '';
+                $delete_column    = "<a class='text-danger mr-2' id='deleteTourItinerary' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
+                // if (Auth::user()->can('tour_itinerary_delete'))
+                $action_column .= $delete_column;
+
+                return $action_column;
+            })
+            ->rawColumns(['price_type', 'action'])
+            ->make(true);
+        return $data;
+    }
+
+    // save tour itinerary
+    public function saveTourItinerary($obj)
+    {
+        $saved_obj = $this->model_tour_date->create($obj);
+
+        if (!$saved_obj)
+            return false;
+
+        return $saved_obj;
+    }
+
+    // delete tour itinerary by id
+    public function deleteTourItineraryById($id)
+    {
+        $tour_itinerary = $this->model_tour_date->getModel()::find($id);
+        $tour_itinerary->delete();
+
+        if (!$tour_itinerary)
+            return false;
+
+        return $tour_itinerary;
     }
 
     //tour list for api

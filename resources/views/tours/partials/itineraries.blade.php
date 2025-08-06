@@ -1,5 +1,5 @@
 <div class="card mb-4">
-    <form id="tourForm" action="{{ url('tour-additional/itineraries-store') }}" method="post" enctype="multipart/form-data">
+    <form id="tourItineraryForm" action="{{ url('tour-additional/tour-itinerary-store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="tour_id" id="tour_id" value="{{ isset($tour) ? $tour->id : '' }}" />
 
@@ -57,7 +57,7 @@
 <div class="card text-left">
     <div class="card-body">
         <div class="table-responsive">
-            <table id="itineraries_table" class="table table-striped display" style="width:100%">
+            <table id="tour_itinerary_table" class="table table-striped display" style="width:100%">
                 <thead>
                     <tr>
                         <th scope="col">Day #</th>
@@ -74,4 +74,115 @@
         </div>
     </div>
 </div>
+@section('js')
+    @include('includes.datatable', [
+        'columns' => "
+            {data: 'day_number' , name: 'day_number'},
+            {data: 'title' , name: 'title'},
+            {data: 'image' , name: 'image' , 'sortable': false , searchable: false},
+            {data: 'description' , name: 'description'},
+            {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
+        'route' => 'tour-itinerary',
+        'buttons' => false,
+        'pageLength' => 10,
+        'class' => 'tour_itinerary_table',
+        'variable' => 'tour_itinerary_table',
+        'datefilter' => false,
+        'params' => "tour_id:$('#tour_id').val()",
+    ])
+    <script>
+        function errorMessage(message) {
+
+            toastr.error(message, "Error", {
+                showMethod: "slideDown",
+                hideMethod: "slideUp",
+                timeOut: 2e3,
+            });
+
+        }
+
+        function successMessage(message) {
+
+            toastr.success(message, "Success", {
+                showMethod: "slideDown",
+                hideMethod: "slideUp",
+                timeOut: 2e3,
+            });
+
+        }
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#tourItineraryForm').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+                let url = $(this).attr('action');
+
+                for (let pair of formData.entries()) {
+                    console.log(pair[0] + ': ' + pair[1]);
+                }
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(res) {
+                        console.log(res);
+                        if (res.Success) {
+                            successMessage(res.Message);
+                            initDataTabletour_itinerary_table();
+                            $('#tourDateForm')[0].reset();
+                        } else {
+                            errorMessage(res.Message);
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.responseJSON?.Message) {
+                            errorMessage(xhr.responseJSON.Message);
+                        } else {
+                            errorMessage("An unexpected error occurred.");
+                        }
+                    }
+                });
+            });
+        });
+        $("body").on("click", "#deleteTourItinerary", function() {
+            var tour_itinerary_id = $(this).data("id");
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                            type: "get",
+                            url: "{{ url('tour-additional/tour-itinerary-destroy') }}/" + tour_itinerary_id,
+                        })
+                        .done(function(data) {
+                            if (data.Success) {
+                                successMessage(data.Message);
+                                initDataTabletour_itinerary_table();
+                            } else {
+                                errorMessage(data.Message);
+                            }
+                        })
+                        .catch(function(err) {
+                            errorMessage(err.Message);
+                        });
+                }
+            });
+        });
+    </script>
+@endsection
 

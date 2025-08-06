@@ -88,28 +88,6 @@
 @endsection
 @section('js')
     <script>
-        $(document).ready(function() {
-            $('.summernote').summernote({
-                height: 150,
-            });
-            $('#tour_category_id').select2();
-        });
-
-        function slugify(text) {
-            return text
-                .toString()
-                .toLowerCase()
-                .trim()
-                .replace(/[\s\W-]+/g, '-') // replace spaces & non-word chars with hyphens
-                .replace(/^-+|-+$/g, ''); // trim starting/ending hyphens
-        }
-
-        $('#title').on('input', function() {
-            const title = $(this).val();
-            const slug = slugify(title);
-            $('#slug').val(slug);
-        });
         
     </script>
-    
 @endsection

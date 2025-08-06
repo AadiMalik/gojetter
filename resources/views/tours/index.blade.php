@@ -31,7 +31,6 @@
                                         <th scope="col">Type</th>
                                         <th scope="col">Duration</th>
                                         <th scope="col">Location</th>
-                                        <th scope="col">Price</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -57,7 +56,6 @@
                  {data: 'tour_type' , name: 'tour_type'},
                  {data: 'duration' , name: 'duration'},
                  {data: 'location' , name: 'location'},
-                 {data: 'price' , name: 'price'},
                  {data: 'is_active' , name: 'is_active' , 'sortable': false , searchable: false},
                 {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
         'route' => 'tours/data',

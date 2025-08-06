@@ -1,5 +1,5 @@
 <div class="card mb-4">
-    <form id="tourForm" action="{{ url('tour-additional/date-slot-store') }}" method="post" enctype="multipart/form-data">
+    <form id="tourDateForm" action="{{ url('tour-additional/tour-date-slot-store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="tour_id" id="tour_id" value="{{ isset($tour) ? $tour->id : '' }}" />
 
@@ -41,17 +41,17 @@
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-                {{-- regular_price --}}
+                {{-- price --}}
                 <div class="col-md-6 form-group mb-3">
-                    <label for="regular_price">Price <span class="text-danger">*</span></label>
-                    <input id="regular_price" class="form-control" type="text" name="regular_price" required>
-                    @error('regular_price')
+                    <label for="price">Price <span class="text-danger">*</span></label>
+                    <input id="price" class="form-control" type="text" name="price" required>
+                    @error('price')
                         <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 {{-- discount_price --}}
                 <div class="col-md-6 form-group mb-3">
-                    <label for="discount_price">Price</label>
+                    <label for="discount_price">Discount Price</label>
                     <input id="discount_price" class="form-control" type="text" name="discount_price" value="0">
                     @error('discount_price')
                         <span class="text-danger">{{ $message }}</span>
@@ -88,4 +88,116 @@
         </div>
     </div>
 </div>
+@section('js')
+    @include('includes.datatable', [
+        'columns' => "
+            {data: 'start_date' , name: 'start_date'},
+            {data: 'end_date' , name: 'end_date'},
+            {data: 'price_type' , name: 'price_type' , 'sortable': false , searchable: false},
+            {data: 'price' , name: 'price'},
+            {data: 'discount_price' , name: 'discount_price'},
+            {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
+        'route' => 'tour-date-slot',
+        'buttons' => false,
+        'pageLength' => 10,
+        'class' => 'date_slot_table',
+        'variable' => 'date_slot_table',
+        'datefilter' => false,
+        'params' => "tour_id:$('#tour_id').val()",
+    ])
+    <script>
+        function errorMessage(message) {
+
+            toastr.error(message, "Error", {
+                showMethod: "slideDown",
+                hideMethod: "slideUp",
+                timeOut: 2e3,
+            });
+
+        }
+
+        function successMessage(message) {
+
+            toastr.success(message, "Success", {
+                showMethod: "slideDown",
+                hideMethod: "slideUp",
+                timeOut: 2e3,
+            });
+
+        }
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('#tourDateForm').on('submit', function(e) {
+                e.preventDefault();
+
+                let formData = new FormData(this);
+                let url = $(this).attr('action');
+
+                for (let pair of formData.entries()) {
+                    console.log(pair[0] + ': ' + pair[1]);
+                }
+
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(res) {
+                        console.log(res);
+                        if (res.Success) {
+                            successMessage(res.Message);
+                            initDataTabledate_slot_table();
+                            $('#tourDateForm')[0].reset();
+                        } else {
+                            errorMessage(res.Message);
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.responseJSON?.Message) {
+                            errorMessage(xhr.responseJSON.Message);
+                        } else {
+                            errorMessage("An unexpected error occurred.");
+                        }
+                    }
+                });
+            });
+        });
+        $("body").on("click", "#deleteTourDate", function() {
+            var tour_date_id = $(this).data("id");
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                            type: "get",
+                            url: "{{ url('tour-additional/tour-date-slot-destroy') }}/" + tour_date_id,
+                        })
+                        .done(function(data) {
+                            if (data.Success) {
+                                successMessage(data.Message);
+                                initDataTabledate_slot_table();
+                            } else {
+                                errorMessage(data.Message);
+                            }
+                        })
+                        .catch(function(err) {
+                            errorMessage(err.Message);
+                        });
+                }
+            });
+        });
+    </script>
+@endsection
 

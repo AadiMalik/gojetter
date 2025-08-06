@@ -14,9 +14,10 @@ return new class extends Migration
      */
     public function up()
     {
+        DB::statement("UPDATE tours SET tour_type = NULL WHERE tour_type NOT IN ('private', 'group')");
         DB::statement("ALTER TABLE tours MODIFY tour_type ENUM('private', 'group') NULL");
         Schema::table('tours', function (Blueprint $table) {
-            $table->json('tags')->nullable();
+            $table->string('tags')->nullable();
             $table->boolean('is_featured')->default(0);
             $table->text('highlights')->nullable();
             $table->enum('difficulty_level', ['easy', 'moderate', 'challenging', 'hard', 'expert'])->default('easy');

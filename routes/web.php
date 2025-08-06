@@ -128,6 +128,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('tour-image', [TourImageController::class, 'getData'])->name('tour-image');
         Route::post('tour-image-store', [TourImageController::class, 'store']);
         Route::get('tour-image-destroy/{id}', [TourImageController::class, 'destroy']);
+        // tour dates
+        Route::post('tour-date-slot', [TourController::class, 'tourDate'])->name('tour-date-slot');
+        Route::post('tour-date-slot-store', [TourController::class, 'tourDateStore']);
+        Route::get('tour-date-slot-destroy/{id}', [TourController::class, 'tourDateDestroy']);
+
+        // tour itinerary
+        Route::post('tour-itinerary', [TourController::class, 'tourItinerary'])->name('tour-itinerary');
+        Route::post('tour-itinerary-store', [TourController::class, 'tourItineraryStore']);
+        Route::get('tour-itinerary-destroy/{id}', [TourController::class, 'tourItineraryDestroy']);
     });
 
     //faqs

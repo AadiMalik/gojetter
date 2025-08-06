@@ -82,8 +82,6 @@ class TourImageController extends Controller
             return $this->error(ResponseMessage::ERROR);
         }
     }
-
-
     public function destroy($id)
     {
         // abort_if(Gate::denies('tour_image_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
