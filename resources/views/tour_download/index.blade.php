@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="breadcrumb">
-                    <h1>Tour Images ({{ $tour->title ?? '' }})</h1>
+                    <h1>Tour Downlaods ({{ $tour->title ?? '' }})</h1>
                     <ul>
                         <li>List</li>
                         <li>Create</li>
@@ -15,34 +15,36 @@
                 <a class="btn btn-primary btn-md m-1" href="{{ url('tours') }}"><i class="fa fa-retweet text-white mr-2"></i>
                     Back</a>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown"
-                        aria-expanded="false">
+                    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         Other
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item text-dark" style="padding: 1px 10px;" href="{{url('tour-date')}}/{{ $tour->id }}">
+                        <a class="dropdown-item text-dark" style="padding: 1px 10px;"
+                            href="{{ url('tour-date') }}/{{ $tour->id }}">
                             <i class="fa fa-calendar mr-1"></i> Dates
                         </a>
                         <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{url('tour-itinerary')}}/{{ $tour->id }}">
+                            href="{{ url('tour-itinerary') }}/{{ $tour->id }}">
                             <i class="fa fa-calendar mr-1"></i> Itinerary
                         </a>
                         <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{url('tour-inclusion')}}/{{ $tour->id }}">
+                            href="{{ url('tour-inclusion') }}/{{ $tour->id }}">
                             <i class="fa fa-check mr-1"></i> Inclusion
                         </a>
                         <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{url('tour-exclusion')}}/{{ $tour->id }}">
+                            href="{{ url('tour-exclusion') }}/{{ $tour->id }}">
                             <i class="fa fa-close mr-1"></i> Exclusion
                         </a>
-                        <a class="dropdown-item text-dark" style="padding: 1px 10px;" href="{{url('tour-faq')}}/{{ $tour->id }}">
+                        <a class="dropdown-item text-dark" style="padding: 1px 10px;"
+                            href="{{ url('tour-faq') }}/{{ $tour->id }}">
                             <i class="fa fa-question-circle mr-1"></i> FAQs
                         </a>
-                        <a class="dropdown-item text-dark" style="padding: 1px 10px;" href="{{url('tour-image')}}/{{ $tour->id }}">
+                        <a class="dropdown-item text-dark" style="padding: 1px 10px;"
+                            href="{{ url('tour-image') }}/{{ $tour->id }}">
                             <i class="fa fa-image mr-1"></i> Gallery
                         </a>
                         <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{url('tour-download')}}/{{ $tour->id }}">
+                            href="{{ url('tour-download') }}/{{ $tour->id }}">
                             <i class="fa fa-download mr-1"></i> Downloads
                         </a>
                     </div>
@@ -59,7 +61,7 @@
         <div class="row mb-4">
             <div class="col-md-5 mb-3">
                 <div class="card mb-4">
-                    <form id="tourForm" action="{{ url('tour-image/store') }}" method="post"
+                    <form id="tourDownloadForm" action="{{ url('tour-download/store') }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="tour_id" id="tour_id" value="{{ isset($tour) ? $tour->id : '' }}" />
@@ -75,20 +77,25 @@
                         @endif
                         <div class="card-body">
                             <div class="row">
-                                {{-- Name --}}
+                                {{-- file_type --}}
                                 <div class="col-md-12 form-group mb-3">
-                                    <label for="name">Name <span class="text-danger">*</span></label>
-                                    <input id="name" class="form-control" type="text" name="name" required>
-                                    @error('name')
+                                    <label for="file_type">file_type <span class="text-danger">*</span></label>
+                                    <select name="file_type" class="form-control" id="file_type" required>
+                                        <option value="image">Image</option>
+                                        <option value="document">Document</option>
+                                        <option value="audio">Audio</option>
+                                        <option value="video">Video</option>
+                                    </select>
+                                    @error('file_type')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
 
-                                {{-- Answer --}}
+                                {{-- file --}}
                                 <div class="col-md-12 form-group mb-3">
-                                    <label for="image">Image <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="file" name="image" required>
-                                    @error('image')
+                                    <label for="file">File <span class="text-danger">*</span></label>
+                                    <input class="form-control" type="file" name="file" required>
+                                    @error('file')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -105,11 +112,11 @@
                 <div class="card text-left">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="tour_image_table" class="table table-striped display" style="width:100%">
+                            <table id="tour_download_table" class="table table-striped display" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Image</th>
+                                        <th scope="col">File Type</th>
+                                        <th scope="col">File</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -129,14 +136,14 @@
 @section('js')
     @include('includes.datatable', [
         'columns' => "
-                                                 {data: 'name' , name: 'name'},
-                                                 {data: 'image' , name: 'image'},
-                                                {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
+                 {data: 'file_type' , name: 'file_type', 'sortable': false , searchable: false},
+                 {data: 'file_path' , name: 'file_path', 'sortable': false , searchable: false},
+                 {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
         'route' => 'data',
         'buttons' => false,
         'pageLength' => 10,
-        'class' => 'tour_image_table',
-        'variable' => 'tour_image_table',
+        'class' => 'tour_download_table',
+        'variable' => 'tour_download_table',
         'datefilter' => false,
         'params' => "tour_id:$('#tour_id').val()",
     ])
@@ -167,7 +174,7 @@
                 }
             });
 
-            $('#tourForm').on('submit', function(e) {
+            $('#tourDownloadForm').on('submit', function(e) {
                 e.preventDefault();
 
                 let formData = new FormData(this);
@@ -187,7 +194,7 @@
                         console.log(res);
                         if (res.Success) {
                             successMessage(res.Message);
-                            initDataTabletour_image_table();
+                            initDataTabletour_download_table();
                             $('#tourForm')[0].reset();
                         } else {
                             errorMessage(res.Message);
@@ -203,8 +210,8 @@
                 });
             });
         });
-        $("body").on("click", "#deleteTourImage", function() {
-            var tour_image_id = $(this).data("id");
+        $("body").on("click", "#deleteTourDownload", function() {
+            var tour_download_id = $(this).data("id");
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -217,12 +224,12 @@
                 if (result.isConfirmed) {
                     $.ajax({
                             type: "get",
-                            url: "{{ url('tour-image/destroy') }}/" + tour_image_id,
+                            url: "{{ url('tour-download/destroy') }}/" + tour_download_id,
                         })
                         .done(function(data) {
                             if (data.Success) {
                                 successMessage(data.Message);
-                                initDataTabletour_image_table();
+                                initDataTabletour_download_table();
                             } else {
                                 errorMessage(data.Message);
                             }

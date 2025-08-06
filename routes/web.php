@@ -20,7 +20,13 @@ use App\Http\Controllers\Admin\SubServiceController;
 use App\Http\Controllers\Admin\TermAndConditionController;
 use App\Http\Controllers\Admin\TourCategoryController;
 use App\Http\Controllers\Admin\TourController;
+use App\Http\Controllers\Admin\TourDateController;
+use App\Http\Controllers\Admin\TourDownloadController;
+use App\Http\Controllers\Admin\TourExclusionController;
+use App\Http\Controllers\Admin\TourFaqController;
 use App\Http\Controllers\Admin\TourImageController;
+use App\Http\Controllers\Admin\TourInclusionController;
+use App\Http\Controllers\Admin\TourItineraryController;
 use App\Http\Controllers\Admin\TourReviewController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\HomeController;
@@ -121,6 +127,55 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('view/{id}', [TourController::class, 'view']);
         Route::get('destroy/{id}', [TourController::class, 'destroy']);
         Route::get('status/{id}', [TourController::class, 'status']);
+    });
+    //tour image
+    Route::group(['prefix' => 'tour-image'], function () {
+        Route::get('/{id}', [TourImageController::class, 'index']);
+        Route::post('data', [TourImageController::class, 'getData'])->name('tour-image.data');
+        Route::post('store', [TourImageController::class, 'store']);
+        Route::get('destroy/{id}', [TourImageController::class, 'destroy']);
+    });
+    //tour date
+    Route::group(['prefix' => 'tour-date'], function () {
+        Route::get('/{id}', [TourDateController::class, 'index']);
+        Route::post('data', [TourDateController::class, 'getData'])->name('tour-date.data');
+        Route::post('store', [TourDateController::class, 'store']);
+        Route::get('destroy/{id}', [TourDateController::class, 'destroy']);
+    });
+    //tour itinerary
+    Route::group(['prefix' => 'tour-itinerary'], function () {
+        Route::get('/{id}', [TourItineraryController::class, 'index']);
+        Route::post('data', [TourItineraryController::class, 'getData'])->name('tour-itinerary.data');
+        Route::post('store', [TourItineraryController::class, 'store']);
+        Route::get('destroy/{id}', [TourItineraryController::class, 'destroy']);
+    });
+    //tour inclusion
+    Route::group(['prefix' => 'tour-inclusion'], function () {
+        Route::get('/{id}', [TourInclusionController::class, 'index']);
+        Route::post('data', [TourInclusionController::class, 'getData'])->name('tour-inclusion.data');
+        Route::post('store', [TourInclusionController::class, 'store']);
+        Route::get('destroy/{id}', [TourInclusionController::class, 'destroy']);
+    });
+    //tour exclusion
+    Route::group(['prefix' => 'tour-exclusion'], function () {
+        Route::get('/{id}', [TourExclusionController::class, 'index']);
+        Route::post('data', [TourExclusionController::class, 'getData'])->name('tour-exclusion.data');
+        Route::post('store', [TourExclusionController::class, 'store']);
+        Route::get('destroy/{id}', [TourExclusionController::class, 'destroy']);
+    });
+    //tour faq
+    Route::group(['prefix' => 'tour-faq'], function () {
+        Route::get('/{id}', [TourFaqController::class, 'index']);
+        Route::post('data', [TourFaqController::class, 'getData'])->name('tour-faq.data');
+        Route::post('store', [TourFaqController::class, 'store']);
+        Route::get('destroy/{id}', [TourFaqController::class, 'destroy']);
+    });
+    //tour download
+    Route::group(['prefix' => 'tour-download'], function () {
+        Route::get('/{id}', [TourDownloadController::class, 'index']);
+        Route::post('data', [TourDownloadController::class, 'getData'])->name('tour-download.data');
+        Route::post('store', [TourDownloadController::class, 'store']);
+        Route::get('destroy/{id}', [TourDownloadController::class, 'destroy']);
     });
 
     Route::group(['prefix' => 'tour-additional'], function () {
@@ -230,13 +285,7 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 
-    //tour image
-    Route::group(['prefix' => 'tour-image'], function () {
-        Route::get('/{id}', [TourImageController::class, 'index']);
-        Route::post('data', [TourImageController::class, 'getData'])->name('tour-image.data');
-        Route::post('store', [TourImageController::class, 'store']);
-        Route::get('destroy/{id}', [TourImageController::class, 'destroy']);
-    });
+
 
     //tour review
     Route::group(['prefix' => 'tour-review'], function () {

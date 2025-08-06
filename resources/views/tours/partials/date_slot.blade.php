@@ -1,203 +1,220 @@
-<div class="card mb-4">
-    <form id="tourDateForm" action="{{ url('tour-additional/tour-date-slot-store') }}" method="post" enctype="multipart/form-data">
-        @csrf
-        <input type="hidden" name="tour_id" id="tour_id" value="{{ isset($tour) ? $tour->id : '' }}" />
-
-        @if ($errors->any())
+@extends('layouts.master')
+@section('content')
+    <div class="main-content pt-4">
+        <div class="breadcrumb">
+            <h1>Tour Date Slot</h1>
+            <ul>
+                <li>Create</li>
+                <li>List</li>
+            </ul>
+        </div>
+        <div class="separator-breadcrumb border-top"></div>
+        @if (session()->has('error'))
             <div class="alert alert-danger">
-                <ul class="mb-0">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+                {{ session()->get('error') }}
             </div>
         @endif
-        <div class="card-body">
-            <div class="row">
-                {{-- start_date --}}
-                <div class="col-md-6 form-group mb-3">
-                    <label for="start_date">Start Date <span class="text-danger">*</span></label>
-                    <input id="start_date" class="form-control" type="date" name="start_date" required>
-                    @error('start_date')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                {{-- end_date --}}
-                <div class="col-md-6 form-group mb-3">
-                    <label for="end_date">End Date <span class="text-danger">*</span></label>
-                    <input id="end_date" class="form-control" type="date" name="end_date" required>
-                    @error('end_date')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                {{-- price_type --}}
-                <div class="col-md-6 form-group mb-3">
-                    <label for="price_type">Price Type <span class="text-danger">*</span></label>
-                    <select name="price_type" class="form-control" id="price_type" required>
-                        <option value="per_person">Per Person</option>
-                        <option value="per_group">Per Group</option>
-                    </select>
-                    @error('price_type')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                {{-- price --}}
-                <div class="col-md-6 form-group mb-3">
-                    <label for="price">Price <span class="text-danger">*</span></label>
-                    <input id="price" class="form-control" type="text" name="price" required>
-                    @error('price')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-                {{-- discount_price --}}
-                <div class="col-md-6 form-group mb-3">
-                    <label for="discount_price">Discount Price</label>
-                    <input id="discount_price" class="form-control" type="text" name="discount_price" value="0">
-                    @error('discount_price')
-                        <span class="text-danger">{{ $message }}</span>
-                    @enderror
+        <div class="card mb-4">
+            <form id="tourDateForm" action="{{ url('tour-additional/tour-date-slot-store') }}" method="post"
+                enctype="multipart/form-data">
+                @csrf
+                <input type="hidden" name="tour_id" id="tour_id" value="{{ isset($tour) ? $tour->id : '' }}" />
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                <div class="card-body">
+                    <div class="row">
+                        {{-- start_date --}}
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="start_date">Start Date <span class="text-danger">*</span></label>
+                            <input id="start_date" class="form-control" type="date" name="start_date" required>
+                            @error('start_date')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        {{-- end_date --}}
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="end_date">End Date <span class="text-danger">*</span></label>
+                            <input id="end_date" class="form-control" type="date" name="end_date" required>
+                            @error('end_date')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        {{-- price_type --}}
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="price_type">Price Type <span class="text-danger">*</span></label>
+                            <select name="price_type" class="form-control" id="price_type" required>
+                                <option value="per_person">Per Person</option>
+                                <option value="per_group">Per Group</option>
+                            </select>
+                            @error('price_type')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        {{-- price --}}
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="price">Price <span class="text-danger">*</span></label>
+                            <input id="price" class="form-control" type="text" name="price" required>
+                            @error('price')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        {{-- discount_price --}}
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="discount_price">Discount Price</label>
+                            <input id="discount_price" class="form-control" type="text" name="discount_price"
+                                value="0">
+                            @error('discount_price')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+
+                    </div>
                 </div>
 
-                
+                <div class="card-footer">
+                    <button class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+        <div class="card text-left">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table id="date_slot_table" class="table table-striped display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th scope="col">Start Date</th>
+                                <th scope="col">End Date</th>
+                                <th scope="col">Price Type</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Discount Price</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
+    @section('js')
+        @include('includes.datatable', [
+            'columns' => "
+                            {data: 'start_date' , name: 'start_date'},
+                            {data: 'end_date' , name: 'end_date'},
+                            {data: 'price_type' , name: 'price_type' , 'sortable': false , searchable: false},
+                            {data: 'price' , name: 'price'},
+                            {data: 'discount_price' , name: 'discount_price'},
+                            {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
+            'route' => 'tour-date-slot',
+            'buttons' => false,
+            'pageLength' => 10,
+            'class' => 'date_slot_table',
+            'variable' => 'date_slot_table',
+            'datefilter' => false,
+            'params' => "tour_id:$('#tour_id').val()",
+        ])
+        <script>
+            function errorMessage(message) {
 
-        <div class="card-footer">
-            <button class="btn btn-primary">Save</button>
-        </div>
-    </form>
-</div>
-<div class="card text-left">
-    <div class="card-body">
-        <div class="table-responsive">
-            <table id="date_slot_table" class="table table-striped display" style="width:100%">
-                <thead>
-                    <tr>
-                        <th scope="col">Start Date</th>
-                        <th scope="col">End Date</th>
-                        <th scope="col">Price Type</th>
-                        <th scope="col">Price</th>
-                        <th scope="col">Discount Price</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
+                toastr.error(message, "Error", {
+                    showMethod: "slideDown",
+                    hideMethod: "slideUp",
+                    timeOut: 2e3,
+                });
 
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-@section('js')
-    @include('includes.datatable', [
-        'columns' => "
-            {data: 'start_date' , name: 'start_date'},
-            {data: 'end_date' , name: 'end_date'},
-            {data: 'price_type' , name: 'price_type' , 'sortable': false , searchable: false},
-            {data: 'price' , name: 'price'},
-            {data: 'discount_price' , name: 'discount_price'},
-            {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
-        'route' => 'tour-date-slot',
-        'buttons' => false,
-        'pageLength' => 10,
-        'class' => 'date_slot_table',
-        'variable' => 'date_slot_table',
-        'datefilter' => false,
-        'params' => "tour_id:$('#tour_id').val()",
-    ])
-    <script>
-        function errorMessage(message) {
+            }
 
-            toastr.error(message, "Error", {
-                showMethod: "slideDown",
-                hideMethod: "slideUp",
-                timeOut: 2e3,
-            });
+            function successMessage(message) {
 
-        }
+                toastr.success(message, "Success", {
+                    showMethod: "slideDown",
+                    hideMethod: "slideUp",
+                    timeOut: 2e3,
+                });
 
-        function successMessage(message) {
+            }
+            $(document).ready(function() {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
 
-            toastr.success(message, "Success", {
-                showMethod: "slideDown",
-                hideMethod: "slideUp",
-                timeOut: 2e3,
-            });
+                $('#tourDateForm').on('submit', function(e) {
+                    e.preventDefault();
 
-        }
-        $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+                    let formData = new FormData(this);
+                    let url = $(this).attr('action');
 
-            $('#tourDateForm').on('submit', function(e) {
-                e.preventDefault();
+                    for (let pair of formData.entries()) {
+                        console.log(pair[0] + ': ' + pair[1]);
+                    }
 
-                let formData = new FormData(this);
-                let url = $(this).attr('action');
-
-                for (let pair of formData.entries()) {
-                    console.log(pair[0] + ': ' + pair[1]);
-                }
-
-                $.ajax({
-                    url: url,
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(res) {
-                        console.log(res);
-                        if (res.Success) {
-                            successMessage(res.Message);
-                            initDataTabledate_slot_table();
-                            $('#tourDateForm')[0].reset();
-                        } else {
-                            errorMessage(res.Message);
+                    $.ajax({
+                        url: url,
+                        type: 'POST',
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        success: function(res) {
+                            console.log(res);
+                            if (res.Success) {
+                                successMessage(res.Message);
+                                initDataTabledate_slot_table();
+                                $('#tourDateForm')[0].reset();
+                            } else {
+                                errorMessage(res.Message);
+                            }
+                        },
+                        error: function(xhr) {
+                            if (xhr.responseJSON?.Message) {
+                                errorMessage(xhr.responseJSON.Message);
+                            } else {
+                                errorMessage("An unexpected error occurred.");
+                            }
                         }
-                    },
-                    error: function(xhr) {
-                        if (xhr.responseJSON?.Message) {
-                            errorMessage(xhr.responseJSON.Message);
-                        } else {
-                            errorMessage("An unexpected error occurred.");
-                        }
+                    });
+                });
+            });
+            $("body").on("click", "#deleteTourDate", function() {
+                var tour_date_id = $(this).data("id");
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                                type: "get",
+                                url: "{{ url('tour-additional/tour-date-slot-destroy') }}/" + tour_date_id,
+                            })
+                            .done(function(data) {
+                                if (data.Success) {
+                                    successMessage(data.Message);
+                                    initDataTabledate_slot_table();
+                                } else {
+                                    errorMessage(data.Message);
+                                }
+                            })
+                            .catch(function(err) {
+                                errorMessage(err.Message);
+                            });
                     }
                 });
             });
-        });
-        $("body").on("click", "#deleteTourDate", function() {
-            var tour_date_id = $(this).data("id");
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                            type: "get",
-                            url: "{{ url('tour-additional/tour-date-slot-destroy') }}/" + tour_date_id,
-                        })
-                        .done(function(data) {
-                            if (data.Success) {
-                                successMessage(data.Message);
-                                initDataTabledate_slot_table();
-                            } else {
-                                errorMessage(data.Message);
-                            }
-                        })
-                        .catch(function(err) {
-                            errorMessage(err.Message);
-                        });
-                }
-            });
-        });
-    </script>
-@endsection
-
+        </script>
+    @endsection

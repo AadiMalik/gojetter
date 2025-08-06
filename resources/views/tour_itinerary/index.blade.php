@@ -4,7 +4,7 @@
         <div class="row">
             <div class="col-md-8">
                 <div class="breadcrumb">
-                    <h1>Tour Images ({{ $tour->title ?? '' }})</h1>
+                    <h1>Tour Itinerary ({{ $tour->title ?? '' }})</h1>
                     <ul>
                         <li>List</li>
                         <li>Create</li>
@@ -15,39 +15,40 @@
                 <a class="btn btn-primary btn-md m-1" href="{{ url('tours') }}"><i class="fa fa-retweet text-white mr-2"></i>
                     Back</a>
                 <div class="btn-group">
-                    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown"
-                        aria-expanded="false">
+                    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         Other
                     </button>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item text-dark" style="padding: 1px 10px;" href="{{url('tour-date')}}/{{ $tour->id }}">
+                        <a class="dropdown-item text-dark" style="padding: 1px 10px;"
+                            href="{{ url('tour-date') }}/{{ $tour->id }}">
                             <i class="fa fa-calendar mr-1"></i> Dates
                         </a>
                         <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{url('tour-itinerary')}}/{{ $tour->id }}">
+                            href="{{ url('tour-itinerary') }}/{{ $tour->id }}">
                             <i class="fa fa-calendar mr-1"></i> Itinerary
                         </a>
                         <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{url('tour-inclusion')}}/{{ $tour->id }}">
+                            href="{{ url('tour-inclusion') }}/{{ $tour->id }}">
                             <i class="fa fa-check mr-1"></i> Inclusion
                         </a>
                         <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{url('tour-exclusion')}}/{{ $tour->id }}">
+                            href="{{ url('tour-exclusion') }}/{{ $tour->id }}">
                             <i class="fa fa-close mr-1"></i> Exclusion
                         </a>
-                        <a class="dropdown-item text-dark" style="padding: 1px 10px;" href="{{url('tour-faq')}}/{{ $tour->id }}">
+                        <a class="dropdown-item text-dark" style="padding: 1px 10px;"
+                            href="{{ url('tour-faq') }}/{{ $tour->id }}">
                             <i class="fa fa-question-circle mr-1"></i> FAQs
                         </a>
-                        <a class="dropdown-item text-dark" style="padding: 1px 10px;" href="{{url('tour-image')}}/{{ $tour->id }}">
+                        <a class="dropdown-item text-dark" style="padding: 1px 10px;"
+                            href="{{ url('tour-image') }}/{{ $tour->id }}">
                             <i class="fa fa-image mr-1"></i> Gallery
                         </a>
                         <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{url('tour-download')}}/{{ $tour->id }}">
+                            href="{{ url('tour-download') }}/{{ $tour->id }}">
                             <i class="fa fa-download mr-1"></i> Downloads
                         </a>
                     </div>
                 </div>
-
             </div>
         </div>
         <div class="separator-breadcrumb border-top"></div>
@@ -56,10 +57,10 @@
                 {{ session()->get('success') }}
             </div>
         @endif
-        <div class="row mb-4">
-            <div class="col-md-5 mb-3">
+        <div class="row">
+            <div class="col-md-5">
                 <div class="card mb-4">
-                    <form id="tourForm" action="{{ url('tour-image/store') }}" method="post"
+                    <form id="tourItineraryForm" action="{{ url('tour-itinerary/store') }}" method="post"
                         enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="tour_id" id="tour_id" value="{{ isset($tour) ? $tour->id : '' }}" />
@@ -75,20 +76,35 @@
                         @endif
                         <div class="card-body">
                             <div class="row">
-                                {{-- Name --}}
-                                <div class="col-md-12 form-group mb-3">
-                                    <label for="name">Name <span class="text-danger">*</span></label>
-                                    <input id="name" class="form-control" type="text" name="name" required>
-                                    @error('name')
+                                {{-- day_number --}}
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="day_number">Day # <span class="text-danger">*</span></label>
+                                    <input id="day_number" class="form-control" type="number" name="day_number" required>
+                                    @error('day_number')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-
-                                {{-- Answer --}}
-                                <div class="col-md-12 form-group mb-3">
-                                    <label for="image">Image <span class="text-danger">*</span></label>
-                                    <input class="form-control" type="file" name="image" required>
+                                {{-- title --}}
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="title">Title <span class="text-danger">*</span></label>
+                                    <input id="title" class="form-control" type="text" name="title" required>
+                                    @error('title')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- image --}}
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="image">Image</label>
+                                    <input id="image" class="form-control" type="file" name="image">
                                     @error('image')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- description --}}
+                                <div class="col-md-12 form-group mb-3">
+                                    <label for="description">Description <span class="text-danger">*</span></label>
+                                    <textarea id="description" class="form-control" name="description" required></textarea>
+                                    @error('description')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -101,15 +117,17 @@
                     </form>
                 </div>
             </div>
-            <div class="col-md-7 mb-3">
+            <div class="col-md-7">
                 <div class="card text-left">
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="tour_image_table" class="table table-striped display" style="width:100%">
+                            <table id="tour_itinerary_table" class="table table-striped display" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Name</th>
+                                        <th scope="col">Day #</th>
+                                        <th scope="col">Title</th>
                                         <th scope="col">Image</th>
+                                        <th scope="col">Description</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -121,22 +139,24 @@
                     </div>
                 </div>
             </div>
-            <!-- end of col-->
         </div>
+
         <!-- end of row-->
     </div>
 @endsection
 @section('js')
     @include('includes.datatable', [
         'columns' => "
-                                                 {data: 'name' , name: 'name'},
-                                                 {data: 'image' , name: 'image'},
-                                                {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
+                {data: 'day_number' , name: 'day_number'},
+                {data: 'title' , name: 'title'},
+                {data: 'image' , name: 'image' , 'sortable': false , searchable: false},
+                {data: 'description' , name: 'description'},
+                {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
         'route' => 'data',
         'buttons' => false,
         'pageLength' => 10,
-        'class' => 'tour_image_table',
-        'variable' => 'tour_image_table',
+        'class' => 'tour_itinerary_table',
+        'variable' => 'tour_itinerary_table',
         'datefilter' => false,
         'params' => "tour_id:$('#tour_id').val()",
     ])
@@ -167,7 +187,7 @@
                 }
             });
 
-            $('#tourForm').on('submit', function(e) {
+            $('#tourItineraryForm').on('submit', function(e) {
                 e.preventDefault();
 
                 let formData = new FormData(this);
@@ -187,8 +207,8 @@
                         console.log(res);
                         if (res.Success) {
                             successMessage(res.Message);
-                            initDataTabletour_image_table();
-                            $('#tourForm')[0].reset();
+                            initDataTabletour_itinerary_table();
+                            $('#tourDateForm')[0].reset();
                         } else {
                             errorMessage(res.Message);
                         }
@@ -203,8 +223,8 @@
                 });
             });
         });
-        $("body").on("click", "#deleteTourImage", function() {
-            var tour_image_id = $(this).data("id");
+        $("body").on("click", "#deleteTourItinerary", function() {
+            var tour_itinerary_id = $(this).data("id");
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -217,12 +237,12 @@
                 if (result.isConfirmed) {
                     $.ajax({
                             type: "get",
-                            url: "{{ url('tour-image/destroy') }}/" + tour_image_id,
+                            url: "{{ url('tour-itinerary/destroy') }}/" + tour_itinerary_id,
                         })
                         .done(function(data) {
                             if (data.Success) {
                                 successMessage(data.Message);
-                                initDataTabletour_image_table();
+                                initDataTabletour_itinerary_table();
                             } else {
                                 errorMessage(data.Message);
                             }
