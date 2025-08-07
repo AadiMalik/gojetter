@@ -189,7 +189,7 @@
                         if (res.Success) {
                             successMessage(res.Message);
                             initDataTabletour_faq_table();
-                            $('#tourDateForm')[0].reset();
+                            $('#tourFaqForm')[0].reset();
                         } else {
                             errorMessage(res.Message);
                         }

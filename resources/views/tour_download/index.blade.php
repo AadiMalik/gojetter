@@ -195,7 +195,7 @@
                         if (res.Success) {
                             successMessage(res.Message);
                             initDataTabletour_download_table();
-                            $('#tourForm')[0].reset();
+                            $('#tourDownloadForm')[0].reset();
                         } else {
                             errorMessage(res.Message);
                         }

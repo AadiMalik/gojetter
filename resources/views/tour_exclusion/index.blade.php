@@ -178,7 +178,7 @@
                         if (res.Success) {
                             successMessage(res.Message);
                             initDataTabletour_exclusion_table();
-                            $('#tourDateForm')[0].reset();
+                            $('#tourExclusionForm')[0].reset();
                         } else {
                             errorMessage(res.Message);
                         }

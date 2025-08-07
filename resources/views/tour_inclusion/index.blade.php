@@ -179,7 +179,7 @@
                         if (res.Success) {
                             successMessage(res.Message);
                             initDataTabletour_inclusion_table();
-                            $('#tourDateForm')[0].reset();
+                            $('#tourInclusionForm')[0].reset();
                         } else {
                             errorMessage(res.Message);
                         }

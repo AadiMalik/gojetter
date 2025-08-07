@@ -59,8 +59,32 @@ class Tour extends Model
         return $this->belongsTo(TourCategory::class, 'tour_category_id');
     }
 
-    public function tourImages() {
+    public function tourImage() {
         return $this->hasMany(TourImage::class, 'tour_id', 'id');
+    }
+
+    public function tourDate() {
+        return $this->hasMany(TourDate::class, 'tour_id', 'id');
+    }
+
+    public function tourDownload() {
+        return $this->hasMany(TourDownload::class, 'tour_id', 'id');
+    }
+
+    public function tourExclusion() {
+        return $this->hasMany(TourExclusion::class, 'tour_id', 'id');
+    }
+
+    public function tourFaq() {
+        return $this->hasMany(TourFaq::class, 'tour_id', 'id');
+    }
+
+    public function tourInclusion() {
+        return $this->hasMany(TourInclusion::class, 'tour_id', 'id');
+    }
+
+    public function tourItinerary() {
+        return $this->hasMany(TourItinerary::class, 'tour_id', 'id');
     }
 
     public function tourReviews() {

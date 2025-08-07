@@ -59,19 +59,19 @@ class TourService
                 $action_column .= $delete_column;
 
                 // if (Auth::user()->can('tour_date_access'))
-                $additional_column .=$dates;
+                $additional_column .= $dates;
                 // if (Auth::user()->can('tour_itinerary_access'))
-                $additional_column .=$itinerary;
+                $additional_column .= $itinerary;
                 // if (Auth::user()->can('tour_inclusion_access'))
-                $additional_column .=$inclusion;
+                $additional_column .= $inclusion;
                 // if (Auth::user()->can('tour_exclusion_access'))
-                $additional_column .=$exclusion;
+                $additional_column .= $exclusion;
                 // if (Auth::user()->can('tour_faqs_access'))
-                $additional_column .=$faqs;
+                $additional_column .= $faqs;
                 // if (Auth::user()->can('tour_image_access'))
-                $additional_column .=$image;
+                $additional_column .= $image;
                 // if (Auth::user()->can('tour_download_access'))
-                $additional_column .=$download;
+                $additional_column .= $download;
                 // Main button with dropdown    
                 $dropdown = '
                     <div class="btn-group">
@@ -84,7 +84,7 @@ class TourService
                     </div>
                 ';
 
-                return $action_column. $dropdown;
+                return $action_column . $dropdown;
             })
             ->rawColumns(['category', 'is_active', 'action'])
             ->make(true);
@@ -117,7 +117,17 @@ class TourService
     // get by id
     public function getById($id)
     {
-        $tour = $this->model_tour->getModel()::find($id);
+        $tour = $this->model_tour->getModel()::with([
+            'tourImage',
+            'tourDate',
+            'tourDownload',
+            'tourExclusion',
+            'tourFaq',
+            'tourInclusion',
+            'tourItinerary',
+            'tourReviews'
+        ])->find($id);
+
 
         if (!$tour)
             return false;

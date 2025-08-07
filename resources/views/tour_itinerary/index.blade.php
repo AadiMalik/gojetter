@@ -208,7 +208,7 @@
                         if (res.Success) {
                             successMessage(res.Message);
                             initDataTabletour_itinerary_table();
-                            $('#tourDateForm')[0].reset();
+                            $('#tourItineraryForm')[0].reset();
                         } else {
                             errorMessage(res.Message);
                         }
