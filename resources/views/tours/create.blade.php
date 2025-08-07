@@ -230,8 +230,17 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-                            {{-- is_featured --}}
+                            {{-- cut_of_day --}}
                             <div class="col-md-6 form-group mb-3">
+                                <label>Cut of Day</label>
+                                <input class="form-control" type="number" name="cut_of_day"
+                                    value="{{ old('cut_of_day', isset($tour) ? $tour->cut_of_day : 0) }}">
+                                @error('cut_of_day')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            {{-- is_featured --}}
+                            <div class="col-md-6 form-group mb-3 mt-4">
                                 <label class="switch pr-5 switch-primary mr-3"><input type="checkbox" name="is_featured" id="is_featured" @if(isset($tour) && $tour->is_featured==1) checked @endif ><span class="slider"></span> Is Featured</label>
 
                                 @error('is_featured')

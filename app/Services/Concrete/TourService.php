@@ -118,6 +118,7 @@ class TourService
     public function getById($id)
     {
         $tour = $this->model_tour->getModel()::with([
+            'tour_category',
             'tourImage',
             'tourDate',
             'tourDownload',
@@ -265,7 +266,17 @@ class TourService
     public function listActiveTours($data)
     {
         $query = Tour::select('tours.*')
-            ->with('tour_category')
+            ->with([
+                'tour_category',
+                'tourImage',
+                'tourDate',
+                'tourDownload',
+                'tourExclusion',
+                'tourFaq',
+                'tourInclusion',
+                'tourItinerary',
+                'tourReviews'
+            ])
             ->withAvg(['tourReviews as average_rating' => function ($q) {
                 $q->where('is_active', 1)->where('is_deleted', 0);
             }], 'rating')
@@ -281,18 +292,19 @@ class TourService
             $query->where('tour_category_id', $data['category_id']);
         }
 
-        // Sort by price
+        $tours = $query->get();
+
         if (!empty($data['sort_by'])) {
             if ($data['sort_by'] == 'price_low_high') {
-                $query->orderBy('price', 'asc');
+                return $tours->sortBy(fn($tour) => optional($tour->tourDate)->price)->values();
             } elseif ($data['sort_by'] == 'price_high_low') {
-                $query->orderBy('price', 'desc');
+                return $tours->sortByDesc(fn($tour) => optional($tour->tourDate)->price)->values();
             }
         } else {
-            $query->orderBy('id', 'desc'); // Default sorting
+            $tours = $tours->sortByDesc('title')->values(); // Default sorting
         }
 
-        return $query->get();
+        return $tours;
     }
 
     //get tour detail
@@ -305,9 +317,15 @@ class TourService
                     ->where('is_deleted', 0)
                     ->select('id', 'user_id', 'tour_id', 'rating', 'comment', 'created_at');
             },
-            'tourImages' => function ($query) {
+            'tourImage' => function ($query) {
                 $query->select('id', 'tour_id', 'name', 'image');
-            }
+            },
+            'tourDate',
+            'tourDownload',
+            'tourExclusion',
+            'tourFaq',
+            'tourInclusion',
+            'tourItinerary'
         ])
             ->withAvg(['tourReviews as average_rating' => function ($query) {
                 $query->where('is_active', 1)->where('is_deleted', 0);

@@ -72,6 +72,7 @@ class TourController extends Controller
                 'age_limit'         => 'nullable',
                 'pickup_info'       => 'nullable|string|max:255',
                 'dropoff_info'      => 'nullable|string|max:255',
+                'cut_of_day'      => 'nullable|integer',
             ],
             $this->validationMessage()
         );

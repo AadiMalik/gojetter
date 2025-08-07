@@ -24,7 +24,7 @@ class GetTourListRequest extends FormRequest
     public function rules()
     {
         return [
-            'type'  => 'sometimes|string|in:Tour,Activity',
+            'type'  => 'sometimes|string|in:private,group',
             'search'  => 'sometimes|string|max:255',
             'category_id'  => 'sometimes|integer',
             'sort_by'  => 'sometimes|string|max:255',

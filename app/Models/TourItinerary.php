@@ -15,6 +15,16 @@ class TourItinerary extends Model
         'description',
         'image'
     ];
+    protected $appends = ['image_url'];
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->image) {
+            return asset('storage/app/public/' .  $this->image);
+        }
+
+        return null;
+    }
     public function tour()
     {
         return $this->belongsTo(Tour::class, 'tour_id');

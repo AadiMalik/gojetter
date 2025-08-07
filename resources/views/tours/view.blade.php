@@ -60,6 +60,10 @@
                                     <label><strong>Min Adults:</strong></label>
                                     <p>{{ $tour->min_adults ?? '' }}</p>
                                 </div>
+                                <div class="col-md-4 mb-2">
+                                    <label><strong>Cut of Day:</strong></label>
+                                    <p>{{ $tour->cut_of_day ?? 0 }}</p>
+                                </div>
                             </div>
                         </div>
 

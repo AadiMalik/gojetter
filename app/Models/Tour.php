@@ -29,6 +29,7 @@ class Tour extends Model
         'pickup_info',
         'dropoff_info',
         'min_adults',
+        'cut_of_day',
         'is_active',
         'createdby_id',
         'updatedby_id',
