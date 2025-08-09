@@ -1,6 +1,16 @@
 <?php
 
 use App\Http\Controllers\Admin\AboutUsController;
+use App\Http\Controllers\Admin\ActivityController;
+use App\Http\Controllers\Admin\ActivityDateController;
+use App\Http\Controllers\Admin\ActivityExclusionController;
+use App\Http\Controllers\Admin\ActivityExpectationController;
+use App\Http\Controllers\Admin\ActivityImageController;
+use App\Http\Controllers\Admin\ActivityInclusionController;
+use App\Http\Controllers\Admin\ActivityPolicyController;
+use App\Http\Controllers\Admin\ActivityReviewController;
+use App\Http\Controllers\Admin\ActivitySupportController;
+use App\Http\Controllers\Admin\ActivityTimeSlotController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BookingController;
@@ -178,21 +188,99 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('destroy/{id}', [TourDownloadController::class, 'destroy']);
     });
 
-    Route::group(['prefix' => 'tour-additional'], function () {
-        Route::get('/{id}', [TourController::class, 'additional']);
-        Route::post('tour-image', [TourImageController::class, 'getData'])->name('tour-image');
-        Route::post('tour-image-store', [TourImageController::class, 'store']);
-        Route::get('tour-image-destroy/{id}', [TourImageController::class, 'destroy']);
-        // tour dates
-        Route::post('tour-date-slot', [TourController::class, 'tourDate'])->name('tour-date-slot');
-        Route::post('tour-date-slot-store', [TourController::class, 'tourDateStore']);
-        Route::get('tour-date-slot-destroy/{id}', [TourController::class, 'tourDateDestroy']);
+    // Route::group(['prefix' => 'tour-additional'], function () {
+    //     Route::get('/{id}', [TourController::class, 'additional']);
+    //     Route::post('tour-image', [TourImageController::class, 'getData'])->name('tour-image');
+    //     Route::post('tour-image-store', [TourImageController::class, 'store']);
+    //     Route::get('tour-image-destroy/{id}', [TourImageController::class, 'destroy']);
+    //     // tour dates
+    //     Route::post('tour-date-slot', [TourController::class, 'tourDate'])->name('tour-date-slot');
+    //     Route::post('tour-date-slot-store', [TourController::class, 'tourDateStore']);
+    //     Route::get('tour-date-slot-destroy/{id}', [TourController::class, 'tourDateDestroy']);
 
-        // tour itinerary
-        Route::post('tour-itinerary', [TourController::class, 'tourItinerary'])->name('tour-itinerary');
-        Route::post('tour-itinerary-store', [TourController::class, 'tourItineraryStore']);
-        Route::get('tour-itinerary-destroy/{id}', [TourController::class, 'tourItineraryDestroy']);
+    //     // tour itinerary
+    //     Route::post('tour-itinerary', [TourController::class, 'tourItinerary'])->name('tour-itinerary');
+    //     Route::post('tour-itinerary-store', [TourController::class, 'tourItineraryStore']);
+    //     Route::get('tour-itinerary-destroy/{id}', [TourController::class, 'tourItineraryDestroy']);
+    // });
+
+    //activities
+    Route::group(['prefix' => 'activity'], function () {
+        Route::get('/', [ActivityController::class, 'index']);
+        Route::post('data', [ActivityController::class, 'getData'])->name('activity.data');
+        Route::get('create', [ActivityController::class, 'create']);
+        Route::post('store', [ActivityController::class, 'store']);
+        Route::get('edit/{id}', [ActivityController::class, 'edit']);
+        Route::get('view/{id}', [ActivityController::class, 'view']);
+        Route::get('destroy/{id}', [ActivityController::class, 'destroy']);
+        Route::get('status/{id}', [ActivityController::class, 'status']);
     });
+    //activity image
+    Route::group(['prefix' => 'activity-image'], function () {
+        Route::get('/{id}', [ActivityImageController::class, 'index']);
+        Route::post('data', [ActivityImageController::class, 'getData'])->name('activity-image.data');
+        Route::post('store', [ActivityImageController::class, 'store']);
+        Route::get('destroy/{id}', [ActivityImageController::class, 'destroy']);
+    });
+    //activity inclusion
+    Route::group(['prefix' => 'activity-inclusion'], function () {
+        Route::get('/{id}', [ActivityInclusionController::class, 'index']);
+        Route::post('data', [ActivityInclusionController::class, 'getData'])->name('activity-inclusion.data');
+        Route::post('store', [ActivityInclusionController::class, 'store']);
+        Route::get('destroy/{id}', [ActivityInclusionController::class, 'destroy']);
+    });
+    //activity exclusion
+    Route::group(['prefix' => 'activity-exclusion'], function () {
+        Route::get('/{id}', [ActivityExclusionController::class, 'index']);
+        Route::post('data', [ActivityExclusionController::class, 'getData'])->name('activity-exclusion.data');
+        Route::post('store', [ActivityExclusionController::class, 'store']);
+        Route::get('destroy/{id}', [ActivityExclusionController::class, 'destroy']);
+    });
+    //activity expectation
+    Route::group(['prefix' => 'activity-expectation'], function () {
+        Route::get('/{id}', [ActivityExpectationController::class, 'index']);
+        Route::post('data', [ActivityExpectationController::class, 'getData'])->name('activity-expectation.data');
+        Route::post('store', [ActivityExpectationController::class, 'store']);
+        Route::get('destroy/{id}', [ActivityExpectationController::class, 'destroy']);
+    });
+    //activity policy
+    Route::group(['prefix' => 'activity-policy'], function () {
+        Route::get('/{id}', [ActivityPolicyController::class, 'index']);
+        Route::post('data', [ActivityPolicyController::class, 'getData'])->name('activity-policy.data');
+        Route::post('store', [ActivityPolicyController::class, 'store']);
+        Route::get('destroy/{id}', [ActivityPolicyController::class, 'destroy']);
+    });
+    //activity support
+    Route::group(['prefix' => 'activity-support'], function () {
+        Route::get('/{id}', [ActivitySupportController::class, 'index']);
+        Route::post('data', [ActivitySupportController::class, 'getData'])->name('activity-support.data');
+        Route::post('store', [ActivitySupportController::class, 'store']);
+        Route::get('destroy/{id}', [ActivitySupportController::class, 'destroy']);
+    });
+    //activity date
+    Route::group(['prefix' => 'activity-date'], function () {
+        Route::get('/{id}', [ActivityDateController::class, 'index']);
+        Route::post('data', [ActivityDateController::class, 'getData'])->name('activity-date.data');
+        Route::post('store', [ActivityDateController::class, 'store']);
+        Route::get('destroy/{id}', [ActivityDateController::class, 'destroy']);
+    });
+    //activity time slot
+    Route::group(['prefix' => 'activity-time-slot'], function () {
+        Route::get('/{date_id}', [ActivityTimeSlotController::class, 'index']);
+        Route::post('data', [ActivityTimeSlotController::class, 'getData'])->name('activity-time-slot.data');
+        Route::post('store', [ActivityTimeSlotController::class, 'store']);
+        Route::get('destroy/{id}', [ActivityTimeSlotController::class, 'destroy']);
+    });
+    //activity review
+    Route::group(['prefix' => 'activity-review'], function () {
+        Route::get('/', [ActivityReviewController::class, 'index']);
+        Route::post('data', [ActivityReviewController::class, 'getData'])->name('activity-review.data');
+        Route::get('destroy/{id}', [ActivityReviewController::class, 'destroy']);
+        Route::get('status/{id}', [ActivityReviewController::class, 'status']);
+    });
+
+
+
 
     //faqs
     Route::group(['prefix' => 'faqs'], function () {

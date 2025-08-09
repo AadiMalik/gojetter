@@ -41,7 +41,7 @@
                     {{-- @endcan --}}
                     {{-- @can('product_management') --}}
                     <li
-                        class="Ul_li--hover {{ Request::is('tours*') || Request::is('tour-category*') || Request::is('tour-review*') ? 'mm-active' : '' }}">
+                        class="Ul_li--hover {{ Request::is('tours*') || Request::is('tour-category*') || Request::is('tour-review*') || Request::is('activity*') || Request::is('activity-review*') ? 'mm-active' : '' }}">
                         <a class="has-arrow" href="#"><i class="fa fa-plane text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Product Manage..</span></a>
                         <ul class="mm-collapse">
@@ -60,6 +60,16 @@
                             <li class="item-name"><a class="{{ Request::is('tour-review*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('tour-review') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
                                         class="text-muted">Tour Reviews</span></a></li>
+                            {{-- @endcan --}}
+                            {{-- @can('activity_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('activity*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('activity') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
+                                        class="text-muted">Activities</span></a></li>
+                            {{-- @endcan --}}
+                            {{-- @can('activity_review_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('activity-review*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('activity-review') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
+                                        class="text-muted">Activity Reviews</span></a></li>
                             {{-- @endcan --}}
                         </ul>
                     </li>

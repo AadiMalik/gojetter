@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ActivityController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\BookingController;
@@ -50,6 +51,10 @@ Route::get('tour-category-list', [TourController::class, 'tourCategory']);
 Route::get('tour-list', [TourController::class, 'tourList']);
 Route::get('tour-by-slug/{slug}', [TourController::class, 'tourBySlug']);
 
+//activity
+Route::get('activity-list', [ActivityController::class, 'activityList']);
+Route::get('activity-by-slug/{slug}', [ActivityController::class, 'activityBySlug']);
+
 //coupon
 Route::post('apply-coupon', [CouponController::class, 'applyCoupon']);
 
@@ -84,6 +89,8 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     // save tour review
     Route::post('save-tour-review', [TourController::class, 'storeReiew']);
+    // save activity review
+    Route::post('save-activity-review', [ActivityController::class, 'storeReiew']);
 
     // wishlist
     Route::get('wishlist-list', [WishlistController::class, 'index']);

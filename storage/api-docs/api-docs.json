@@ -15,6 +15,820 @@
         }
     ],
     "paths": {
+        "/api/activity-list": {
+            "get": {
+                "tags": [
+                    "Activity"
+                ],
+                "summary": "Get list of active activities",
+                "description": "Returns a list of active activities filtered by search, category_id, type, and sorted by price if specified.",
+                "operationId": "getActivityList",
+                "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Filter results by type: private or group",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "private",
+                                "group"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "description": "Search keyword for activity title or description",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "maxLength": 255
+                        }
+                    },
+                    {
+                        "name": "category_id",
+                        "in": "query",
+                        "description": "Filter activities by category ID",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sort_by",
+                        "in": "query",
+                        "description": "Sort by price_low_high or price_high_low",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "maxLength": 255,
+                            "enum": [
+                                "price_low_high",
+                                "price_high_low"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string"
+                                                    },
+                                                    "slug": {
+                                                        "type": "string"
+                                                    },
+                                                    "thumbnail": {
+                                                        "type": "string"
+                                                    },
+                                                    "thumbnail_url": {
+                                                        "type": "string"
+                                                    },
+                                                    "overview": {
+                                                        "type": "string"
+                                                    },
+                                                    "short_description": {
+                                                        "type": "string",
+                                                        "nullable": true
+                                                    },
+                                                    "highlights": {
+                                                        "type": "string",
+                                                        "nullable": true
+                                                    },
+                                                    "full_description": {
+                                                        "type": "string",
+                                                        "nullable": true
+                                                    },
+                                                    "tags": {
+                                                        "type": "string",
+                                                        "nullable": true
+                                                    },
+                                                    "category_id": {
+                                                        "type": "integer"
+                                                    },
+                                                    "is_featured": {
+                                                        "type": "integer"
+                                                    },
+                                                    "difficulty_level": {
+                                                        "type": "string"
+                                                    },
+                                                    "age_limit": {
+                                                        "type": "integer"
+                                                    },
+                                                    "pickup_info": {
+                                                        "type": "string"
+                                                    },
+                                                    "dropoff_info": {
+                                                        "type": "string"
+                                                    },
+                                                    "location": {
+                                                        "type": "string"
+                                                    },
+                                                    "duration": {
+                                                        "type": "string"
+                                                    },
+                                                    "languages": {
+                                                        "type": "string"
+                                                    },
+                                                    "min_adults": {
+                                                        "type": "integer",
+                                                        "nullable": true
+                                                    },
+                                                    "group_size": {
+                                                        "type": "integer"
+                                                    },
+                                                    "activity_type": {
+                                                        "type": "string",
+                                                        "example": "private"
+                                                    },
+                                                    "is_wheelchair_accessible": {
+                                                        "type": "integer"
+                                                    },
+                                                    "is_stroller_friendly": {
+                                                        "type": "integer"
+                                                    },
+                                                    "cut_of_day": {
+                                                        "type": "integer"
+                                                    },
+                                                    "rules": {
+                                                        "type": "string"
+                                                    },
+                                                    "requirements": {
+                                                        "type": "string"
+                                                    },
+                                                    "disclaimers": {
+                                                        "type": "string"
+                                                    },
+                                                    "is_active": {
+                                                        "type": "integer"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time"
+                                                    },
+                                                    "average_rating": {
+                                                        "type": "number",
+                                                        "format": "float",
+                                                        "nullable": true
+                                                    },
+                                                    "activity_category": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "thumbnail": {
+                                                                "type": "string"
+                                                            },
+                                                            "thumbnail_url": {
+                                                                "type": "string"
+                                                            },
+                                                            "is_active": {
+                                                                "type": "integer"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "activity_image": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "activity_date": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "activity_id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "date": {
+                                                                    "type": "string",
+                                                                    "format": "date"
+                                                                },
+                                                                "price": {
+                                                                    "type": "string"
+                                                                },
+                                                                "discount_price": {
+                                                                    "type": "string"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                },
+                                                                "activity_time_slot": {
+                                                                    "type": "array",
+                                                                    "items": {
+                                                                        "properties": {
+                                                                            "id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "activity_date_id": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "start_time": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "end_time": {
+                                                                                "type": "string"
+                                                                            },
+                                                                            "total_seats": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "available_seats": {
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "created_at": {
+                                                                                "type": "string",
+                                                                                "format": "date-time"
+                                                                            },
+                                                                            "updated_at": {
+                                                                                "type": "string",
+                                                                                "format": "date-time"
+                                                                            }
+                                                                        },
+                                                                        "type": "object"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "activity_expectation": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "activity_exclusion": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "activity_policy": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "activity_inclusion": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "activity_reviews": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "type": "object"
+                                                        }
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/activity-by-slug/{slug}": {
+            "get": {
+                "tags": [
+                    "Activity"
+                ],
+                "summary": "Get activity details by slug",
+                "description": "Returns detailed information for a specific activity including category, images, dates, time slots, inclusions, exclusions, policies, expectations, and reviews.",
+                "operationId": "getActivityBySlug",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "The unique slug of the activity",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "aut-et-elit-dolore"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Aut et elit dolore"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "example": "aut-et-elit-dolore"
+                                                },
+                                                "thumbnail": {
+                                                    "type": "string",
+                                                    "example": "activity/OvPJUSSQUToALhK2K2LPlz6degzlFzVdpUhqMtTV.png"
+                                                },
+                                                "overview": {
+                                                    "type": "string",
+                                                    "example": "Dolor aut nesciunt"
+                                                },
+                                                "short_description": {
+                                                    "type": "string",
+                                                    "example": "Sint quo est except"
+                                                },
+                                                "highlights": {
+                                                    "type": "string",
+                                                    "example": "Sed quidem perspicia"
+                                                },
+                                                "full_description": {
+                                                    "type": "string",
+                                                    "example": "Vero voluptates null"
+                                                },
+                                                "tags": {
+                                                    "type": "string",
+                                                    "example": "Est ad dolorem bland"
+                                                },
+                                                "category_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "is_featured": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "difficulty_level": {
+                                                    "type": "string",
+                                                    "example": "moderate"
+                                                },
+                                                "age_limit": {
+                                                    "type": "integer",
+                                                    "example": 43
+                                                },
+                                                "pickup_info": {
+                                                    "type": "string",
+                                                    "example": "Totam consectetur de"
+                                                },
+                                                "dropoff_info": {
+                                                    "type": "string",
+                                                    "example": "Tempor error nemo eu"
+                                                },
+                                                "location": {
+                                                    "type": "string",
+                                                    "example": "Molestiae amet expe"
+                                                },
+                                                "duration": {
+                                                    "type": "string",
+                                                    "example": "Tenetur natus minim"
+                                                },
+                                                "languages": {
+                                                    "type": "string",
+                                                    "example": "Aperiam excepturi ad"
+                                                },
+                                                "min_adults": {
+                                                    "type": "integer",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "group_size": {
+                                                    "type": "integer",
+                                                    "example": 48
+                                                },
+                                                "activity_type": {
+                                                    "type": "string",
+                                                    "example": "private"
+                                                },
+                                                "is_wheelchair_accessible": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "is_stroller_friendly": {
+                                                    "type": "integer",
+                                                    "example": 0
+                                                },
+                                                "cut_of_day": {
+                                                    "type": "integer",
+                                                    "example": 7
+                                                },
+                                                "rules": {
+                                                    "type": "string",
+                                                    "example": "Est est ducimus un"
+                                                },
+                                                "requirements": {
+                                                    "type": "string",
+                                                    "example": "Quas labore ut aute"
+                                                },
+                                                "disclaimers": {
+                                                    "type": "string",
+                                                    "example": "Dignissimos neque er"
+                                                },
+                                                "is_active": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-08-09T17:41:02.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-08-09T17:41:02.000000Z"
+                                                },
+                                                "average_rating": {
+                                                    "type": "number",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "thumbnail_url": {
+                                                    "type": "string",
+                                                    "example": "http://localhost/gojetter/storage/app/public/activity/OvPJUSSQUToALhK2K2LPlz6degzlFzVdpUhqMtTV.png"
+                                                },
+                                                "activity_category": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Advanture"
+                                                        },
+                                                        "thumbnail": {
+                                                            "type": "string",
+                                                            "example": "tour_category/DpLGO0CO1yHcH2kdIBYmOaMCgmTD0lhj5h4CLHDX.webp"
+                                                        },
+                                                        "is_active": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-07-18T18:16:30.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-07-18T18:16:30.000000Z"
+                                                        },
+                                                        "thumbnail_url": {
+                                                            "type": "string",
+                                                            "example": "http://localhost/gojetter/storage/app/public/tour_category/DpLGO0CO1yHcH2kdIBYmOaMCgmTD0lhj5h4CLHDX.webp"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "activity_reviews": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "activity_image": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "activity_date": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "activity_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "date": {
+                                                                "type": "string",
+                                                                "format": "date",
+                                                                "example": "2025-08-11"
+                                                            },
+                                                            "price": {
+                                                                "type": "string",
+                                                                "example": "30.00"
+                                                            },
+                                                            "discount_price": {
+                                                                "type": "string",
+                                                                "example": "0.00"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-08-09T20:12:09.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-08-09T20:12:09.000000Z"
+                                                            },
+                                                            "activity_time_slot": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "example": 2
+                                                                        },
+                                                                        "activity_date_id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "start_time": {
+                                                                            "type": "string",
+                                                                            "example": "01 AM"
+                                                                        },
+                                                                        "end_time": {
+                                                                            "type": "string",
+                                                                            "example": "02 AM"
+                                                                        },
+                                                                        "total_seats": {
+                                                                            "type": "integer",
+                                                                            "example": 12
+                                                                        },
+                                                                        "available_seats": {
+                                                                            "type": "integer",
+                                                                            "example": 12
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-09T20:23:09.000000Z"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-09T20:23:09.000000Z"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "activity_expectation": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "activity_exclusion": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "activity_policy": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "activity_inclusion": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Activity not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Activity not found."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 404
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/save-activity-review": {
+            "post": {
+                "tags": [
+                    "Review"
+                ],
+                "summary": "Submit a review for a activity",
+                "operationId": "8e0e47e6ca155b9d251850caf283c6df",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "activity_id",
+                                    "rating",
+                                    "comment"
+                                ],
+                                "properties": {
+                                    "activity_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "rating": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 5
+                                    },
+                                    "comment": {
+                                        "type": "string",
+                                        "example": "good"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Review successfully saved",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Record saved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "activity_id": {
+                                                    "type": "string",
+                                                    "example": "1"
+                                                },
+                                                "rating": {
+                                                    "type": "string",
+                                                    "example": "5"
+                                                },
+                                                "comment": {
+                                                    "type": "string",
+                                                    "example": "good"
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-18T19:05:53.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-18T19:05:53.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failed",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/api/register": {
             "post": {
                 "tags": [
@@ -1097,7 +1911,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "authbearer": []
                     }
                 ]
             }
@@ -1141,6 +1955,918 @@
                     },
                     "401": {
                         "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "authbearer": []
+                    }
+                ]
+            }
+        },
+        "/api/blog-category-list": {
+            "get": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Get list of blog categories",
+                "description": "Returns all blog categories that are not deleted",
+                "operationId": "getBlogCategoryList",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Blog Category 1"
+                                                    },
+                                                    "is_active": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-29T13:45:15.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-29T13:45:15.000000Z"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/blog-list": {
+            "get": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Get list of blogs",
+                "description": "Returns all active blogs with related category data",
+                "operationId": "getBlogList",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "title": {
+                                                        "type": "string",
+                                                        "example": "Exploring the Hidden Gems of Northern Pakistan"
+                                                    },
+                                                    "slug": {
+                                                        "type": "string",
+                                                        "example": "exploring-the-hidden-gems-of-northern-pakistan"
+                                                    },
+                                                    "short_description": {
+                                                        "type": "string",
+                                                        "example": "<p>Discover breathtaking valleys, lakes, and traditions nestled in Pakistan's northern regions.</p>"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "<p>Full blog content here...</p>"
+                                                    },
+                                                    "image": {
+                                                        "type": "string",
+                                                        "example": "blogs/Zii5TZq2uewbU9qk4LJAvPGp8blFH7otCYPJvZQH.jpg"
+                                                    },
+                                                    "video_url": {
+                                                        "type": "string",
+                                                        "example": "https://www.youtube.com/embed/UnUTQ8d8ppE?si=ZeB6WMBtfQ3pPD2p"
+                                                    },
+                                                    "blog_category_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "author": {
+                                                        "type": "string",
+                                                        "example": "Sarah Malik"
+                                                    },
+                                                    "is_active": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-29T16:12:23.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-29T16:15:22.000000Z"
+                                                    },
+                                                    "image_url": {
+                                                        "type": "string",
+                                                        "example": "http://localhost/gojetter/storage/app/public/blogs/Zii5TZq2uewbU9qk4LJAvPGp8blFH7otCYPJvZQH.jpg"
+                                                    },
+                                                    "category": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Blog Category 1"
+                                                            },
+                                                            "is_active": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-07-29T13:45:15.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-07-29T13:45:15.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/blog-by-slug/{slug}": {
+            "get": {
+                "tags": [
+                    "Blog"
+                ],
+                "summary": "Get blog details by slug",
+                "description": "Fetch a blog post along with its category by slug",
+                "operationId": "getBlogBySlug",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "The slug of the blog post",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Record details retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Record details retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "title": {
+                                                    "type": "string",
+                                                    "example": "Exploring the Hidden Gems of Northern Pakistan"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "example": "exploring-the-hidden-gems-of-northern-pakistan"
+                                                },
+                                                "short_description": {
+                                                    "type": "string",
+                                                    "example": "<p>Discover breathtaking valleys...</p>"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "<p>The northern areas of Pakistan offer...</p>"
+                                                },
+                                                "image": {
+                                                    "type": "string",
+                                                    "example": "blogs/Zii5TZq2uewbU9qk4LJAvPGp8blFH7otCYPJvZQH.jpg"
+                                                },
+                                                "video_url": {
+                                                    "type": "string",
+                                                    "example": "https://www.youtube.com/embed/UnUTQ8d8ppE?si=ZeB6WMBtfQ3pPD2p"
+                                                },
+                                                "blog_category_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "author": {
+                                                    "type": "string",
+                                                    "example": "Sarah Malik"
+                                                },
+                                                "is_active": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-29T16:12:23.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-29T16:15:22.000000Z"
+                                                },
+                                                "image_url": {
+                                                    "type": "string",
+                                                    "example": "http://localhost/gojetter/storage/app/public/blogs/Zii5TZq2uewbU9qk4LJAvPGp8blFH7otCYPJvZQH.jpg"
+                                                },
+                                                "category": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Blog Category 1"
+                                                        },
+                                                        "is_active": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-07-29T13:45:15.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-07-29T13:45:15.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/booking-list": {
+            "get": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Get all bookings",
+                "description": "Returns a list of bookings with tour and user details",
+                "operationId": "getBookingList",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "tour_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "user_id": {
+                                                        "type": "integer",
+                                                        "example": 13
+                                                    },
+                                                    "booking_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2025-08-15"
+                                                    },
+                                                    "first_name": {
+                                                        "type": "string",
+                                                        "example": "John"
+                                                    },
+                                                    "last_name": {
+                                                        "type": "string",
+                                                        "example": "Doe"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "john@example.com"
+                                                    },
+                                                    "phone": {
+                                                        "type": "string",
+                                                        "example": "1234567890"
+                                                    },
+                                                    "country": {
+                                                        "type": "string",
+                                                        "example": "USA"
+                                                    },
+                                                    "zipcode": {
+                                                        "type": "string",
+                                                        "example": "10001"
+                                                    },
+                                                    "address": {
+                                                        "type": "string",
+                                                        "example": "123 Street"
+                                                    },
+                                                    "adults": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "children": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "total_participants": {
+                                                        "type": "integer",
+                                                        "example": 3
+                                                    },
+                                                    "sub_total": {
+                                                        "type": "string",
+                                                        "example": "300.00"
+                                                    },
+                                                    "tax_percent": {
+                                                        "type": "string",
+                                                        "example": "5.00"
+                                                    },
+                                                    "tax_amount": {
+                                                        "type": "string",
+                                                        "example": "15.00"
+                                                    },
+                                                    "discount": {
+                                                        "type": "string",
+                                                        "example": "10.00"
+                                                    },
+                                                    "total": {
+                                                        "type": "string",
+                                                        "example": "305.00"
+                                                    },
+                                                    "payment_method": {
+                                                        "type": "string",
+                                                        "example": "card"
+                                                    },
+                                                    "coupon_id": {
+                                                        "type": "integer",
+                                                        "example": null,
+                                                        "nullable": true
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "confirmed"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-28T19:13:43.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-28T19:17:50.000000Z"
+                                                    },
+                                                    "tour": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "Desert Safari"
+                                                            },
+                                                            "slug": {
+                                                                "type": "string",
+                                                                "example": "desert-safari"
+                                                            },
+                                                            "thumbnail": {
+                                                                "type": "string",
+                                                                "example": "tours/sample.jpg"
+                                                            },
+                                                            "overview": {
+                                                                "type": "string",
+                                                                "example": "<p>Desert adventure</p>"
+                                                            },
+                                                            "short_description": {
+                                                                "type": "string",
+                                                                "example": "<h2>Highlights</h2>..."
+                                                            },
+                                                            "full_description": {
+                                                                "type": "string",
+                                                                "example": "<h2>Included/Excluded</h2>..."
+                                                            },
+                                                            "duration_days": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "duration_nights": {
+                                                                "type": "integer",
+                                                                "example": 0
+                                                            },
+                                                            "tour_type": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "group_size": {
+                                                                "type": "integer",
+                                                                "example": 10
+                                                            },
+                                                            "languages": {
+                                                                "type": "string",
+                                                                "example": "English"
+                                                            },
+                                                            "price": {
+                                                                "type": "string",
+                                                                "example": "176.00"
+                                                            },
+                                                            "min_adults": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            },
+                                                            "location": {
+                                                                "type": "string",
+                                                                "example": "DAE"
+                                                            },
+                                                            "is_active": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "thumbnail_url": {
+                                                                "type": "string",
+                                                                "format": "url",
+                                                                "example": "http://localhost/storage/tours/sample.jpg"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "user": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 13
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "new user 6"
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "example": "user6@gmail.com"
+                                                            },
+                                                            "email_verified_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-07-14T17:30:12.000000Z"
+                                                            },
+                                                            "username": {
+                                                                "type": "string",
+                                                                "example": "user6"
+                                                            },
+                                                            "phone": {
+                                                                "type": "string",
+                                                                "example": "03000000001"
+                                                            },
+                                                            "paypal_email": {
+                                                                "type": "string",
+                                                                "nullable": true
+                                                            },
+                                                            "is_show_email_phone": {
+                                                                "type": "integer",
+                                                                "example": 0
+                                                            },
+                                                            "home_airport": {
+                                                                "type": "string",
+                                                                "example": "lahore"
+                                                            },
+                                                            "gender": {
+                                                                "type": "string",
+                                                                "example": "Male"
+                                                            },
+                                                            "country_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/save-booking": {
+            "post": {
+                "tags": [
+                    "Booking"
+                ],
+                "summary": "Create a new tour booking with details",
+                "operationId": "2366595ee2981aa8e4a105cbf7214c82",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "tour_id",
+                                    "booking_date",
+                                    "first_name",
+                                    "last_name",
+                                    "email",
+                                    "phone",
+                                    "country",
+                                    "zipcode",
+                                    "address",
+                                    "adults",
+                                    "children",
+                                    "sub_total",
+                                    "total",
+                                    "payment_method",
+                                    "booking_details"
+                                ],
+                                "properties": {
+                                    "tour_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "booking_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-08-15"
+                                    },
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john@example.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "USA"
+                                    },
+                                    "zipcode": {
+                                        "type": "string",
+                                        "example": "10001"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "123 Street"
+                                    },
+                                    "adults": {
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "children": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "sub_total": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 300
+                                    },
+                                    "tax_percent": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 5,
+                                        "nullable": true
+                                    },
+                                    "tax_amount": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 15,
+                                        "nullable": true
+                                    },
+                                    "discount": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 10,
+                                        "nullable": true
+                                    },
+                                    "total": {
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 305
+                                    },
+                                    "payment_method": {
+                                        "type": "string",
+                                        "example": "card"
+                                    },
+                                    "coupon_id": {
+                                        "type": "integer",
+                                        "example": null,
+                                        "nullable": true
+                                    },
+                                    "booking_details": {
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "first_name": {
+                                                    "type": "string",
+                                                    "example": "Alice"
+                                                },
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "Smith"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "enum": [
+                                                        "adult",
+                                                        "child"
+                                                    ],
+                                                    "example": "adult"
+                                                },
+                                                "dob": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "1990-01-01"
+                                                },
+                                                "weight": {
+                                                    "type": "string",
+                                                    "example": "60"
+                                                },
+                                                "weight_unit": {
+                                                    "type": "string",
+                                                    "example": "kg"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "minItems": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Booking saved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Record saved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "tour_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 13
+                                                },
+                                                "booking_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-08-15"
+                                                },
+                                                "first_name": {
+                                                    "type": "string",
+                                                    "example": "John"
+                                                },
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "Doe"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "john@example.com"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "1234567890"
+                                                },
+                                                "country": {
+                                                    "type": "string",
+                                                    "example": "USA"
+                                                },
+                                                "zipcode": {
+                                                    "type": "string",
+                                                    "example": "10001"
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": "123 Street"
+                                                },
+                                                "adults": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "children": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "total_participants": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                },
+                                                "sub_total": {
+                                                    "type": "number",
+                                                    "example": "300.00"
+                                                },
+                                                "tax_percent": {
+                                                    "type": "number",
+                                                    "example": "5.00"
+                                                },
+                                                "tax_amount": {
+                                                    "type": "number",
+                                                    "example": "15.00"
+                                                },
+                                                "discount": {
+                                                    "type": "number",
+                                                    "example": "10.00"
+                                                },
+                                                "total": {
+                                                    "type": "number",
+                                                    "example": "305.00"
+                                                },
+                                                "payment_method": {
+                                                    "type": "string",
+                                                    "example": "card"
+                                                },
+                                                "coupon_id": {
+                                                    "type": "integer",
+                                                    "example": null
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "pending"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "tour": {
+                                                    "type": "object",
+                                                    "example": {
+                                                        "id": 1,
+                                                        "title": "Desert Safari"
+                                                    }
+                                                },
+                                                "user": {
+                                                    "type": "object",
+                                                    "example": {
+                                                        "id": 13,
+                                                        "name": "new user 6",
+                                                        "email": "user6@gmail.com"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1475,6 +3201,634 @@
                 }
             }
         },
+        "/api/save-contact-us": {
+            "post": {
+                "tags": [
+                    "Contact Us"
+                ],
+                "summary": "Submit a contact us message",
+                "description": "Saves a contact form entry from a user.",
+                "operationId": "saveContactUs",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "phone",
+                                    "subject",
+                                    "message"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Awais Akram"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "maxLength": 255,
+                                        "example": "awais@gmail.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "1234567896"
+                                    },
+                                    "subject": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "For Seo Marketing Contact Me"
+                                    },
+                                    "message": {
+                                        "type": "string",
+                                        "maxLength": 500,
+                                        "example": "ثم إنه رفع رأسه إلى السماء وقال..."
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Record saved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 11
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Awais Akram"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "awais@gmail.com"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "1234567896"
+                                                },
+                                                "subject": {
+                                                    "type": "string",
+                                                    "example": "For Seo Marketing Contact Me"
+                                                },
+                                                "message": {
+                                                    "type": "string",
+                                                    "example": "ثم إنه رفع رأسه إلى السماء وقال..."
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-19T11:17:37.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-19T11:17:37.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/apply-coupon": {
+            "post": {
+                "tags": [
+                    "Coupon"
+                ],
+                "summary": "Apply a coupon by code",
+                "operationId": "applyCoupon",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "description": "Coupon code to apply",
+                                        "type": "string",
+                                        "example": "SAMS10"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Coupon applied successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Operation completed successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "code": {
+                                                    "type": "string",
+                                                    "example": "SAMS10"
+                                                },
+                                                "type": {
+                                                    "type": "string",
+                                                    "example": "amount"
+                                                },
+                                                "value": {
+                                                    "type": "string",
+                                                    "example": "100.00"
+                                                },
+                                                "valid_from": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-07-22"
+                                                },
+                                                "valid_until": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-07-30"
+                                                },
+                                                "is_active": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-22T16:42:11.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "code": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The selected code is invalid."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/customer-card-list": {
+            "get": {
+                "tags": [
+                    "Customer Card"
+                ],
+                "summary": "Get customer card list",
+                "description": "Retrieve a list of cards saved by the authenticated customer.",
+                "operationId": "getCustomerCardList",
+                "responses": {
+                    "200": {
+                        "description": "Records retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {},
+                                            "example": []
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Unauthenticated."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/save-customer-card": {
+            "post": {
+                "tags": [
+                    "Customer Card"
+                ],
+                "summary": "Save a new customer card",
+                "description": "Store a new card for the authenticated customer using a Stripe payment method.",
+                "operationId": "saveCustomerCard",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "payment_method_id"
+                                ],
+                                "properties": {
+                                    "payment_method_id": {
+                                        "type": "string",
+                                        "example": "pm_1NxWy5JvL3RQyoU1slm0HdM2"
+                                    },
+                                    "is_default": {
+                                        "type": "boolean",
+                                        "example": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Customer card saved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "is_default": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "stripe_payment_method_id": {
+                                            "type": "string",
+                                            "example": "pm_1NxWy5JvL3RQyoU1slm0HdM2"
+                                        },
+                                        "card_brand": {
+                                            "type": "string",
+                                            "example": "visa"
+                                        },
+                                        "card_last_four": {
+                                            "type": "string",
+                                            "example": "4242"
+                                        },
+                                        "exp_month": {
+                                            "type": "integer",
+                                            "example": 12
+                                        },
+                                        "exp_year": {
+                                            "type": "integer",
+                                            "example": 2026
+                                        },
+                                        "card_holder_name": {
+                                            "type": "string",
+                                            "example": "John Doe"
+                                        },
+                                        "createdby_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/save-customer-request": {
+            "post": {
+                "tags": [
+                    "Customer Request"
+                ],
+                "summary": "Save a new customer request",
+                "description": "Stores a customer request for a sub-service, including optional medical details and file upload.",
+                "operationId": "saveCustomerRequest",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "sub_service_id",
+                                    "name",
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "sub_service_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "John Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "email@gmail.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "1234567"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "Pakistan"
+                                    },
+                                    "city": {
+                                        "type": "string",
+                                        "example": "Lahore"
+                                    },
+                                    "age": {
+                                        "type": "integer",
+                                        "example": 30
+                                    },
+                                    "medical_history": {
+                                        "type": "string",
+                                        "example": "No prior surgeries"
+                                    },
+                                    "gender": {
+                                        "type": "string",
+                                        "enum": [
+                                            "male",
+                                            "female",
+                                            "other"
+                                        ],
+                                        "example": "male"
+                                    },
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "specific_date": {
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2025-07-30"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Record saved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Record saved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "sub_service_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "John Doe"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "email@gmail.com",
+                                                    "nullable": true
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "1234567"
+                                                },
+                                                "country": {
+                                                    "type": "string",
+                                                    "example": "Pakistan",
+                                                    "nullable": true
+                                                },
+                                                "city": {
+                                                    "type": "string",
+                                                    "example": "Lahore",
+                                                    "nullable": true
+                                                },
+                                                "age": {
+                                                    "type": "integer",
+                                                    "example": 30,
+                                                    "nullable": true
+                                                },
+                                                "medical_history": {
+                                                    "type": "string",
+                                                    "example": "Diabetic",
+                                                    "nullable": true
+                                                },
+                                                "gender": {
+                                                    "type": "string",
+                                                    "example": "male",
+                                                    "nullable": true
+                                                },
+                                                "file": {
+                                                    "type": "string",
+                                                    "example": "customer_requests/file.png",
+                                                    "nullable": true
+                                                },
+                                                "specific_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-07-30"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-30T10:11:54.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-30T10:11:54.000000Z"
+                                                },
+                                                "sub_service": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "service_id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Wallace Riddle"
+                                                        },
+                                                        "slug": {
+                                                            "type": "string",
+                                                            "example": "wallace-riddle"
+                                                        },
+                                                        "image": {
+                                                            "type": "string",
+                                                            "example": "sub_services/image.png"
+                                                        },
+                                                        "description": {
+                                                            "type": "string",
+                                                            "nullable": true
+                                                        },
+                                                        "has_customer_form": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "is_active": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-07-29T22:59:18.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-07-29T22:59:18.000000Z"
+                                                        },
+                                                        "image_url": {
+                                                            "type": "string",
+                                                            "example": "http://localhost/gojetter/storage/app/public/sub_services/image.png"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                }
+            }
+        },
         "/api/gallery-list": {
             "get": {
                 "tags": [
@@ -1698,10 +4052,23 @@
                 "tags": [
                     "Tour"
                 ],
-                "summary": "Get list of active tours",
-                "description": "Returns a list of active tours filtered by search, category_id, and sorted by price if specified.",
+                "summary": "Get list of active tours or activities",
+                "description": "Returns a list of active tours or activities filtered by search, category_id, type, and sorted by price if specified.",
                 "operationId": "getTourList",
                 "parameters": [
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "Filter results by type: private or group",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "private",
+                                "group"
+                            ]
+                        }
+                    },
                     {
                         "name": "search",
                         "in": "query",
@@ -1764,24 +4131,19 @@
                                                         "example": 1
                                                     },
                                                     "title": {
-                                                        "type": "string",
-                                                        "example": "Dubai and Cairo Combo Tour"
+                                                        "type": "string"
                                                     },
                                                     "slug": {
-                                                        "type": "string",
-                                                        "example": "dubai-and-cairo-combo-tour"
+                                                        "type": "string"
                                                     },
                                                     "thumbnail": {
-                                                        "type": "string",
-                                                        "example": "tours/9iGOlgbNCuCdxj3QTnlvL1Vqntysz3oFxwTKcwGJ.png"
+                                                        "type": "string"
                                                     },
                                                     "thumbnail_url": {
-                                                        "type": "string",
-                                                        "example": "http://localhost/gojetter/storage/app/public/tours/9iGOlgbNCuCdxj3QTnlvL1Vqntysz3oFxwTKcwGJ.png"
+                                                        "type": "string"
                                                     },
                                                     "overview": {
-                                                        "type": "string",
-                                                        "example": "<h2 class='st-heading-section'>About this tour</h2>"
+                                                        "type": "string"
                                                     },
                                                     "short_description": {
                                                         "type": "string",
@@ -1791,83 +4153,82 @@
                                                         "type": "string",
                                                         "nullable": true
                                                     },
-                                                    "duration_days": {
-                                                        "type": "integer",
-                                                        "example": 13
-                                                    },
-                                                    "duration_nights": {
-                                                        "type": "integer",
-                                                        "example": 12
-                                                    },
                                                     "tour_type": {
                                                         "type": "string",
-                                                        "example": "Adventure"
+                                                        "example": "private"
                                                     },
                                                     "group_size": {
-                                                        "type": "integer",
-                                                        "example": 72
+                                                        "type": "integer"
                                                     },
                                                     "languages": {
-                                                        "type": "string",
-                                                        "example": "English, Arabic"
+                                                        "type": "string"
                                                     },
                                                     "price": {
                                                         "type": "string",
-                                                        "example": "1898.00"
+                                                        "nullable": true
                                                     },
                                                     "min_adults": {
-                                                        "type": "integer",
-                                                        "example": 2
+                                                        "type": "integer"
                                                     },
                                                     "location": {
-                                                        "type": "string",
-                                                        "example": "Dubai"
+                                                        "type": "string"
                                                     },
                                                     "is_active": {
-                                                        "type": "integer",
-                                                        "example": 1
+                                                        "type": "integer"
                                                     },
                                                     "created_at": {
                                                         "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-07-08T22:49:38.000000Z"
+                                                        "format": "date-time"
                                                     },
                                                     "updated_at": {
                                                         "type": "string",
-                                                        "format": "date-time",
-                                                        "example": "2025-07-18T18:16:49.000000Z"
+                                                        "format": "date-time"
                                                     },
                                                     "tour_category_id": {
-                                                        "type": "integer",
-                                                        "example": 1
+                                                        "type": "integer"
                                                     },
                                                     "average_rating": {
                                                         "type": "number",
                                                         "format": "float",
-                                                        "example": 4.5,
                                                         "nullable": true
+                                                    },
+                                                    "tags": {
+                                                        "type": "string"
+                                                    },
+                                                    "is_featured": {
+                                                        "type": "integer"
+                                                    },
+                                                    "highlights": {
+                                                        "type": "string"
+                                                    },
+                                                    "difficulty_level": {
+                                                        "type": "string"
+                                                    },
+                                                    "age_limit": {
+                                                        "type": "integer"
+                                                    },
+                                                    "pickup_info": {
+                                                        "type": "string"
+                                                    },
+                                                    "dropoff_info": {
+                                                        "type": "string"
                                                     },
                                                     "tour_category": {
                                                         "properties": {
                                                             "id": {
-                                                                "type": "integer",
-                                                                "example": 1
+                                                                "type": "integer"
                                                             },
                                                             "name": {
-                                                                "type": "string",
-                                                                "example": "Adventure"
+                                                                "type": "string"
                                                             },
                                                             "thumbnail": {
-                                                                "type": "string",
-                                                                "example": "tour_category/DpLGO0CO1yHcH2kdIBYmOaMCgmTD0lhj5h4CLHDX.webp"
+                                                                "type": "string"
                                                             },
                                                             "thumbnail_url": {
-                                                                "type": "string",
-                                                                "example": "http://localhost/gojetter/storage/app/public/tour_category/DpLGO0CO1yHcH2kdIBYmOaMCgmTD0lhj5h4CLHDX.webp"
+                                                                "type": "string"
                                                             },
                                                             "is_active": {
-                                                                "type": "integer",
-                                                                "example": 1
+                                                                "type": "integer"
                                                             },
                                                             "created_at": {
                                                                 "type": "string",
@@ -1879,6 +4240,217 @@
                                                             }
                                                         },
                                                         "type": "object"
+                                                    },
+                                                    "tour_image": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "name": {
+                                                                    "type": "string"
+                                                                },
+                                                                "image": {
+                                                                    "type": "string"
+                                                                },
+                                                                "image_url": {
+                                                                    "type": "string"
+                                                                },
+                                                                "tour_id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "tour_date": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "start_date": {
+                                                                    "type": "string",
+                                                                    "format": "date"
+                                                                },
+                                                                "end_date": {
+                                                                    "type": "string",
+                                                                    "format": "date"
+                                                                },
+                                                                "price": {
+                                                                    "type": "string"
+                                                                },
+                                                                "discount_price": {
+                                                                    "type": "string"
+                                                                },
+                                                                "price_type": {
+                                                                    "type": "string"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "tour_download": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "file_type": {
+                                                                    "type": "string",
+                                                                    "example": "image"
+                                                                },
+                                                                "file_path": {
+                                                                    "type": "string"
+                                                                },
+                                                                "file_path_url": {
+                                                                    "type": "string"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "tour_faq": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "question": {
+                                                                    "type": "string"
+                                                                },
+                                                                "answer": {
+                                                                    "type": "string"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "tour_inclusion": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "item": {
+                                                                    "type": "string"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "tour_itinerary": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "day_number": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "title": {
+                                                                    "type": "string"
+                                                                },
+                                                                "description": {
+                                                                    "type": "string"
+                                                                },
+                                                                "image": {
+                                                                    "type": "string"
+                                                                },
+                                                                "image_url": {
+                                                                    "type": "string"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "tour_reviews": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "user_id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "tour_id": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "rating": {
+                                                                    "type": "string"
+                                                                },
+                                                                "comment": {
+                                                                    "type": "string"
+                                                                },
+                                                                "is_active": {
+                                                                    "type": "integer"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
                                                     }
                                                 },
                                                 "type": "object"
@@ -1899,13 +4471,13 @@
                     "Tour"
                 ],
                 "summary": "Get tour detail by slug",
-                "description": "Returns a single tour detail with category, reviews, images, and rating",
+                "description": "Returns a detailed tour object with associated data such as category, reviews, images, pricing, documents, FAQs, and more.",
                 "operationId": "getTourBySlug",
                 "parameters": [
                     {
                         "name": "slug",
                         "in": "path",
-                        "description": "Tour slug",
+                        "description": "Slug identifier for the tour",
                         "required": true,
                         "schema": {
                             "type": "string",
@@ -1947,16 +4519,14 @@
                                                     "example": "dubai-and-cairo-combo-tour"
                                                 },
                                                 "thumbnail": {
-                                                    "type": "string",
-                                                    "example": "tours/image.png"
+                                                    "type": "string"
                                                 },
                                                 "thumbnail_url": {
                                                     "type": "string",
-                                                    "example": "http://localhost/gojetter/storage/app/public/tours/image.png"
+                                                    "format": "url"
                                                 },
                                                 "overview": {
-                                                    "type": "string",
-                                                    "example": "<h2>About this tour</h2>"
+                                                    "type": "string"
                                                 },
                                                 "short_description": {
                                                     "type": "string",
@@ -1966,37 +4536,23 @@
                                                     "type": "string",
                                                     "nullable": true
                                                 },
-                                                "duration_days": {
-                                                    "type": "integer",
-                                                    "example": 13
-                                                },
-                                                "duration_nights": {
-                                                    "type": "integer",
-                                                    "example": 12
-                                                },
                                                 "tour_type": {
                                                     "type": "string",
-                                                    "example": "Adventure"
+                                                    "example": "private"
                                                 },
                                                 "group_size": {
                                                     "type": "integer",
-                                                    "example": 72
+                                                    "example": 32
                                                 },
                                                 "languages": {
-                                                    "type": "string",
-                                                    "example": "English, Arabic"
-                                                },
-                                                "price": {
-                                                    "type": "string",
-                                                    "example": "1898.00"
+                                                    "type": "string"
                                                 },
                                                 "min_adults": {
                                                     "type": "integer",
                                                     "example": 2
                                                 },
                                                 "location": {
-                                                    "type": "string",
-                                                    "example": "Dubai"
+                                                    "type": "string"
                                                 },
                                                 "is_active": {
                                                     "type": "integer",
@@ -2011,36 +4567,57 @@
                                                     "format": "date-time"
                                                 },
                                                 "tour_category_id": {
+                                                    "type": "integer"
+                                                },
+                                                "duration": {
+                                                    "type": "string",
+                                                    "nullable": true
+                                                },
+                                                "tags": {
+                                                    "type": "string"
+                                                },
+                                                "is_featured": {
                                                     "type": "integer",
                                                     "example": 1
                                                 },
+                                                "highlights": {
+                                                    "type": "string"
+                                                },
+                                                "difficulty_level": {
+                                                    "type": "string",
+                                                    "example": "easy"
+                                                },
+                                                "age_limit": {
+                                                    "type": "integer",
+                                                    "example": 23
+                                                },
+                                                "pickup_info": {
+                                                    "type": "string"
+                                                },
+                                                "dropoff_info": {
+                                                    "type": "string"
+                                                },
                                                 "average_rating": {
-                                                    "type": "number",
-                                                    "format": "float",
-                                                    "example": 4.3,
-                                                    "nullable": true
+                                                    "type": "string",
+                                                    "example": "4.5"
                                                 },
                                                 "tour_category": {
                                                     "properties": {
                                                         "id": {
-                                                            "type": "integer",
-                                                            "example": 1
+                                                            "type": "integer"
                                                         },
                                                         "name": {
-                                                            "type": "string",
-                                                            "example": "Adventure"
+                                                            "type": "string"
                                                         },
                                                         "thumbnail": {
-                                                            "type": "string",
-                                                            "example": "tour_category/image.webp"
+                                                            "type": "string"
                                                         },
                                                         "thumbnail_url": {
                                                             "type": "string",
-                                                            "example": "http://localhost/gojetter/storage/app/public/tour_category/image.webp"
+                                                            "format": "url"
                                                         },
                                                         "is_active": {
-                                                            "type": "integer",
-                                                            "example": 1
+                                                            "type": "integer"
                                                         },
                                                         "created_at": {
                                                             "type": "string",
@@ -2058,21 +4635,19 @@
                                                     "items": {
                                                         "properties": {
                                                             "id": {
-                                                                "type": "integer",
-                                                                "example": 1
+                                                                "type": "integer"
                                                             },
                                                             "user_id": {
-                                                                "type": "integer",
-                                                                "example": 5
+                                                                "type": "integer"
+                                                            },
+                                                            "tour_id": {
+                                                                "type": "integer"
                                                             },
                                                             "rating": {
-                                                                "type": "number",
-                                                                "format": "float",
-                                                                "example": 4.5
+                                                                "type": "string"
                                                             },
                                                             "comment": {
-                                                                "type": "string",
-                                                                "example": "Amazing tour experience!"
+                                                                "type": "string"
                                                             },
                                                             "created_at": {
                                                                 "type": "string",
@@ -2082,25 +4657,187 @@
                                                         "type": "object"
                                                     }
                                                 },
-                                                "tour_images": {
+                                                "tour_image": {
                                                     "type": "array",
                                                     "items": {
                                                         "properties": {
                                                             "id": {
-                                                                "type": "integer",
-                                                                "example": 1
+                                                                "type": "integer"
+                                                            },
+                                                            "tour_id": {
+                                                                "type": "integer"
                                                             },
                                                             "name": {
-                                                                "type": "string",
-                                                                "example": "Main Image"
+                                                                "type": "string"
                                                             },
                                                             "image": {
-                                                                "type": "string",
-                                                                "example": "tour_images/sample.jpg"
+                                                                "type": "string"
                                                             },
-                                                            "full_url": {
+                                                            "image_url": {
                                                                 "type": "string",
-                                                                "example": "http://localhost/gojetter/storage/app/public/tour_images/sample.jpg"
+                                                                "format": "url"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "tour_date": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "tour_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "start_date": {
+                                                                "type": "string",
+                                                                "format": "date"
+                                                            },
+                                                            "end_date": {
+                                                                "type": "string",
+                                                                "format": "date"
+                                                            },
+                                                            "price": {
+                                                                "type": "string"
+                                                            },
+                                                            "discount_price": {
+                                                                "type": "string"
+                                                            },
+                                                            "price_type": {
+                                                                "type": "string"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "tour_download": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "tour_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "file_type": {
+                                                                "type": "string"
+                                                            },
+                                                            "file_path": {
+                                                                "type": "string"
+                                                            },
+                                                            "file_path_url": {
+                                                                "type": "string",
+                                                                "format": "url"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "tour_faq": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "tour_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "question": {
+                                                                "type": "string"
+                                                            },
+                                                            "answer": {
+                                                                "type": "string"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "tour_inclusion": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "tour_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "item": {
+                                                                "type": "string"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "tour_itinerary": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "tour_id": {
+                                                                "type": "integer"
+                                                            },
+                                                            "day_number": {
+                                                                "type": "integer"
+                                                            },
+                                                            "title": {
+                                                                "type": "string"
+                                                            },
+                                                            "description": {
+                                                                "type": "string"
+                                                            },
+                                                            "image": {
+                                                                "type": "string"
+                                                            },
+                                                            "image_url": {
+                                                                "type": "string",
+                                                                "format": "url"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time"
                                                             }
                                                         },
                                                         "type": "object"
@@ -2145,7 +4882,7 @@
         "/api/save-tour-review": {
             "post": {
                 "tags": [
-                    "Tour Review"
+                    "Review"
                 ],
                 "summary": "Submit a review for a tour",
                 "operationId": "560cb3abaa3554c308310b6e8120d01f",
@@ -2607,12 +5344,44 @@
     },
     "tags": [
         {
+            "name": "Activity",
+            "description": "Activity"
+        },
+        {
+            "name": "Review",
+            "description": "Review"
+        },
+        {
             "name": "Customer Auth",
             "description": "Customer Auth"
         },
         {
+            "name": "Blog",
+            "description": "Blog"
+        },
+        {
+            "name": "Booking",
+            "description": "Booking"
+        },
+        {
             "name": "Common",
             "description": "Common"
+        },
+        {
+            "name": "Contact Us",
+            "description": "Contact Us"
+        },
+        {
+            "name": "Coupon",
+            "description": "Coupon"
+        },
+        {
+            "name": "Customer Card",
+            "description": "Customer Card"
+        },
+        {
+            "name": "Customer Request",
+            "description": "Customer Request"
         },
         {
             "name": "Gallery",
@@ -2625,10 +5394,6 @@
         {
             "name": "Tour",
             "description": "Tour"
-        },
-        {
-            "name": "Tour Review",
-            "description": "Tour Review"
         },
         {
             "name": "Wishlist",

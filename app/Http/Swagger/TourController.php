@@ -411,7 +411,7 @@ class TourController extends Controller
        * @OA\Post(
        *     path="/api/save-tour-review",
        *     summary="Submit a review for a tour",
-       *     tags={"Tour Review"},
+       *     tags={"Review"},
        *     security={{"bearerAuth":{}}},
        *     @OA\RequestBody(
        *         required=true,
