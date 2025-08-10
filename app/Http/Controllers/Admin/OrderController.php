@@ -4,32 +4,32 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
-use App\Services\Concrete\BookingService;
+use App\Services\Concrete\OrderService;
 use App\Traits\ResponseAPI;
 use Exception;
 use Illuminate\Http\Request;
 
-class BookingController extends Controller
+class OrderController extends Controller
 {
     use ResponseAPI;
-    protected $booking_service;
+    protected $order_service;
 
-    public function __construct(BookingService $booking_service)
+    public function __construct(OrderService $order_service)
     {
-        $this->booking_service = $booking_service;
+        $this->order_service = $order_service;
     }
 
     public function index()
     {
-        // abort_if(Gate::denies('booking_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        return view('booking.index');
+        // abort_if(Gate::denies('order_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        return view('order.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('booking_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('order_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
-            return $this->booking_service->getSource();
+            return $this->order_service->getSource();
         } catch (Exception $e) {
             return $this->error(ResponseMessage::ERROR);
         }
@@ -37,10 +37,10 @@ class BookingController extends Controller
 
     public function view($id)
     {
-        // abort_if(Gate::denies('booking_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('order_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
-            $booking = $this->booking_service->getDetailById($id);
-            return view('booking.view', compact('booking'));
+            $order = $this->order_service->getById($id);
+            return view('order.view', compact('order'));
         } catch (Exception $e) {
             return redirect()->back()->with('error', ResponseMessage::ERROR);
         }
@@ -48,11 +48,11 @@ class BookingController extends Controller
 
     public function status(Request $request)
     {
-        // abort_if(Gate::denies('booking_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('order_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
-            $booking = $this->booking_service->statusById($request->all());
+            $order = $this->order_service->statusById($request->all());
             return $this->success(
-                $booking,
+                $order,
                 ResponseMessage::UPDATE_STATUS,
                 200
             );
@@ -63,11 +63,11 @@ class BookingController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('booking_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        // abort_if(Gate::denies('order_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
-            $booking = $this->booking_service->deleteById($id);
+            $order = $this->order_service->deleteById($id);
             return $this->success(
-                $booking,
+                $order,
                 ResponseMessage::DELETE,
                 true
             );

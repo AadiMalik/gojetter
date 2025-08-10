@@ -74,11 +74,16 @@
                         </ul>
                     </li>
                     {{-- @endcan --}}
-                    {{-- @can('booking_access') --}}
+                    {{-- @can('order_management_access') --}}
                     <li class="Ul_li--hover {{ Request::is('booking*') ? 'mm-active' : '' }}">
                         <a class="has-arrow" href="#"><i class="fa fa-bus text-20 mr-2 text-muted"></i><span
-                                class="item-name text-15 text-muted">Booking Manage..</span></a>
+                                class="item-name text-15 text-muted">Order Manage..</span></a>
                         <ul class="mm-collapse">
+                            {{-- @can('order_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('order*') ? 'sidebar_active' : '' }}"
+                                href="{{ url('order') }}"><i class="nav-icon fa fa-circle"></i><span
+                                    class="item-name">Orders</span></a></li>
+                        {{-- @endcan --}}
                             {{-- @can('booking_access') --}}
                             <li class="item-name"><a class="{{ Request::is('booking*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('booking') }}"><i class="nav-icon fa fa-circle"></i><span

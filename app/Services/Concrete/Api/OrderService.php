@@ -2,7 +2,6 @@
 
 namespace App\Services\Concrete\Api;
 
-use App\Models\ActivityTimeSlot;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -15,14 +14,12 @@ class OrderService
 {
       protected $model_order;
       protected $model_order_detail;
-      protected $model_activity_time_slot;
       protected $model_cart;
       public function __construct()
       {
             // set the model
             $this->model_order = new Repository(new Order());
             $this->model_order_detail = new Repository(new OrderDetail());
-            $this->model_activity_time_slot = new Repository(new ActivityTimeSlot());
             $this->model_cart = new Repository(new Cart());
       }
       public function list()
@@ -85,10 +82,6 @@ class OrderService
                               'total'                 => $item->quantity * $item->activity_date->price
                         ];
                         $this->model_order_detail->getModel()::create($order_detail_obj);
-
-                        $this->model_activity_time_slot->getModel()
-                              ::where('id', $item->activity_time_slot_id)
-                              ->decrement('available_seats', $item->quantity);
                   }
                   Cart::where('user_id', $user_id)->delete();
 

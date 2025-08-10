@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\CustomerRequestController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\GalleryController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PolicyController;
 use App\Http\Controllers\Admin\RoleController;
@@ -409,6 +410,15 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('view/{id}', [BookingController::class, 'view']);
         Route::get('destroy/{id}', [BookingController::class, 'destroy']);
         Route::post('status', [BookingController::class, 'status']);
+    });
+
+    //order
+    Route::group(['prefix' => 'order'], function () {
+        Route::get('/', [OrderController::class, 'index']);
+        Route::post('data', [OrderController::class, 'getData'])->name('order.data');
+        Route::get('view/{id}', [OrderController::class, 'view']);
+        Route::get('destroy/{id}', [OrderController::class, 'destroy']);
+        Route::post('status', [OrderController::class, 'status']);
     });
 
     //blog category
