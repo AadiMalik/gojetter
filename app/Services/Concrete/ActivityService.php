@@ -44,7 +44,7 @@ class ActivityService
                 $inclusion = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-inclusion/" . $item->id . "'><i class='fa fa-check mr-1'></i> Inclusion</a>";
                 $exclusion = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-exclusion/" . $item->id . "'><i class='fa fa-close mr-1'></i> Exclusion</a>";
                 $expectation = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-expectation/" . $item->id . "'><i class='fa fa-leaf mr-1'></i> Expectation</a>";
-                $policy = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-policy/" . $item->id . "'><i class='fa fa-question-circle mr-1'></i> FAQs</a>";
+                $policy = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-policy/" . $item->id . "'><i class='fa fa-question-circle mr-1'></i> Policies</a>";
                 $image = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-image/" . $item->id . "'><i class='fa fa-image mr-1'></i> Gallery</a>";
                 $support = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-support/" . $item->id . "'><i class='fa fa-users mr-1'></i> Supports</a>";
                 // if (Auth::user()->can('activity_edit'))

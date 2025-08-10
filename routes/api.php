@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\CustomerCardController;
 use App\Http\Controllers\Api\CustomerRequestController;
 use App\Http\Controllers\Api\GalleryController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\SocialMediaController;
 use App\Http\Controllers\Api\TourController;
@@ -110,4 +111,9 @@ Route::group(['middleware' => ['auth:api']], function () {
     //customer card
     Route::get('customer-card-list', [CustomerCardController::class, 'index']);
     Route::post('save-customer-card', [CustomerCardController::class, 'store']);
+
+    //order
+    Route::get('order-list', [OrderController::class, 'index']);
+    Route::post('save-order', [OrderController::class, 'store']);
+    Route::get('order-detail/{id}', [OrderController::class, 'getOrderDetail']);
 });

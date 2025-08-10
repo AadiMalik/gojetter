@@ -13,7 +13,7 @@ class Cart extends Model
         'activity_date_id',
         'activity_time_slot_id',
         'user_id',
-        'quatitiy'
+        'quantity'
     ];
     public function activity()
     {

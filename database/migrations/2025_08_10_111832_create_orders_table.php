@@ -34,6 +34,7 @@ return new class extends Migration
 
             $table->string('payment_method')->nullable();
             $table->integer('currency_id')->nullable();
+            $table->integer('card_id')->nullable();
             $table->integer('coupon_id')->nullable();
 
             $table->enum('status', [
