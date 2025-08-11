@@ -34,6 +34,12 @@
         <div class="main-content-wrap mobile-menu-content bg-off-white m-0">
             @include('layouts.header')
             <!-- ============ Body content start ============= -->
+            <!-- Pre Loader Strat  -->
+            <div class='loadscreen' id="preloader">
+
+                <div class="loader spinner spinner-primary">
+                </div>
+            </div>
             @yield('content')
             <div class="sidebar-overlay open"></div><!-- Footer Start -->
             <div class="flex-grow-1"></div>

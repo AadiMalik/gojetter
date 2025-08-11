@@ -24,6 +24,7 @@ use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\PolicyController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SocialMediaController;
@@ -484,5 +485,17 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('data', [CustomerRequestController::class, 'getData'])->name('customer-requests.data');
         Route::get('view/{id}', [CustomerRequestController::class, 'view']);
         Route::get('destroy/{id}', [CustomerRequestController::class, 'destroy']);
+    });
+
+    //reports
+    Route::group(['prefix' => 'reports'], function () {
+        //customer report
+        Route::get('customer-report', [ReportController::class, 'customerReport']);
+        Route::get('get-customer-report', [ReportController::class, 'getCustomerReport']);
+        Route::get('get-preview-customert-report', [ReportController::class, 'getPreviewCustomerReport'])->name('report.get-preview-customer-report');
+        // booking report
+        Route::get('booking-report', [ReportController::class, 'bookingReport']);
+        Route::get('get-booking-report', [ReportController::class, 'getBookingReport']);
+        Route::get('get-preview-bookingt-report', [ReportController::class, 'getPreviewBookingReport'])->name('report.get-preview-booking-report');
     });
 });

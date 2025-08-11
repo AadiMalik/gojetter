@@ -1,0 +1,70 @@
+table,
+    th,
+    /* td {
+        border: 0.5px solid black;
+        border-collapse: collapse;
+    } */
+
+    th,
+    td {
+        /* border-style: dashed; */
+        padding: 2px;
+    }
+    .border-top{
+        border-top: 1px solid black !important;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+
+    .text-left {
+        text-align: left;
+    }
+
+    .font-x-small {
+        font-size: xx-small;
+    }
+
+    .font-small {
+        font-size: x-small;
+    }
+
+    .font-medium {
+        font-size: medium;
+    }
+
+    .font-weight-bold {
+        font-weight: bold;
+    }
+
+    .bg-dark {
+        background: #000;
+    }
+
+    .bg-grey {
+        background: #a2a2a2;
+    }
+
+    .font-color-white {
+        color: #fff;
+    }
+
+    .font-color-black {
+        color: #000;
+    }
+
+    thead {
+        position: sticky;
+        top: 0;
+        background-color: #f2f2f2;
+        /* Set your desired background color */
+    }
+
+    .border-black {
+      border:1px solid black;
+    }

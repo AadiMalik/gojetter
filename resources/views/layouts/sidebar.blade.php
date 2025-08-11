@@ -241,6 +241,26 @@
                         </ul>
                     </li>
                     {{-- @endcan --}}
+                    {{-- @can('report_access') --}}
+                    <li class="Ul_li--hover {{ Request::is('reports/customer-report') ? 'mm-active' : '' }}">
+                        <a class="has-arrow" href="#"><i
+                                class="fa fa-smile text-20 mr-2 text-muted"></i><span
+                                class="item-name text-15 text-muted">Reports</span></a>
+                        <ul class="mm-collapse">
+                            {{-- @can('customer_report_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('reports/customer-report') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('reports/customer-report') }}"><i class="nav-icon fa fa-circle"></i><span
+                                        class="item-name">Customer Report</span></a></li>
+                            {{-- @endcan --}}
+                            {{-- @can('booking_report_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('reports/booking-report') ? 'sidebar_active' : '' }}"
+                                href="{{ url('reports/booking-report') }}"><i class="nav-icon fa fa-circle"></i><span
+                                    class="item-name">Booking Report</span></a></li>
+                        {{-- @endcan --}}
+
+                        </ul>
+                    </li>
+                    {{-- @endcan --}}
                 </ul>
             </div>
         </div>
