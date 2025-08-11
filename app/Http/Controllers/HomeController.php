@@ -40,7 +40,6 @@ class HomeController extends Controller
         $summary = $stmt->fetchAll(PDO::FETCH_OBJ);
         $stmt->nextRowset();
         $line_data = $stmt->fetchAll(PDO::FETCH_OBJ);
-
         $summary = $summary[0];
 
         $initialData = [
@@ -48,13 +47,14 @@ class HomeController extends Controller
             'total_users' => $summary->total_users,
             'total_tours' => $summary->total_tours,
             'total_bookings' => $summary->total_bookings,
-            'total_paid_amount' => $summary->total_paid_amount,
+            'total_orders' => $summary->total_orders,
+            'total_earnings' => $summary->total_earnings,
             'chart_data' => $line_data
         ];
 
         // Prepare chart labels and data separately
         $labels = array_map(fn($row) => $row->label, $line_data);
-        $data = array_map(fn($row) => (float) $row->count, $line_data);
+        $data   = array_map(fn($row) => (float) $row->total_amount, $line_data);
 
         return response()->json([
             'view' => view('partials.dashboard', compact('initialData'))->render(),

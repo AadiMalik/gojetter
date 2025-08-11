@@ -107,10 +107,20 @@
     </div>
     <div class="col-md-3">
         <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+            <div class="card-body text-center"><i class="i-Checkout-Basket"></i>
+                <div class="content">
+                    <p class="text-muted mt-2 mb-0">Orders</p>
+                    <p class="text-primary text-24 line-height-1 mb-2">{{ $initialData['total_orders'] ?? 0 }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
             <div class="card-body text-center"><i class="i-Money-2"></i>
                 <div class="content">
                     <p class="text-muted mt-2 mb-0">Earnings</p>
-                    <p class="text-primary text-24 line-height-1 mb-2">{{ $initialData['total_paid_amount'] ?? '0.00' }}</p>
+                    <p class="text-primary text-24 line-height-1 mb-2">{{ $initialData['total_earnings'] ?? '0.00' }}</p>
                 </div>
             </div>
         </div>
@@ -123,7 +133,7 @@
                 <div class="row" style="align-items: center;">
                     <div class="col-md-6">
                         <div class="ul-card-widget__head-label">
-                            <h5 class="text-18 font-weight-700 card-title">Booking Summary</h5>
+                            <h5 class="text-18 font-weight-700 card-title">Earnings Summary</h5>
                         </div>
                     </div>
                 </div>
