@@ -496,6 +496,21 @@ Route::group(['middleware' => ['auth']], function () {
         // booking report
         Route::get('booking-report', [ReportController::class, 'bookingReport']);
         Route::get('get-booking-report', [ReportController::class, 'getBookingReport']);
-        Route::get('get-preview-bookingt-report', [ReportController::class, 'getPreviewBookingReport'])->name('report.get-preview-booking-report');
+        Route::get('get-preview-booking-report', [ReportController::class, 'getPreviewBookingReport'])->name('report.get-preview-booking-report');
+
+        // booking detail report
+        Route::get('booking-detail-report', [ReportController::class, 'bookingDetailReport']);
+        Route::get('get-booking-detail-report', [ReportController::class, 'getBookingDetailReport']);
+        Route::get('get-preview-booking-detail-report', [ReportController::class, 'getPreviewBookingDetailReport'])->name('report.get-preview-booking-detail-report');
+
+        // order report
+        Route::get('order-report', [ReportController::class, 'orderReport']);
+        Route::get('get-order-report', [ReportController::class, 'getOrderReport']);
+        Route::get('get-preview-order-report', [ReportController::class, 'getPreviewOrderReport'])->name('report.get-preview-order-report');
+
+        // order detail report
+        Route::get('order-detail-report', [ReportController::class, 'orderDetailReport']);
+        Route::get('get-order-detail-report', [ReportController::class, 'getOrderDetailReport']);
+        Route::get('get-preview-order-detail-report', [ReportController::class, 'getPreviewOrderDetailReport'])->name('report.get-preview-order-detail-report');
     });
 });

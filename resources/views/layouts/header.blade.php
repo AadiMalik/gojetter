@@ -26,13 +26,13 @@
                   </div>
             </div> -->
             <!-- Notificaiton -->
-            <div class="dropdown">
+            <!-- <div class="dropdown">
                   <div class="badge-top-container" role="button" id="dropdownNotification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="badge badge-primary">3</span>
                         <i class="i-Bell text-muted header-icon"></i>
-                  </div>
+                  </div> -->
                   <!-- Notification dropdown -->
-                  <div class="dropdown-menu dropdown-menu-right notification-dropdown rtl-ps-none" aria-labelledby="dropdownNotification" data-perfect-scrollbar data-suppress-scroll-x="true">
+                  <!-- <div class="dropdown-menu dropdown-menu-right notification-dropdown rtl-ps-none" aria-labelledby="dropdownNotification" data-perfect-scrollbar data-suppress-scroll-x="true">
                         <div class="dropdown-item d-flex">
                               <div class="notification-icon">
                                     <i class="i-Speach-Bubble-6 text-primary mr-1"></i>
@@ -89,8 +89,8 @@
                                     <p class="text-small text-muted m-0">Server rebooted successfully</p>
                               </div>
                         </div>
-                  </div>
-            </div>
+                  </div> -->
+            <!-- </div> -->
             <!-- Notificaiton End -->
             <!-- User avatar dropdown -->
             <div class="dropdown">
@@ -105,7 +105,7 @@
                               <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        Sign out
+                                       <span class="fa fa-lock"></span> Sign out
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

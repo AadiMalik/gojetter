@@ -61,6 +61,7 @@ class ReportController extends Controller
         $parms = (object)$parms;
         $parms->start_date = $request->start_date;
         $parms->end_date = $request->end_date;
+        $parms->status = $request->status;
 
         $pdf = Pdf::loadView('/reports/booking_report/partials.report', compact('parms'));
         return $pdf->stream('Booking Report .pdf');
@@ -72,7 +73,101 @@ class ReportController extends Controller
         $parms = (object)$parms;
         $parms->start_date = $request->start_date;
         $parms->end_date = $request->end_date;
+        $parms->status = $request->status;
 
         return view('/reports/booking_report/partials.report', compact('parms'));
+    }
+
+    ////////////////////////////Booking Detail Report////////////////////////////////
+    public function bookingDetailReport()
+    {
+        $reflection = new ReflectionClass(BookingStatus::class);
+        $statuses = $reflection->getConstants();
+        return view('reports/booking_detail_report/index',compact('statuses'));
+    }
+    public function getBookingDetailReport(Request $request)
+    {
+        $parms['data'] = $this->report_service->getBookingDetailReport($request->all());
+
+        $parms = (object)$parms;
+        $parms->start_date = $request->start_date;
+        $parms->end_date = $request->end_date;
+        $parms->status = $request->status;
+
+        $pdf = Pdf::loadView('/reports/booking_detail_report/partials.report', compact('parms'));
+        return $pdf->stream('Booking Report .pdf');
+    }
+    public function getPreviewBookingDetailReport(Request $request)
+    {
+        $parms['data'] = $this->report_service->getBookingDetailReport($request->all());
+
+        $parms = (object)$parms;
+        $parms->start_date = $request->start_date;
+        $parms->end_date = $request->end_date;
+        $parms->status = $request->status;
+
+        return view('/reports/booking_detail_report/partials.report', compact('parms'));
+    }
+
+    ////////////////////////////Order Report////////////////////////////////
+    public function orderReport()
+    {
+        $reflection = new ReflectionClass(BookingStatus::class);
+        $statuses = $reflection->getConstants();
+        return view('reports/order_report/index',compact('statuses'));
+    }
+    public function getOrderReport(Request $request)
+    {
+        $parms['data'] = $this->report_service->getOrderReport($request->all());
+
+        $parms = (object)$parms;
+        $parms->start_date = $request->start_date;
+        $parms->end_date = $request->end_date;
+        $parms->status = $request->status;
+
+        $pdf = Pdf::loadView('/reports/order_report/partials.report', compact('parms'));
+        return $pdf->stream('Order Report .pdf');
+    }
+    public function getPreviewOrderReport(Request $request)
+    {
+        $parms['data'] = $this->report_service->getOrderReport($request->all());
+
+        $parms = (object)$parms;
+        $parms->start_date = $request->start_date;
+        $parms->end_date = $request->end_date;
+        $parms->status = $request->status;
+
+        return view('/reports/order_report/partials.report', compact('parms'));
+    }
+
+    ////////////////////////////Order Detail Report////////////////////////////////
+    public function orderDetailReport()
+    {
+        $reflection = new ReflectionClass(BookingStatus::class);
+        $statuses = $reflection->getConstants();
+        return view('reports/order_detail_report/index',compact('statuses'));
+    }
+    public function getOrderDetailReport(Request $request)
+    {
+        $parms['data'] = $this->report_service->getOrderDetailReport($request->all());
+
+        $parms = (object)$parms;
+        $parms->start_date = $request->start_date;
+        $parms->end_date = $request->end_date;
+        $parms->status = $request->status;
+
+        $pdf = Pdf::loadView('/reports/order_detail_report/partials.report', compact('parms'));
+        return $pdf->stream('Order Detail Report .pdf');
+    }
+    public function getPreviewOrderDetailReport(Request $request)
+    {
+        $parms['data'] = $this->report_service->getOrderDetailReport($request->all());
+
+        $parms = (object)$parms;
+        $parms->start_date = $request->start_date;
+        $parms->end_date = $request->end_date;
+        $parms->status = $request->status;
+
+        return view('/reports/order_detail_report/partials.report', compact('parms'));
     }
 }

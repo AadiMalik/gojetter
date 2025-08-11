@@ -81,9 +81,9 @@
                         <ul class="mm-collapse">
                             {{-- @can('order_access') --}}
                             <li class="item-name"><a class="{{ Request::is('order*') ? 'sidebar_active' : '' }}"
-                                href="{{ url('order') }}"><i class="nav-icon fa fa-circle"></i><span
-                                    class="item-name">Orders</span></a></li>
-                        {{-- @endcan --}}
+                                    href="{{ url('order') }}"><i class="nav-icon fa fa-circle"></i><span
+                                        class="item-name">Orders</span></a></li>
+                            {{-- @endcan --}}
                             {{-- @can('booking_access') --}}
                             <li class="item-name"><a class="{{ Request::is('booking*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('booking') }}"><i class="nav-icon fa fa-circle"></i><span
@@ -242,9 +242,9 @@
                     </li>
                     {{-- @endcan --}}
                     {{-- @can('report_access') --}}
-                    <li class="Ul_li--hover {{ Request::is('reports/customer-report') ? 'mm-active' : '' }}">
+                    <li class="Ul_li--hover {{ Request::is('reports/customer-report') || Request::is('reports/booking-report') || Request::is('reports/booking-detail-report') || Request::is('reports/order-report') || Request::is('reports/order-detail-report') ? 'mm-active' : '' }}">
                         <a class="has-arrow" href="#"><i
-                                class="fa fa-smile text-20 mr-2 text-muted"></i><span
+                                class="fa fa-bar-chart text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Reports</span></a>
                         <ul class="mm-collapse">
                             {{-- @can('customer_report_access') --}}
@@ -254,8 +254,23 @@
                             {{-- @endcan --}}
                             {{-- @can('booking_report_access') --}}
                             <li class="item-name"><a class="{{ Request::is('reports/booking-report') ? 'sidebar_active' : '' }}"
-                                href="{{ url('reports/booking-report') }}"><i class="nav-icon fa fa-circle"></i><span
-                                    class="item-name">Booking Report</span></a></li>
+                                    href="{{ url('reports/booking-report') }}"><i class="nav-icon fa fa-circle"></i><span
+                                        class="item-name">Booking Report</span></a></li>
+                            {{-- @endcan --}}
+                            {{-- @can('booking_detail_report_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('reports/booking-detail-report') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('reports/booking-detail-report') }}"><i class="nav-icon fa fa-circle"></i><span
+                                        class="item-name">Booking Detail Report</span></a></li>
+                            {{-- @endcan --}}
+                            {{-- @can('order_report_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('reports/order-report') ? 'sidebar_active' : '' }}"
+                                href="{{ url('reports/order-report') }}"><i class="nav-icon fa fa-circle"></i><span
+                                    class="item-name">Order Report</span></a></li>
+                        {{-- @endcan --}}
+                        {{-- @can('order_detail_report_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('reports/order-detail-report') ? 'sidebar_active' : '' }}"
+                                href="{{ url('reports/order-detail-report') }}"><i class="nav-icon fa fa-circle"></i><span
+                                    class="item-name">Order Detail Report</span></a></li>
                         {{-- @endcan --}}
 
                         </ul>
