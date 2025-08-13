@@ -12,7 +12,7 @@ class ActivityController extends Controller
        *     path="/api/activity-list",
        *     tags={"Activity"},
        *     summary="Get list of active activities",
-       *     description="Returns a list of active activities filtered by search, category_id, type, and sorted by price if specified.",
+       *     description="Returns a list of active activities filtered by search, category_id, type, location, duration, and sorted by price if specified.",
        *     operationId="getActivityList",
        *
        *     @OA\Parameter(
@@ -35,6 +35,20 @@ class ActivityController extends Controller
        *         description="Filter activities by category ID",
        *         required=false,
        *         @OA\Schema(type="integer")
+       *     ),
+       *     @OA\Parameter(
+       *         name="location",
+       *         in="query",
+       *         description="Filter activities by location name",
+       *         required=false,
+       *         @OA\Schema(type="string")
+       *     ),
+       *     @OA\Parameter(
+       *         name="duration",
+       *         in="query",
+       *         description="Filter activities by duration (e.g., '2 hours', '1 day')",
+       *         required=false,
+       *         @OA\Schema(type="string")
        *     ),
        *     @OA\Parameter(
        *         name="sort_by",

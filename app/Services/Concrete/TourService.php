@@ -287,18 +287,52 @@ class TourService
         if (!empty($data['type'])) {
             $query->where('tour_type', $data['type']);
         }
-        // Filter by category
+        // Filter by type
         if (!empty($data['category_id'])) {
             $query->where('tour_category_id', $data['category_id']);
+        }
+        // Filter by location
+        if (!empty($data['location'])) {
+            $query->where('location', 'LIKE', '%' . $data['location'] . '%');
+        }
+        if (!empty($data['type'])) {
+            $query->where('tour_type', $data['type']);
+        }
+
+        if (!empty($data['duration'])) {
+            $query->where(function ($q) use ($data) {
+                $q->whereRaw("
+                    CAST(SUBSTRING_INDEX(duration, ' ', 1) AS UNSIGNED) 
+                    BETWEEN ? AND ?
+                ", match ($data['duration']) {
+                    '1-3' => [1, 3],
+                    '4-7' => [4, 7],
+                    '8-14' => [8, 14],
+                    '15+' => [15, 1000], // arbitrarily large number
+                    default => [0, 1000],
+                });
+            });
+        }
+
+        if(!empty($data['search'])){
+            $query->where('title', 'LIKE', '%' . $data['search'] . '%')
+            ->orWhere('overview', 'LIKE', '%' . $data['search'] . '%')
+            ->orWhere('highlights', 'LIKE', '%' . $data['search'] . '%')
+            ->orWhere('short_description', 'LIKE', '%' . $data['search'] . '%')
+            ->orWhere('full_description', 'LIKE', '%' . $data['search'] . '%');
         }
 
         $tours = $query->get();
 
         if (!empty($data['sort_by'])) {
             if ($data['sort_by'] == 'price_low_high') {
-                return $tours->sortBy(fn($tour) => optional($tour->tourDate)->price)->values();
+                return $tours->sortBy(function ($tour) {
+                    return $tour->tourDate->min('price'); // lowest price in the dates
+                })->values();
             } elseif ($data['sort_by'] == 'price_high_low') {
-                return $tours->sortByDesc(fn($tour) => optional($tour->tourDate)->price)->values();
+                return $tours->sortByDesc(function ($tour) {
+                    return $tour->tourDate->min('price'); // lowest price in the dates
+                })->values();
             }
         } else {
             $tours = $tours->sortByDesc('title')->values(); // Default sorting

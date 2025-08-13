@@ -46,7 +46,7 @@ class TourController extends Controller
        *     path="/api/tour-list",
        *     tags={"Tour"},
        *     summary="Get list of active tours or activities",
-       *     description="Returns a list of active tours or activities filtered by search, category_id, type, and sorted by price if specified.",
+       *     description="Returns a list of active tours or activities filtered by search, category_id, type, location, duration, and sorted by price if specified.",
        *     operationId="getTourList",
        *
        *     @OA\Parameter(
@@ -69,6 +69,20 @@ class TourController extends Controller
        *         description="Filter tours by category ID",
        *         required=false,
        *         @OA\Schema(type="integer")
+       *     ),
+       *     @OA\Parameter(
+       *         name="location",
+       *         in="query",
+       *         description="Filter tours by location",
+       *         required=false,
+       *         @OA\Schema(type="string")
+       *     ),
+       *     @OA\Parameter(
+       *         name="duration",
+       *         in="query",
+       *         description="Filter tours by duration (e.g., '2 hours', '3 days')",
+       *         required=false,
+       *         @OA\Schema(type="string")
        *     ),
        *     @OA\Parameter(
        *         name="sort_by",
@@ -103,6 +117,7 @@ class TourController extends Controller
        *                     @OA\Property(property="price", type="string", nullable=true),
        *                     @OA\Property(property="min_adults", type="integer"),
        *                     @OA\Property(property="location", type="string"),
+       *                     @OA\Property(property="duration", type="string"),
        *                     @OA\Property(property="is_active", type="integer"),
        *                     @OA\Property(property="created_at", type="string", format="date-time"),
        *                     @OA\Property(property="updated_at", type="string", format="date-time"),
