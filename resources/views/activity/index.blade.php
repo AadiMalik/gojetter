@@ -30,7 +30,7 @@
                                         <th scope="col">Category</th>
                                         <th scope="col">Type</th>
                                         <th scope="col">Duration</th>
-                                        <th scope="col">Location</th>
+                                        <th scope="col">Destination</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Action</th>
                                     </tr>
@@ -55,7 +55,7 @@
                  {data: 'category' , name: 'category' , 'sortable': false , searchable: false},
                  {data: 'activity_type' , name: 'activity_type'},
                  {data: 'duration' , name: 'duration'},
-                 {data: 'location' , name: 'location'},
+                 {data: 'destination' , name: 'destination', 'sortable': false , searchable: false},
                  {data: 'is_active' , name: 'is_active' , 'sortable': false , searchable: false},
                 {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
         'route' => 'activity/data',

@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\CurrencyController;
 use App\Http\Controllers\Admin\CustomerRequestController;
+use App\Http\Controllers\Admin\DestinationController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\GalleryController;
 use App\Http\Controllers\Admin\OrderController;
@@ -366,6 +367,27 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('status/{id}', [CountryController::class, 'status']);
         Route::get('/js/country.js', function () {
             $path = resource_path('views/country/js/country.js');
+            if (file_exists($path)) {
+                return Response::file($path, [
+                    'Content-Type' => 'application/javascript',
+                ]);
+            }
+            abort(404);
+        });
+    });
+
+    //destination
+    Route::group(['prefix' => 'destination'], function () {
+        Route::get('/', [DestinationController::class, 'index']);
+        Route::post('data', [DestinationController::class, 'getData'])->name('destination.data');
+        Route::get('create', [DestinationController::class, 'create']);
+        Route::post('store', [DestinationController::class, 'store']);
+        Route::get('edit/{id}', [DestinationController::class, 'edit']);
+        Route::post('update', [DestinationController::class, 'update']);
+        Route::get('destroy/{id}', [DestinationController::class, 'destroy']);
+        Route::get('status/{id}', [DestinationController::class, 'status']);
+        Route::get('/js/destination.js', function () {
+            $path = resource_path('views/destination/js/destination.js');
             if (file_exists($path)) {
                 return Response::file($path, [
                     'Content-Type' => 'application/javascript',

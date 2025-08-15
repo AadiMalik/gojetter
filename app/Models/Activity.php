@@ -11,6 +11,7 @@ class Activity extends Model
     protected $fillable = [
         'title',
         'slug',
+        'destination_id',
         'thumbnail',
         'category_id',
         'overview',
@@ -65,6 +66,10 @@ class Activity extends Model
     public function activity_category()
     {
         return $this->belongsTo(TourCategory::class, 'category_id');
+    }
+    public function destination()
+    {
+        return $this->belongsTo(Destination::class, 'destination_id');
     }
     public function activityImage() {
         return $this->hasMany(ActivityImage::class, 'activity_id', 'id');

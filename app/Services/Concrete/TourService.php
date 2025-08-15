@@ -2,6 +2,7 @@
 
 namespace App\Services\Concrete;
 
+use App\Models\Destination;
 use App\Models\Tour;
 use App\Models\TourDate;
 use App\Repository\Repository;
@@ -13,20 +14,26 @@ class TourService
 {
     protected $model_tour;
     protected $model_tour_date;
+    protected $model_destination;
     public function __construct()
     {
         // set the model
         $this->model_tour = new Repository(new Tour);
         $this->model_tour_date = new Repository(new TourDate);
+        $this->model_destination = new Repository(new Destination);
     }
     //Bead type
     public function getSource()
     {
-        $model = $this->model_tour->getModel()::with('tour_category')->where('is_deleted', 0);
+        $model = $this->model_tour->getModel()::with(['tour_category', 'destination'])->where('is_deleted', 0);
         $data = DataTables::of($model)
             ->addColumn('category', function ($item) {
 
                 return $item->tour_category->name ?? '';
+            })
+            ->addColumn('destination', function ($item) {
+
+                return $item->destination->name ?? '';
             })
             ->addColumn('is_active', function ($item) {
                 if ($item->is_active == 1) {
@@ -86,7 +93,7 @@ class TourService
 
                 return $action_column . $dropdown;
             })
-            ->rawColumns(['category', 'is_active', 'action'])
+            ->rawColumns(['category', 'destination', 'is_active', 'action'])
             ->make(true);
         return $data;
     }
@@ -265,8 +272,14 @@ class TourService
     //tour list for api
     public function listActiveTours($data)
     {
+        $destinations = $this->model_destination->getModel()::where('is_deleted', 0)->where('is_active', 1)->get();
+        $filter_destination = $destinations;
+        if (!empty($data['destination_id'])) {
+            $filter_destination = $destinations->where('id', $data['destination_id']);
+        }
         $query = Tour::select('tours.*')
             ->with([
+                'destination',
                 'tour_category',
                 'tourImage',
                 'tourDate',
@@ -291,13 +304,6 @@ class TourService
         if (!empty($data['category_id'])) {
             $query->where('tour_category_id', $data['category_id']);
         }
-        // Filter by location
-        if (!empty($data['location'])) {
-            $query->where('location', 'LIKE', '%' . $data['location'] . '%');
-        }
-        if (!empty($data['type'])) {
-            $query->where('tour_type', $data['type']);
-        }
 
         if (!empty($data['duration'])) {
             $query->where(function ($q) use ($data) {
@@ -314,12 +320,14 @@ class TourService
             });
         }
 
-        if(!empty($data['search'])){
-            $query->where('title', 'LIKE', '%' . $data['search'] . '%')
-            ->orWhere('overview', 'LIKE', '%' . $data['search'] . '%')
-            ->orWhere('highlights', 'LIKE', '%' . $data['search'] . '%')
-            ->orWhere('short_description', 'LIKE', '%' . $data['search'] . '%')
-            ->orWhere('full_description', 'LIKE', '%' . $data['search'] . '%');
+        if (!empty($data['search'])) {
+            $query->where(function ($q) use ($data) {
+                $q->where('title', 'LIKE', "%{$data['search']}%")
+                    ->orWhere('overview', 'LIKE', "%{$data['search']}%")
+                    ->orWhere('highlights', 'LIKE', "%{$data['search']}%")
+                    ->orWhere('short_description', 'LIKE', "%{$data['search']}%")
+                    ->orWhere('full_description', 'LIKE', "%{$data['search']}%");
+            });
         }
 
         $tours = $query->get();
@@ -331,20 +339,33 @@ class TourService
                 })->values();
             } elseif ($data['sort_by'] == 'price_high_low') {
                 return $tours->sortByDesc(function ($tour) {
-                    return $tour->tourDate->min('price'); // lowest price in the dates
+                    return $tour->tourDate->max('price'); // highest price in the dates
                 })->values();
             }
         } else {
             $tours = $tours->sortByDesc('title')->values(); // Default sorting
         }
 
-        return $tours;
+        $tour_data = [];
+        foreach ($filter_destination as $item) {
+            $tour_data[] = [
+                "destination_id" => $item->id,
+                "destination_name" => $item->name ?? '',
+                "is_active" => $item->is_active ?? '',
+                "tours" => $tours->where('destination_id', $item->id)->values()
+            ];
+        }
+        return [
+            "destinations" => $destinations,
+            "data" => $tour_data
+        ];
     }
 
     //get tour detail
     public function tourDetailById($slug)
     {
         $tour = Tour::with([
+            'destination',
             'tour_category',
             'tourReviews' => function ($query) {
                 $query->where('is_active', 1)

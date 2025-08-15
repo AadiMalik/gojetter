@@ -27,7 +27,7 @@ class GetActivityListRequest extends FormRequest
             'type'  => 'sometimes|string|in:private,group',
             'search'  => 'sometimes|string|max:255',
             'category_id'  => 'sometimes|integer',
-            'location'  => 'sometimes|string',
+            'destination_id'  => 'sometimes|string',
             'duration'  => 'sometimes|string',
             'sort_by'  => 'sometimes|string|max:255',
         ];

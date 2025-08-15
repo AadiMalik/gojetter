@@ -11,6 +11,7 @@ class Tour extends Model
     protected $fillable = [
         'title',
         'slug',
+        'destination_id',
         'thumbnail',
         'tour_category_id',
         'overview',
@@ -58,6 +59,10 @@ class Tour extends Model
     public function tour_category()
     {
         return $this->belongsTo(TourCategory::class, 'tour_category_id');
+    }
+    public function destination()
+    {
+        return $this->belongsTo(Destination::class, 'destination_id');
     }
 
     public function tourImage() {

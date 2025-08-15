@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
+use App\Services\Concrete\DestinationService;
 use App\Services\Concrete\TourCategoryService;
 use App\Services\Concrete\TourService;
 use App\Traits\ResponseAPI;
@@ -16,13 +17,16 @@ class TourController extends Controller
     use ResponseAPI;
     protected $tour_category_service;
     protected $tour_service;
+    protected $destination_service;
 
     public function __construct(
         TourCategoryService $tour_category_service,
-        TourService $tour_service
+        TourService $tour_service,
+        DestinationService $destination_service
     ) {
         $this->tour_category_service = $tour_category_service;
         $this->tour_service = $tour_service;
+        $this->destination_service = $destination_service;
     }
 
     public function index()
@@ -44,7 +48,8 @@ class TourController extends Controller
     {
         // abort_if(Gate::denies('tour_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tour_category = $this->tour_category_service->getAllActive();
-        return view('tours.create', compact('tour_category'));
+        $destinations = $this->destination_service->getAllActive();
+        return view('tours.create', compact('tour_category','destinations'));
     }
     public function store(Request $request)
     {
@@ -57,6 +62,7 @@ class TourController extends Controller
                 'slug'              => 'required|string|unique:tours,slug,' . ($request->id ?? 'null') . ',id',
                 'tour_category_id'  => 'required',
                 'tags'              => 'required|string|max:255',
+                'destination_id'    => 'required',
                 'thumbnail'         => 'nullable|image',
                 'overview'          => 'nullable|string',
                 'short_description' => 'nullable|string',
@@ -105,8 +111,9 @@ class TourController extends Controller
     {
         // abort_if(Gate::denies('tour_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tour_category = $this->tour_category_service->getAllActive();
+        $destinations = $this->destination_service->getAllActive();
         $tour = $this->tour_service->getById($id);
-        return view('tours.create', compact('tour_category', 'tour'));
+        return view('tours.create', compact('tour_category', 'tour','destinations'));
     }
     public function additional($id)
     {

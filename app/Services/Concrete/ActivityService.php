@@ -3,6 +3,7 @@
 namespace App\Services\Concrete;
 
 use App\Models\Activity;
+use App\Models\Destination;
 use App\Repository\Repository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -11,19 +12,25 @@ use Yajra\DataTables\Facades\DataTables;
 class ActivityService
 {
     protected $model_activity;
+    protected $model_destination;
     public function __construct()
     {
         // set the model
         $this->model_activity = new Repository(new Activity);
+        $this->model_destination = new Repository(new Destination);
     }
     //Bead type
     public function getSource()
     {
-        $model = $this->model_activity->getModel()::with('activity_category')->where('is_deleted', 0);
+        $model = $this->model_activity->getModel()::with(['activity_category','destination'])->where('is_deleted', 0);
         $data = DataTables::of($model)
             ->addColumn('category', function ($item) {
 
                 return $item->activity_category->name ?? '';
+            })
+            ->addColumn('destination', function ($item) {
+
+                return $item->destination->name ?? '';
             })
             ->addColumn('is_active', function ($item) {
                 if ($item->is_active == 1) {
@@ -82,7 +89,7 @@ class ActivityService
 
                 return $action_column . $dropdown;
             })
-            ->rawColumns(['category', 'is_active', 'action'])
+            ->rawColumns(['category','destination', 'is_active', 'action'])
             ->make(true);
         return $data;
     }
@@ -164,8 +171,14 @@ class ActivityService
     //activity list for api
     public function listActiveActivities($data)
     {
+        $destinations = $this->model_destination->getModel()::where('is_deleted', 0)->where('is_active', 1)->get();
+        $filter_destination = $destinations;
+        if (!empty($data['destination_id'])) {
+            $filter_destination = $destinations->where('id', $data['destination_id']);
+        }
         $query = $this->model_activity->getModel()::select('activities.*')
             ->with([
+                'destination',
                 'activity_category',
                 'activityImage',
                 'activityDate',
@@ -189,13 +202,6 @@ class ActivityService
         // Filter by type
         if (!empty($data['category_id'])) {
             $query->where('category_id', $data['category_id']);
-        }
-        // Filter by location
-        if (!empty($data['location'])) {
-            $query->where('location', 'LIKE', '%' . $data['location'] . '%');
-        }
-        if (!empty($data['type'])) {
-            $query->where('tour_type', $data['type']);
         }
 
         if (!empty($data['duration'])) {
@@ -236,7 +242,19 @@ class ActivityService
         } else {
             $activities = $activities->sortByDesc('title')->values(); // Default sorting
         }
-        return $activities;
+        $activity_data = [];
+        foreach ($filter_destination as $item) {
+            $activity_data[] = [
+                "destination_id" => $item->id,
+                "destination_name" => $item->name ?? '',
+                "is_active" => $item->is_active ?? '',
+                "activities" => $activities->where('destination_id', $item->id)->values()
+            ];
+        }
+        return [
+            "destinations" => $destinations,
+            "data" => $activity_data
+        ];
     }
 
     //get activity detail

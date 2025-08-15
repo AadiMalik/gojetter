@@ -140,12 +140,15 @@
                             </div>
 
 
-                            {{-- Location --}}
+                            {{-- destination --}}
                             <div class="col-md-4 form-group mb-3">
-                                <label>Location</label>
-                                <input class="form-control" type="text" name="location"
-                                    value="{{ old('location', isset($activity) ? $activity->location : '') }}">
-                                @error('location')
+                                <label>Destination <span class="text-danger">*</span></label>
+                                <select name="destination_id" class="form-control" id="destination_id">
+                                    @foreach($destinations as $item)
+                                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('destination_id')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>

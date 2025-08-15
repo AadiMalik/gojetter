@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Services\Concrete\ActivityService;
+use App\Services\Concrete\DestinationService;
 use App\Services\Concrete\TourCategoryService;
 use App\Traits\ResponseAPI;
 use Exception;
@@ -16,13 +17,16 @@ class ActivityController extends Controller
     use ResponseAPI;
     protected $activity_category_service;
     protected $activity_service;
+    protected $destination_service;
 
     public function __construct(
         TourCategoryService $activity_category_service,
-        ActivityService $activity_service
+        ActivityService $activity_service,
+        DestinationService $destination_service
     ) {
         $this->activity_category_service = $activity_category_service;
         $this->activity_service = $activity_service;
+        $this->destination_service = $destination_service;
     }
 
     public function index()
@@ -44,7 +48,8 @@ class ActivityController extends Controller
     {
         // abort_if(Gate::denies('activity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activity_category = $this->activity_category_service->getAllActive();
-        return view('activity.create', compact('activity_category'));
+        $destinations = $this->destination_service->getAllActive();
+        return view('activity.create', compact('activity_category','destinations'));
     }
     public function store(Request $request)
     {
@@ -61,6 +66,7 @@ class ActivityController extends Controller
                 'overview'          => 'nullable|string',
                 'short_description' => 'nullable|string',
                 'full_description'  => 'nullable|string',
+                'destination_id'    => 'required',
                 'highlights'        => 'nullable|string',
                 'rules'             => 'nullable|string',
                 'requirements'      => 'nullable|string',
@@ -112,8 +118,9 @@ class ActivityController extends Controller
     {
         // abort_if(Gate::denies('activity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activity_category = $this->activity_category_service->getAllActive();
+        $destinations = $this->destination_service->getAllActive();
         $activity = $this->activity_service->getById($id);
-        return view('activity.create', compact('activity_category', 'activity'));
+        return view('activity.create', compact('activity_category', 'activity','destinations'));
     }
 
     public function view($id)

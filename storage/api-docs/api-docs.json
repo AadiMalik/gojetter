@@ -2876,6 +2876,582 @@
                 ]
             }
         },
+        "/api/cart-list": {
+            "get": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Get cart list",
+                "description": "Retrieve the list of cart items for the authenticated user",
+                "operationId": "09cbed669401476eb06b02313f8cffde",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "user_id": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "activity_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "activity_date_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "activity_time_slot_id": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "quantity": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-08-09T23:32:35.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-08-09T23:32:35.000000Z"
+                                                    },
+                                                    "activity": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "Aut et elit dolore"
+                                                            },
+                                                            "slug": {
+                                                                "type": "string",
+                                                                "example": "aut-et-elit-dolore"
+                                                            },
+                                                            "thumbnail": {
+                                                                "type": "string",
+                                                                "example": "activity/OvPJUSSQUToALhK2K2LPlz6degzlFzVdpUhqMtTV.png"
+                                                            },
+                                                            "overview": {
+                                                                "type": "string",
+                                                                "example": "Dolor aut nesciunt"
+                                                            },
+                                                            "short_description": {
+                                                                "type": "string",
+                                                                "example": "Sint quo est except"
+                                                            },
+                                                            "highlights": {
+                                                                "type": "string",
+                                                                "example": "Sed quidem perspicia"
+                                                            },
+                                                            "full_description": {
+                                                                "type": "string",
+                                                                "example": "Vero voluptates null"
+                                                            },
+                                                            "tags": {
+                                                                "type": "string",
+                                                                "example": "Est ad dolorem bland"
+                                                            },
+                                                            "category_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "is_featured": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "difficulty_level": {
+                                                                "type": "string",
+                                                                "example": "moderate"
+                                                            },
+                                                            "age_limit": {
+                                                                "type": "integer",
+                                                                "example": 43
+                                                            },
+                                                            "pickup_info": {
+                                                                "type": "string",
+                                                                "example": "Totam consectetur de"
+                                                            },
+                                                            "dropoff_info": {
+                                                                "type": "string",
+                                                                "example": "Tempor error nemo eu"
+                                                            },
+                                                            "location": {
+                                                                "type": "string",
+                                                                "example": "Molestiae amet expe"
+                                                            },
+                                                            "duration": {
+                                                                "type": "string",
+                                                                "example": "Tenetur natus minim"
+                                                            },
+                                                            "languages": {
+                                                                "type": "string",
+                                                                "example": "Aperiam excepturi ad"
+                                                            },
+                                                            "min_adults": {
+                                                                "type": "integer",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "group_size": {
+                                                                "type": "integer",
+                                                                "example": 48
+                                                            },
+                                                            "activity_type": {
+                                                                "type": "string",
+                                                                "example": "private"
+                                                            },
+                                                            "is_wheelchair_accessible": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "is_stroller_friendly": {
+                                                                "type": "integer",
+                                                                "example": 0
+                                                            },
+                                                            "cut_of_day": {
+                                                                "type": "integer",
+                                                                "example": 7
+                                                            },
+                                                            "rules": {
+                                                                "type": "string",
+                                                                "example": "Est est ducimus un"
+                                                            },
+                                                            "requirements": {
+                                                                "type": "string",
+                                                                "example": "Quas labore ut aute"
+                                                            },
+                                                            "disclaimers": {
+                                                                "type": "string",
+                                                                "example": "Dignissimos neque er"
+                                                            },
+                                                            "is_active": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-08-09T17:41:02.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-08-09T17:41:02.000000Z"
+                                                            },
+                                                            "thumbnail_url": {
+                                                                "type": "string",
+                                                                "example": "http://localhost/gojetter/storage/app/public/activity/OvPJUSSQUToALhK2K2LPlz6degzlFzVdpUhqMtTV.png"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "activity_date": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "activity_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "date": {
+                                                                "type": "string",
+                                                                "format": "date",
+                                                                "example": "2025-08-11"
+                                                            },
+                                                            "price": {
+                                                                "type": "string",
+                                                                "example": "30.00"
+                                                            },
+                                                            "discount_price": {
+                                                                "type": "string",
+                                                                "example": "0.00"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-08-09T20:12:09.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-08-09T20:12:09.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "activity_time_slot": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            },
+                                                            "activity_date_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "start_time": {
+                                                                "type": "string",
+                                                                "example": "01 AM"
+                                                            },
+                                                            "end_time": {
+                                                                "type": "string",
+                                                                "example": "02 AM"
+                                                            },
+                                                            "total_seats": {
+                                                                "type": "integer",
+                                                                "example": 12
+                                                            },
+                                                            "available_seats": {
+                                                                "type": "integer",
+                                                                "example": 12
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-08-09T20:23:09.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-08-09T20:23:09.000000Z"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "user": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "User"
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "example": "user@user.com"
+                                                            },
+                                                            "email_verified_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-07-19T00:04:27.000000Z"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-07-04T09:53:20.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-07-18T19:03:39.000000Z"
+                                                            },
+                                                            "username": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "phone": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "paypal_email": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "is_show_email_phone": {
+                                                                "type": "integer",
+                                                                "example": 0
+                                                            },
+                                                            "about_yourself": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "avatar": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "home_airport": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "address": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "city": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "state": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "zip_code": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "country_id": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "alternative_phone": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "gender": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "stripe_customer_id": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "authbearer": []
+                    }
+                ]
+            }
+        },
+        "/api/save-cart": {
+            "post": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Save a cart item",
+                "description": "Stores a new cart item for the authenticated user.",
+                "operationId": "saveCart",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "activity_id",
+                                    "activity_date_id",
+                                    "activity_time_slot_id",
+                                    "quantity"
+                                ],
+                                "properties": {
+                                    "activity_id": {
+                                        "description": "ID of the activity (must exist in activities table)",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "activity_date_id": {
+                                        "description": "ID of the activity date (must exist in activity_dates table)",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "activity_time_slot_id": {
+                                        "description": "ID of the activity time slot (must exist in activity_time_slots table)",
+                                        "type": "integer",
+                                        "example": 2
+                                    },
+                                    "quantity": {
+                                        "description": "Number of seats to book (minimum 1)",
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Record saved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Record saved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "activity_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "activity_date_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "activity_time_slot_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-08-09T23:32:35.000000Z"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-08-09T23:32:35.000000Z"
+                                                },
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error or invalid input"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/delete-cart/{id}": {
+            "get": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Delete a cart record",
+                "description": "Deletes the cart item with the given ID for the authenticated user.",
+                "operationId": "deleteCart",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the cart record to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cart record deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Record deleted successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Cart record not found"
+                    }
+                },
+                "security": [
+                    {
+                        "authbearer": []
+                    }
+                ]
+            }
+        },
         "/api/currency-list": {
             "get": {
                 "tags": [
@@ -5362,6 +5938,10 @@
         {
             "name": "Booking",
             "description": "Booking"
+        },
+        {
+            "name": "Cart",
+            "description": "Cart"
         },
         {
             "name": "Common",
