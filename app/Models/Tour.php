@@ -65,7 +65,7 @@ class Tour extends Model
     }
 
     public function tourDate() {
-        return $this->hasMany(TourDate::class, 'tour_id', 'id');
+        return $this->hasMany(TourDate::class, 'tour_id', 'id')->where('is_deleted',0);
     }
 
     public function tourDownload() {
