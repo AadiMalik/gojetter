@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('activities', function (Blueprint $table) {
-            $table->integer('destination_id')->nullable();
+        Schema::table('wishlists', function (Blueprint $table) {
+            $table->integer('activity_id')->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('activities', function (Blueprint $table) {
-            $table->dropColumn('destination_id');
+        Schema::table('wishlists', function (Blueprint $table) {
+            $table->dropColumn('activity_id');
         });
     }
 };

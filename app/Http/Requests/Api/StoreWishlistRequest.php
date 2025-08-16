@@ -24,7 +24,8 @@ class StoreWishlistRequest extends FormRequest
     public function rules()
     {
         return [
-            'tour_id' => 'required|exists:tours,id',
+            'tour_id' => 'nullable|exists:tours,id',
+            'activity_id' => 'nullable|exists:tours,id',
         ];
     }
 }

@@ -46,7 +46,7 @@ class Tour extends Model
         'is_deleted',
         'date_deleted'
     ];
-    protected $appends = ['thumbnail_url'];
+    protected $appends = ['thumbnail_url', 'is_wishlist'];
 
     public function getThumbnailUrlAttribute()
     {
@@ -55,6 +55,17 @@ class Tour extends Model
         }
 
         return null;
+    }
+
+    public function getIsWishlistAttribute()
+    {
+        if (!auth()->check()) {
+            return 0;
+        }
+
+        return $this->wishlists()
+            ->where('user_id', auth()->id())
+            ->exists() ? 1 : 0;
     }
     public function tour_category()
     {
@@ -65,35 +76,43 @@ class Tour extends Model
         return $this->belongsTo(Destination::class, 'destination_id');
     }
 
-    public function tourImage() {
+    public function tourImage()
+    {
         return $this->hasMany(TourImage::class, 'tour_id', 'id');
     }
 
-    public function tourDate() {
-        return $this->hasMany(TourDate::class, 'tour_id', 'id')->where('is_deleted',0);
+    public function tourDate()
+    {
+        return $this->hasMany(TourDate::class, 'tour_id', 'id')->where('is_deleted', 0);
     }
 
-    public function tourDownload() {
+    public function tourDownload()
+    {
         return $this->hasMany(TourDownload::class, 'tour_id', 'id');
     }
 
-    public function tourExclusion() {
+    public function tourExclusion()
+    {
         return $this->hasMany(TourExclusion::class, 'tour_id', 'id');
     }
 
-    public function tourFaq() {
+    public function tourFaq()
+    {
         return $this->hasMany(TourFaq::class, 'tour_id', 'id');
     }
 
-    public function tourInclusion() {
+    public function tourInclusion()
+    {
         return $this->hasMany(TourInclusion::class, 'tour_id', 'id');
     }
 
-    public function tourItinerary() {
+    public function tourItinerary()
+    {
         return $this->hasMany(TourItinerary::class, 'tour_id', 'id');
     }
 
-    public function tourReviews() {
+    public function tourReviews()
+    {
         return $this->hasMany(TourReview::class, 'tour_id', 'id');
     }
 }

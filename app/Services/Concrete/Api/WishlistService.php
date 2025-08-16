@@ -31,7 +31,7 @@ class WishlistService
       // get by user id
       public function getByUserId()
       {
-            $wishlist = $this->model_wishlist->getModel()::with(['tour','user'])
+            $wishlist = $this->model_wishlist->getModel()::with(['tour','activity','user'])
             ->where('user_id',Auth::User()->id)->get();
 
             if (!$wishlist)

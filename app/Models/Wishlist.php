@@ -10,6 +10,7 @@ class Wishlist extends Model
     use HasFactory;
     protected $fillable = [
         'tour_id',
+        'activity_id',
         'user_id'
     ];
 
@@ -17,6 +18,11 @@ class Wishlist extends Model
     public function tour()
     {
         return $this->belongsTo(Tour::class, 'tour_id');
+    }
+
+    public function activity()
+    {
+        return $this->belongsTo(Activity::class, 'activity_id');
     }
 
     public function user()
