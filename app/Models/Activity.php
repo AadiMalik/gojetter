@@ -52,7 +52,7 @@ class Activity extends Model
         'is_deleted',
         'date_deleted'
     ];
-    protected $appends = ['thumbnail_url','is_wishlist'];
+    protected $appends = ['thumbnail_url'];
 
     public function getThumbnailUrlAttribute()
     {
@@ -61,17 +61,6 @@ class Activity extends Model
         }
 
         return null;
-    }
-
-    public function getIsWishlistAttribute()
-    {
-        if (!auth()->check()) {
-            return 0;
-        }
-
-        return $this->wishlists()
-            ->where('user_id', auth()->id())
-            ->exists() ? 1 : 0;
     }
 
     public function activity_category()

@@ -5,6 +5,7 @@ namespace App\Services\Concrete;
 use App\Models\Destination;
 use App\Models\Tour;
 use App\Models\TourDate;
+use App\Models\Wishlist;
 use App\Repository\Repository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -330,7 +331,7 @@ class TourService
             });
         }
 
-        $tours = $query->get()->each->append('is_wishlist');
+        $tours = $query->get();
 
         if (!empty($data['sort_by'])) {
             if ($data['sort_by'] == 'price_low_high') {
@@ -344,6 +345,10 @@ class TourService
             }
         } else {
             $tours = $tours->sortByDesc('title')->values(); // Default sorting
+        }
+
+        foreach($tours as $item){
+            $item['is_wishlist']=$this->isTourWishlist($item->id);
         }
 
         $tour_data = [];
@@ -391,5 +396,16 @@ class TourService
             ->first();
 
         return $tour;
+    }
+
+    public function isTourWishlist($tour_id)
+    {
+        if (!auth()->check()) {
+            return 0;
+        }
+
+        return Wishlist::where('tour_id',$tour_id)
+            ->where('user_id', auth()->id())
+            ->exists() ? 1 : 0;
     }
 }

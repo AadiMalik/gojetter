@@ -4,6 +4,7 @@ namespace App\Services\Concrete;
 
 use App\Models\Activity;
 use App\Models\Destination;
+use App\Models\Wishlist;
 use App\Repository\Repository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -242,6 +243,11 @@ class ActivityService
         } else {
             $activities = $activities->sortByDesc('title')->values(); // Default sorting
         }
+
+        foreach($activities as $item){
+            $item['is_wishlist']=$this->isActivityWishlist($item->id);
+        }
+
         $activity_data = [];
         foreach ($filter_destination as $item) {
             $activity_data[] = [
@@ -286,5 +292,16 @@ class ActivityService
             ->first();
 
         return $activity;
+    }
+
+    public function isActivityWishlist($activity_id)
+    {
+        if (!auth()->check()) {
+            return 0;
+        }
+
+        return Wishlist::where('activity_id',$activity_id)
+            ->where('user_id', auth()->id())
+            ->exists() ? 1 : 0;
     }
 }

@@ -46,7 +46,7 @@ class Tour extends Model
         'is_deleted',
         'date_deleted'
     ];
-    protected $appends = ['thumbnail_url', 'is_wishlist'];
+    protected $appends = ['thumbnail_url'];
 
     public function getThumbnailUrlAttribute()
     {
@@ -57,22 +57,11 @@ class Tour extends Model
         return null;
     }
 
-    public function getIsWishlistAttribute()
-    {
-        if (!auth()->check()) {
-            return 0;
-        }
-
-        return $this->wishlists()
-            ->where('user_id', auth()->id())
-            ->exists() ? 1 : 0;
-    }
-
     public function wishlists()
     {
         return $this->hasMany(Wishlist::class, 'tour_id');
     }
-    
+
     public function tour_category()
     {
         return $this->belongsTo(TourCategory::class, 'tour_category_id');
