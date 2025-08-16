@@ -67,6 +67,12 @@ class Tour extends Model
             ->where('user_id', auth()->id())
             ->exists() ? 1 : 0;
     }
+
+    public function wishlists()
+    {
+        return $this->hasMany(Wishlist::class, 'tour_id');
+    }
+    
     public function tour_category()
     {
         return $this->belongsTo(TourCategory::class, 'tour_category_id');
