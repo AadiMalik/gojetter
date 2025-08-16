@@ -31,6 +31,7 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SocialMediaController;
 use App\Http\Controllers\Admin\SubServiceController;
 use App\Http\Controllers\Admin\TermAndConditionController;
+use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\TourCategoryController;
 use App\Http\Controllers\Admin\TourController;
 use App\Http\Controllers\Admin\TourDateController;
@@ -353,6 +354,16 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('edit/{id}', [TourCategoryController::class, 'edit']);
         Route::get('destroy/{id}', [TourCategoryController::class, 'destroy']);
         Route::get('status/{id}', [TourCategoryController::class, 'status']);
+    });
+
+    //testimonial
+    Route::group(['prefix' => 'testimonial'], function () {
+        Route::get('/', [TestimonialController::class, 'index']);
+        Route::post('data', [TestimonialController::class, 'getData'])->name('testimonial.data');
+        Route::get('create', [TestimonialController::class, 'create']);
+        Route::post('store', [TestimonialController::class, 'store']);
+        Route::get('edit/{id}', [TestimonialController::class, 'edit']);
+        Route::get('destroy/{id}', [TestimonialController::class, 'destroy']);
     });
 
     //country

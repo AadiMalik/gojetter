@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Api\ActivityController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BlogController;
@@ -81,6 +82,8 @@ Route::post('save-contact-us', [ContactUsMessageController::class, 'store']);
 
 // gallery
 Route::get('gallery-list', [GalleryController::class, 'index']);
+// testimonial
+Route::get('testimonial-list', [TestimonialController::class, 'list']);
 
 Route::group(['middleware' => ['auth:api']], function () {
 

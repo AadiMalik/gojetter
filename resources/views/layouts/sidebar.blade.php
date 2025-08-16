@@ -171,7 +171,7 @@
                     {{-- @endcan --}}
                     {{-- @can('content_management_access') --}}
                     <li
-                        class="Ul_li--hover {{ Request::is('about-us*') | Request::is('gallery*') ? 'mm-active' : '' }}">
+                        class="Ul_li--hover {{ Request::is('about-us*') | Request::is('testimonial*') | Request::is('gallery*') ? 'mm-active' : '' }}">
                         <a class="has-arrow" href="#"><i class="fa fa-plug text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Content Manage..</span></a>
                         <ul class="mm-collapse">
@@ -184,6 +184,11 @@
                             <li class="item-name"><a class="{{ Request::is('gallery*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('gallery') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
                                         class="text-muted">Gallery</span></a></li>
+                            {{-- @endcan --}}
+                            {{-- @can('testimonial_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('testimonial*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('testimonial') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
+                                        class="text-muted">Testimonials</span></a></li>
                             {{-- @endcan --}}
 
                         </ul>
