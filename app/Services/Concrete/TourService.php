@@ -330,7 +330,7 @@ class TourService
             });
         }
 
-        $tours = $query->get();
+        $tours = $query->get()->each->append('is_wishlist');
 
         if (!empty($data['sort_by'])) {
             if ($data['sort_by'] == 'price_low_high') {
