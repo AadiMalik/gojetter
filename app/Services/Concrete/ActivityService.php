@@ -23,7 +23,7 @@ class ActivityService
     //Bead type
     public function getSource()
     {
-        $model = $this->model_activity->getModel()::with(['activity_category','destination'])->where('is_deleted', 0);
+        $model = $this->model_activity->getModel()::with(['activity_category', 'destination'])->where('is_deleted', 0);
         $data = DataTables::of($model)
             ->addColumn('category', function ($item) {
 
@@ -90,7 +90,7 @@ class ActivityService
 
                 return $action_column . $dropdown;
             })
-            ->rawColumns(['category','destination', 'is_active', 'action'])
+            ->rawColumns(['category', 'destination', 'is_active', 'action'])
             ->make(true);
         return $data;
     }
@@ -220,12 +220,12 @@ class ActivityService
             });
         }
 
-        if(!empty($data['search'])){
+        if (!empty($data['search'])) {
             $query->where('title', 'LIKE', '%' . $data['search'] . '%')
-            ->orWhere('overview', 'LIKE', '%' . $data['search'] . '%')
-            ->orWhere('highlights', 'LIKE', '%' . $data['search'] . '%')
-            ->orWhere('short_description', 'LIKE', '%' . $data['search'] . '%')
-            ->orWhere('full_description', 'LIKE', '%' . $data['search'] . '%');
+                ->orWhere('overview', 'LIKE', '%' . $data['search'] . '%')
+                ->orWhere('highlights', 'LIKE', '%' . $data['search'] . '%')
+                ->orWhere('short_description', 'LIKE', '%' . $data['search'] . '%')
+                ->orWhere('full_description', 'LIKE', '%' . $data['search'] . '%');
         }
 
         $activities = $query->get();
@@ -244,8 +244,8 @@ class ActivityService
             $activities = $activities->sortByDesc('title')->values(); // Default sorting
         }
 
-        foreach($activities as $item){
-            $item['is_wishlist']=$this->isActivityWishlist($item->id);
+        foreach ($activities as $item) {
+            $item['is_wishlist'] = $this->isActivityWishlist($item->id);
         }
 
         $activity_data = [];
@@ -269,7 +269,7 @@ class ActivityService
         $activity = $this->model_activity->getModel()::with([
             'activity_category',
             'activityReviews' => function ($query) {
-                $query->where('is_active', 1)
+                $query->with('user')->where('is_active', 1)
                     ->where('is_deleted', 0)
                     ->select('id', 'user_id', 'activity_id', 'rating', 'comment', 'created_at');
             },
@@ -291,7 +291,32 @@ class ActivityService
             ->where('is_deleted', 0)
             ->first();
 
-        return $activity;
+        $related_activities = $this->model_activity->getModel()::select('activities.*')
+            ->with([
+                'destination',
+                'activity_category',
+                'activityImage',
+                'activityDate',
+                'activityDate.activityTimeSlot',
+                'activityExpectation',
+                'activityExclusion',
+                'activityPolicy',
+                'activityInclusion',
+                'activityReviews'
+            ])
+            ->withAvg(['activityReviews as average_rating' => function ($q) {
+                $q->where('is_active', 1)->where('is_deleted', 0);
+            }], 'rating')
+            ->where('is_active', 1)
+            ->where('is_deleted', 0)
+            ->inRandomOrder()
+            ->take(4)
+            ->get();
+
+        return [
+            "detail" => $activity,
+            "related_activities" => $related_activities
+        ];
     }
 
     public function isActivityWishlist($activity_id)
@@ -300,7 +325,7 @@ class ActivityService
             return 0;
         }
 
-        return Wishlist::where('activity_id',$activity_id)
+        return Wishlist::where('activity_id', $activity_id)
             ->where('user_id', auth()->id())
             ->exists() ? 1 : 0;
     }

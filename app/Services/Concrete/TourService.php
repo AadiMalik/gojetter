@@ -347,8 +347,8 @@ class TourService
             $tours = $tours->sortByDesc('title')->values(); // Default sorting
         }
 
-        foreach($tours as $item){
-            $item['is_wishlist']=$this->isTourWishlist($item->id);
+        foreach ($tours as $item) {
+            $item['is_wishlist'] = $this->isTourWishlist($item->id);
         }
 
         $tour_data = [];
@@ -373,7 +373,7 @@ class TourService
             'destination',
             'tour_category',
             'tourReviews' => function ($query) {
-                $query->where('is_active', 1)
+                $query->with('user')->where('is_active', 1)
                     ->where('is_deleted', 0)
                     ->select('id', 'user_id', 'tour_id', 'rating', 'comment', 'created_at');
             },
@@ -394,8 +394,31 @@ class TourService
             ->where('is_active', 1)
             ->where('is_deleted', 0)
             ->first();
-
-        return $tour;
+        $related_tours = Tour::select('tours.*')
+            ->with([
+                'destination',
+                'tour_category',
+                'tourImage',
+                'tourDate',
+                'tourDownload',
+                'tourExclusion',
+                'tourFaq',
+                'tourInclusion',
+                'tourItinerary',
+                'tourReviews'
+            ])
+            ->withAvg(['tourReviews as average_rating' => function ($q) {
+                $q->where('is_active', 1)->where('is_deleted', 0);
+            }], 'rating')
+            ->where('is_active', 1)
+            ->where('is_deleted', 0)
+            ->inRandomOrder()
+            ->take(4)
+            ->get();
+        return [
+            "detail" => $tour,
+            "related_tours" => $related_tours
+        ];
     }
 
     public function isTourWishlist($tour_id)
@@ -404,7 +427,7 @@ class TourService
             return 0;
         }
 
-        return Wishlist::where('tour_id',$tour_id)
+        return Wishlist::where('tour_id', $tour_id)
             ->where('user_id', auth()->id())
             ->exists() ? 1 : 0;
     }

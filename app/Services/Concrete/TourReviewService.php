@@ -71,13 +71,13 @@ class TourReviewService
             if (!$saved_obj)
                   return false;
 
-            return $saved_obj;
+            return $this->getById($saved_obj->id);
       }
 
       // get by id
       public function getById($id)
       {
-            $tour_review = $this->model_tour_review->getModel()::find($id);
+            $tour_review = $this->model_tour_review->getModel()::with('user')->find($id);
 
             if (!$tour_review)
                   return false;
