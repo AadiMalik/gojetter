@@ -207,7 +207,7 @@
                                 @enderror
                             </div>
                             {{-- is_featured --}}
-                            <div class="col-md-4 form-group mb-3 mt-4">
+                            <div class="col-md-12 form-group mb-3 mt-4">
                                 <label class="switch pr-5 switch-primary mr-3"><input type="checkbox" name="is_featured" id="is_featured" @if(isset($activity) && $activity->is_featured==1) checked @endif ><span class="slider"></span> Is Featured</label>
 
                                 @error('is_featured')
@@ -215,21 +215,22 @@
                                 @enderror
                             </div>
                             {{-- is_wheelchair_accessible --}}
-                            <div class="col-md-4 form-group mb-3 mt-4">
+                            {{-- <div class="col-md-4 form-group mb-3 mt-4">
                                 <label class="switch pr-5 switch-primary mr-3"><input type="checkbox" name="is_wheelchair_accessible" id="is_wheelchair_accessible" @if(isset($activity) && $activity->is_wheelchair_accessible==1) checked @endif ><span class="slider"></span> Wheelchair Accessible</label>
 
                                 @error('is_wheelchair_accessible')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> --}}
                             {{-- is_stroller_friendly --}}
-                            <div class="col-md-4 form-group mb-3 mt-4">
+                            {{-- <div class="col-md-4 form-group mb-3 mt-4">
                                 <label class="switch pr-5 switch-primary mr-3"><input type="checkbox" name="is_stroller_friendly" id="is_stroller_friendly" @if(isset($activity) && $activity->is_stroller_friendly==1) checked @endif ><span class="slider"></span> Stroller Friendly</label>
 
                                 @error('is_stroller_friendly')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
-                            </div>
+                            </div> --}}
+                            
                             {{-- rules --}}
                             <div class="col-md-6 form-group mb-3">
                                 <label for="rules">Rules</label>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ActivityExclusionController;
 use App\Http\Controllers\Admin\ActivityExpectationController;
 use App\Http\Controllers\Admin\ActivityImageController;
 use App\Http\Controllers\Admin\ActivityInclusionController;
+use App\Http\Controllers\Admin\ActivityNotSuitableController;
 use App\Http\Controllers\Admin\ActivityPolicyController;
 use App\Http\Controllers\Admin\ActivityReviewController;
 use App\Http\Controllers\Admin\ActivitySupportController;
@@ -281,6 +282,14 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('data', [ActivityReviewController::class, 'getData'])->name('activity-review.data');
         Route::get('destroy/{id}', [ActivityReviewController::class, 'destroy']);
         Route::get('status/{id}', [ActivityReviewController::class, 'status']);
+    });
+
+    //activity not suitable
+    Route::group(['prefix' => 'activity-not-suitable'], function () {
+        Route::get('/{id}', [ActivityNotSuitableController::class, 'index']);
+        Route::post('data', [ActivityNotSuitableController::class, 'getData'])->name('activity-not-suitable.data');
+        Route::post('store', [ActivityNotSuitableController::class, 'store']);
+        Route::get('destroy/{id}', [ActivityNotSuitableController::class, 'destroy']);
     });
 
 

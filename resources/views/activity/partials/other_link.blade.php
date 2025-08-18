@@ -31,5 +31,9 @@
                   href="{{ url('activity-support') }}/{{ $activity->id }}">
                   <i class="fa fa-users mr-1"></i> Supports
             </a>
+            <a class="dropdown-item text-dark" style="padding: 1px 10px;"
+                  href="{{ url('activity-not-suitable') }}/{{ $activity->id }}">
+                  <i class="fa fa-exclamation mr-1"></i> Not Suitable
+            </a>
       </div>
 </div>

@@ -55,6 +55,7 @@ class ActivityService
                 $policy = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-policy/" . $item->id . "'><i class='fa fa-question-circle mr-1'></i> Policies</a>";
                 $image = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-image/" . $item->id . "'><i class='fa fa-image mr-1'></i> Gallery</a>";
                 $support = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-support/" . $item->id . "'><i class='fa fa-users mr-1'></i> Supports</a>";
+                $not_suitable = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-not-suitable/" . $item->id . "'><i class='fa fa-exclamation mr-1'></i> Not Suitable</a>";
                 // if (Auth::user()->can('activity_edit'))
                 $action_column .= $edit_column;
                 // if (Auth::user()->can('activity_view'))
@@ -76,6 +77,8 @@ class ActivityService
                 $additional_column .= $image;
                 // if (Auth::user()->can('activity_support_access'))
                 $additional_column .= $support;
+                // if (Auth::user()->can('activity_support_access'))
+                $additional_column .= $not_suitable;
                 // Main button with dropdown    
                 $dropdown = '
                     <div class="btn-group">
@@ -188,7 +191,8 @@ class ActivityService
                 'activityExclusion',
                 'activityPolicy',
                 'activityInclusion',
-                'activityReviews'
+                'activityReviews',
+                'activityNotSuitable'
             ])
             ->withAvg(['activityReviews as average_rating' => function ($q) {
                 $q->where('is_active', 1)->where('is_deleted', 0);
@@ -281,7 +285,8 @@ class ActivityService
             'activityExpectation',
             'activityExclusion',
             'activityPolicy',
-            'activityInclusion'
+            'activityInclusion',
+            'activityNotSuitable'
         ])
             ->withAvg(['activityReviews as average_rating' => function ($query) {
                 $query->where('is_active', 1)->where('is_deleted', 0);
@@ -302,7 +307,8 @@ class ActivityService
                 'activityExclusion',
                 'activityPolicy',
                 'activityInclusion',
-                'activityReviews'
+                'activityReviews',
+                'activityNotSuitable'
             ])
             ->withAvg(['activityReviews as average_rating' => function ($q) {
                 $q->where('is_active', 1)->where('is_deleted', 0);

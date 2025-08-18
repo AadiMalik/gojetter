@@ -82,8 +82,8 @@ class ActivityController extends Controller
                 'pickup_info'       => 'nullable|string|max:255',
                 'dropoff_info'      => 'nullable|string|max:255',
                 'cut_of_day'        => 'nullable|integer',
-                'is_wheelchair_accessible'  => 'nullable',
-                'is_stroller_friendly'      => 'nullable',
+                // 'is_wheelchair_accessible'  => 'nullable',
+                // 'is_stroller_friendly'      => 'nullable',
             ],
             $this->validationMessage()
         );
@@ -99,8 +99,8 @@ class ActivityController extends Controller
                 $obj['thumbnail'] = $request->file('thumbnail')->store('activity', 'public');
             }
             $obj['is_featured'] = isset($request->is_featured) ? 1 : 0;
-            $obj['is_wheelchair_accessible'] = isset($request->is_wheelchair_accessible) ? 1 : 0;
-            $obj['is_stroller_friendly'] = isset($request->is_stroller_friendly) ? 1 : 0;
+            // $obj['is_wheelchair_accessible'] = isset($request->is_wheelchair_accessible) ? 1 : 0;
+            // $obj['is_stroller_friendly'] = isset($request->is_stroller_friendly) ? 1 : 0;
 
             $response = $this->activity_service->save($obj);
 
