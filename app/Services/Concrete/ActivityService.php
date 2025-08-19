@@ -271,6 +271,7 @@ class ActivityService
     public function activityDetailById($slug)
     {
         $activity = $this->model_activity->getModel()::with([
+            'destination',
             'activity_category',
             'activityReviews' => function ($query) {
                 $query->with('user')->where('is_active', 1)
@@ -286,6 +287,7 @@ class ActivityService
             'activityExclusion',
             'activityPolicy',
             'activityInclusion',
+            'activitySupport',
             'activityNotSuitable'
         ])
             ->withAvg(['activityReviews as average_rating' => function ($query) {
@@ -308,6 +310,7 @@ class ActivityService
                 'activityPolicy',
                 'activityInclusion',
                 'activityReviews',
+                'activitySupport',
                 'activityNotSuitable'
             ])
             ->withAvg(['activityReviews as average_rating' => function ($q) {

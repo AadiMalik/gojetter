@@ -98,6 +98,9 @@ class Activity extends Model
     public function activityReviews() {
         return $this->hasMany(ActivityReview::class, 'activity_id', 'id');
     }
+    public function activitySupport() {
+        return $this->hasMany(ActivitySupport::class, 'activity_id', 'id');
+    }
     public function activityNotSuitable() {
         return $this->hasMany(ActivityNotSuitable::class, 'activity_id', 'id');
     }

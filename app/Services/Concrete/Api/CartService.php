@@ -19,7 +19,7 @@ class CartService
       {
             $timeSlot = ActivityTimeSlot::where('id', $data['activity_time_slot_id'])
                   ->where('activity_date_id', $data['activity_date_id'])
-                  ->where('is_deleted',0)
+                  ->where('is_deleted', 0)
                   ->first();
 
             if (!$timeSlot) {
@@ -35,13 +35,22 @@ class CartService
       // save
       public function save($obj)
       {
-            $obj['user_id'] = Auth::User()->id;
-            $saved_obj = $this->model_cart->create($obj);
+            $cart = $this->model_cart->getModel()::where('activity_id', $obj['activity_id'])
+                  ->where('activity_date_id', $obj['activity_date_id'])
+                  ->where('activity_time_slot_id', $obj['activity_time_slot_id'])
+                  ->first();
+            if ($cart) {
+                  $cart->quantity = $cart->quantity + $obj['quantity'];
+                  $cart->update();
+            } else {
+                  $obj['user_id'] = Auth::User()->id;
+                  $cart = $this->model_cart->create($obj);
+            }
 
-            if (!$saved_obj)
+            if (!$cart)
                   return false;
 
-            return $saved_obj;
+            return $cart;
       }
 
       // get by user id
