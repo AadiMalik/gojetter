@@ -327,12 +327,13 @@ class ActivityService
 
     public function isActivityWishlist($activity_id)
     {
-        if (!auth()->check()) {
-            return 0;
+        $user = auth('api')->user();
+        if (!$user) {
+            return 0; // guest users can't have wishlist
         }
 
         return Wishlist::where('activity_id', $activity_id)
-            ->where('user_id', auth()->id())
+            ->where('user_id', $user->id)
             ->exists() ? 1 : 0;
     }
 }

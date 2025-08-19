@@ -423,12 +423,13 @@ class TourService
 
     public function isTourWishlist($tour_id)
     {
-        if (!auth()->check()) {
-            return 0;
+        $user = auth('api')->user();
+        if (!$user) {
+            return 0; // guest users can't have wishlist
         }
 
         return Wishlist::where('tour_id', $tour_id)
-            ->where('user_id', auth()->id())
+            ->where('user_id', $user->id)
             ->exists() ? 1 : 0;
     }
 }
