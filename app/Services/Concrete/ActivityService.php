@@ -236,11 +236,11 @@ class ActivityService
 
         if (!empty($data['sort_by'])) {
             if ($data['sort_by'] == 'price_low_high') {
-                return $activities->sortBy(function ($activity) {
+                $activities = $activities->sortBy(function ($activity) {
                     return $activity->activityDate->min('price'); // lowest price in the dates
                 })->values();
             } elseif ($data['sort_by'] == 'price_high_low') {
-                return $activities->sortByDesc(function ($activity) {
+                $activities = $activities->sortByDesc(function ($activity) {
                     return $activity->activityDate->min('price'); // lowest price in the dates
                 })->values();
             }

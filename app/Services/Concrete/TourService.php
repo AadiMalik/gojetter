@@ -335,11 +335,11 @@ class TourService
 
         if (!empty($data['sort_by'])) {
             if ($data['sort_by'] == 'price_low_high') {
-                return $tours->sortBy(function ($tour) {
+                $tours = $tours->sortBy(function ($tour) {
                     return $tour->tourDate->min('price'); // lowest price in the dates
                 })->values();
             } elseif ($data['sort_by'] == 'price_high_low') {
-                return $tours->sortByDesc(function ($tour) {
+                $tours = $tours->sortByDesc(function ($tour) {
                     return $tour->tourDate->max('price'); // highest price in the dates
                 })->values();
             }
