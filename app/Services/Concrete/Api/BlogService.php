@@ -29,12 +29,16 @@ class BlogService
     }
 
     // get all
-    public function getBlogs()
+    public function getBlogs($data)
     {
-        return $this->model_blog->getModel()::with('category')->where('is_deleted', 0)
+        $blogs = $this->model_blog->getModel()::with('category')->where('is_deleted', 0)
             ->where('is_active', 1)
-            ->orderBy('created_at', 'DESC')
-            ->get();
+            ->orderBy('created_at', 'DESC');
+        if (!empty($data['category_id'])) {
+            $blogs->where('blog_category_id', $data['category_id']);
+        }
+        $blogs = $blogs->get();
+        return $blogs;
     }
 
     public function getBlogBySlug($slug)

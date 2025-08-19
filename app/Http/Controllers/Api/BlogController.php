@@ -29,9 +29,9 @@ class BlogController extends Controller
     }
 
     //blog list
-    public function blogList()
+    public function blogList(Request $request)
     {
-        $blogs = $this->blog_service->getBlogs();
+        $blogs = $this->blog_service->getBlogs($request->all());
         return $this->success(
             $blogs,
             ResponseMessage::FETCHED
