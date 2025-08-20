@@ -41,7 +41,7 @@ class OrderService
                         return 'Cart is empty';
                   }
 
-                  $sub_total = $cart_items->sum(fn($item) => $item->quantity * $item->activity_date->price);
+                  $sub_total = $cart_items->sum(fn($item) => $item->quantity * ($item->activity_date->discount_price>0)?$item->activity_date->discount_price:$item->activity_date->price);
                   $quantity = $cart_items->sum(fn($item) => $item->quantity);
                   $discount = $data['discount'];
                   $total = $sub_total - $discount;
@@ -78,8 +78,8 @@ class OrderService
                               'activity_date_id'      => $item->activity_date_id,
                               'activity_time_slot_id' => $item->activity_time_slot_id,
                               'quantity'              => $item->quantity,
-                              'price'                 => $item->activity_date->price,
-                              'total'                 => $item->quantity * $item->activity_date->price
+                              'price'                 => ($item->activity_date->discount_price>0)?$item->activity_date->discount_price:$item->activity_date->price,
+                              'total'                 => $item->quantity * ($item->activity_date->discount_price>0)?$item->activity_date->discount_price:$item->activity_date->price
                         ];
                         $this->model_order_detail->getModel()::create($order_detail_obj);
                   }
