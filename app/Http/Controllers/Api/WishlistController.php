@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\DeleteWishlistRequest;
 use App\Http\Requests\Api\StoreWishlistRequest;
 use App\Services\Concrete\Api\WishlistService;
 use App\Traits\ResponseAPI;
@@ -38,8 +39,8 @@ class WishlistController extends Controller
     }
 
     // delete
-    public function destroy($wishlist_id){
-        $wishlist = $this->wishlist_service->deleteById($wishlist_id);
+    public function destroy(DeleteWishlistRequest $request){
+        $wishlist = $this->wishlist_service->deleteBy($request->validated());
         return $this->success(
             $wishlist,
             ResponseMessage::DELETE

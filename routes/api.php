@@ -100,7 +100,7 @@ Route::group(['middleware' => ['auth:api']], function () {
     // wishlist
     Route::get('wishlist-list', [WishlistController::class, 'index']);
     Route::post('save-wishlist', [WishlistController::class, 'store']);
-    Route::post('delete-wishlist/{id}', [WishlistController::class, 'destroy']);
+    Route::post('delete-wishlist', [WishlistController::class, 'destroy']);
 
     // cart
     Route::get('cart-list', [CartController::class, 'index']);

@@ -31,8 +31,8 @@ class WishlistService
       // get by user id
       public function getByUserId()
       {
-            $wishlist = $this->model_wishlist->getModel()::with(['tour','activity','user'])
-            ->where('user_id',Auth::User()->id)->get();
+            $wishlist = $this->model_wishlist->getModel()::with(['tour', 'activity', 'user'])
+                  ->where('user_id', Auth::User()->id)->get();
 
             if (!$wishlist)
                   return false;
@@ -52,14 +52,19 @@ class WishlistService
       }
 
       // delete by id
-      public function deleteById($id)
+      public function deleteBy($data)
       {
-            $wishlist = $this->model_wishlist->getModel()::find($id);
-            $wishlist->delete();
-
-            if (!$wishlist)
+            if (!empty($data['tour_id']) && $data['tour_id'] != null) {
+                  $wishlist = $this->model_wishlist->getModel()::where('tour_id', $data['tour_id'])->where('user_id', Auth::User()->id)->first();
+            }
+            if (!empty($data['activity_id']) && $data['activity_id'] != null) {
+                  $wishlist = $this->model_wishlist->getModel()::where('activity_id', $data['activity_id'])->where('user_id', Auth::User()->id)->first();
+            }
+            if ($wishlist) {
+                  $wishlist->delete();
+            } else {
                   return false;
-
+            }
             return true;
       }
 }
