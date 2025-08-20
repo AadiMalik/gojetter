@@ -40,7 +40,7 @@ class CartService
                   ->where('activity_time_slot_id', $obj['activity_time_slot_id'])
                   ->first();
             if ($cart) {
-                  $cart->quantity = $cart->quantity + $obj['quantity'];
+                  $cart->quantity = $obj['quantity'];
                   $cart->update();
             } else {
                   $obj['user_id'] = Auth::User()->id;
