@@ -25,7 +25,7 @@ class StoreWishlistRequest extends FormRequest
     {
         return [
             'tour_id' => 'nullable|exists:tours,id',
-            'activity_id' => 'nullable|exists:tours,id',
+            'activity_id' => 'nullable|exists:activities,id',
         ];
     }
 }
