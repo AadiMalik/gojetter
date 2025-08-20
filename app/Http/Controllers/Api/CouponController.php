@@ -24,9 +24,14 @@ class CouponController extends Controller
     {
         $data = $request->validated();
         $coupon = $this->coupon_service->applyCoupon($data);
+        if($coupon)
         return $this->success(
             $coupon,
             ResponseMessage::SUCCESS
+        );
+
+        return $this->error(
+            ResponseMessage::NOT_FOUND
         );
     }
 }
