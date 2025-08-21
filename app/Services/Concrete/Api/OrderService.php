@@ -26,7 +26,15 @@ class OrderService
       public function list()
       {
 
-            return $this->model_order->getModel()::with(['orderDetail', 'user', 'card', 'currency'])
+            return $this->model_order->getModel()::with([
+                  'orderDetail',
+                  'orderDetail.activity',
+                  'orderDetail.activity_date',
+                  'orderDetail.activity_time_slot',
+                  'user',
+                  'card',
+                  'currency'
+            ])
                   ->where('user_id', auth()->user()->id)
                   ->get();
       }
@@ -42,7 +50,7 @@ class OrderService
                         return 'Cart is empty';
                   }
                   $currency = Currency::find($data['currency_id']);
-                  $without_converted_sub_total = $cart_items->sum(fn($item) => $item->quantity * ($item->activity_date->discount_price>0)?$item->activity_date->discount_price:$item->activity_date->price);
+                  $without_converted_sub_total = $cart_items->sum(fn($item) => $item->quantity * ($item->activity_date->discount_price > 0) ? $item->activity_date->discount_price : $item->activity_date->price);
                   $quantity = $cart_items->sum(fn($item) => $item->quantity);
                   $discount = $data['discount'];
                   $sub_total = $without_converted_sub_total * $currency->rate;
@@ -80,8 +88,8 @@ class OrderService
                               'activity_date_id'      => $item->activity_date_id,
                               'activity_time_slot_id' => $item->activity_time_slot_id,
                               'quantity'              => $item->quantity,
-                              'price'                 => (($item->activity_date->discount_price>0)?$item->activity_date->discount_price:$item->activity_date->price) * $currency->rate,
-                              'total'                 => ($item->quantity * ($item->activity_date->discount_price>0)?$item->activity_date->discount_price:$item->activity_date->price) * $currency->rate
+                              'price'                 => (($item->activity_date->discount_price > 0) ? $item->activity_date->discount_price : $item->activity_date->price) * $currency->rate,
+                              'total'                 => ($item->quantity * ($item->activity_date->discount_price > 0) ? $item->activity_date->discount_price : $item->activity_date->price) * $currency->rate
                         ];
                         $this->model_order_detail->getModel()::create($order_detail_obj);
                   }
