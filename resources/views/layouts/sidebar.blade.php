@@ -115,12 +115,12 @@
                     </li>
                     {{-- @endcan --}}
                     {{-- @can('service_management_access') --}}
-                    <li class="Ul_li--hover {{ Request::is('services*') ? 'mm-active' : '' }}">
+                    <li class="Ul_li--hover {{ Request::is('services*') | Request::is('sub-services*') | Request::is('customer-requests*') ? 'mm-active' : '' }}">
                         <a class="has-arrow" href="#"><i class="fa fa-ship text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Service Manage..</span></a>
                         <ul class="mm-collapse">
                             {{-- @can('service_access') --}}
-                            <li class="item-name"><a class="{{ Request::is('services*') | Request::is('sub-services*') | Request::is('customer-requests*') ? 'sidebar_active' : '' }}"
+                            <li class="item-name"><a class="{{ Request::is('services*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('services') }}"><i class="nav-icon fa fa-circle"></i><span
                                         class="item-name">Services</span></a></li>
                             {{-- @endcan --}}

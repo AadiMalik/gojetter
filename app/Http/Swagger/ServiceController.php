@@ -4,7 +4,7 @@ namespace App\Http\Swagger;
 
 use App\Http\Controllers\Controller;
 
-class SocialMediaController extends Controller
+class ServiceController extends Controller
 {
 
       /**
