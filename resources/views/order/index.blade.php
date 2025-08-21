@@ -26,6 +26,7 @@
                                     <tr>
                                         <th scope="col">Date</th>
                                         <th scope="col">Quantity</th>
+                                        <th scope="col">Currency</th>
                                         <th scope="col">Subtotal</th>
                                         <th scope="col">Discount</th>
                                         <th scope="col">Total</th>
@@ -51,6 +52,7 @@
         'columns' => "
                              {data: 'order_date' , name: 'order_date'},
                              {data: 'quantity' , name: 'quantity'},
+                             {data: 'currency' , name: 'currency'},
                              {data: 'sub_total' , name: 'sub_total'},
                              {data: 'discount' , name: 'discount'},
                              {data: 'total' , name: 'total'},
@@ -100,10 +102,12 @@
                         initDataTableorder_table();
                     } else {
                         errorMessage(data.Message);
+                        initDataTableorder_table();
                     }
                 },
                 error: function(xhr) {
                     errorMessage(xhr.Message);
+                    initDataTableorder_table();
                 }
             });
         });
@@ -130,10 +134,12 @@
                                 initDataTableorder_table();
                             } else {
                                 errorMessage(data.Message);
+                                initDataTableorder_table();
                             }
                         })
                         .catch(function(err) {
                             errorMessage(err.Message);
+                            initDataTableorder_table();
                         });
                 }
             });

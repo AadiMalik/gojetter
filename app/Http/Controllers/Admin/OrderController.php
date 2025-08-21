@@ -49,15 +49,17 @@ class OrderController extends Controller
     public function status(Request $request)
     {
         // abort_if(Gate::denies('order_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        try {
-            $order = $this->order_service->statusById($request->all());
+        $order = $this->order_service->statusById($request->all());
+        if ($order) {
             return $this->success(
                 $order,
                 ResponseMessage::UPDATE_STATUS,
                 200
             );
-        } catch (Exception $e) {
-            return $this->error(ResponseMessage::ERROR);
+        } else {
+            return $this->error(
+                ResponseMessage::ERROR
+            );
         }
     }
 

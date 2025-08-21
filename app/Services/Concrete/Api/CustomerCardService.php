@@ -31,7 +31,7 @@ class CustomerCardService
             return DB::transaction(function () use ($data, $user) {
 
                   // Create Stripe customer if not exists
-                  if (!$user->stripe_customer_id) {
+                  if (empty($user->stripe_customer_id)) {
                         $customer = Customer::create([
                               'email' => $user->email,
                               'name' => $user->name,

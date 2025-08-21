@@ -43,6 +43,9 @@ class OrderService
     {
         $model = $this->model_order->getModel()::where('is_deleted', 0);
         $data = DataTables::of($model)
+            ->addColumn('currency', function ($item) {
+                return $item->currency->code . '(' . $item->currency->symbol . ')';
+            })
             ->addColumn('status', function ($item) {
                 $reflection = new ReflectionClass(BookingStatus::class);
                 $statuses = $reflection->getConstants();
@@ -67,7 +70,7 @@ class OrderService
 
                 return $action_column;
             })
-            ->rawColumns(['status', 'action'])
+            ->rawColumns(['currency', 'status', 'action'])
             ->make(true);
         return $data;
     }
@@ -98,60 +101,66 @@ class OrderService
     }
     public function statusById($data)
     {
-        $order = $this->model_order->getModel()::findOrFail($data['order_id']);
-        if (!$order) {
+        DB::beginTransaction();
+        try {
+            $order = $this->model_order->getModel()::findOrFail($data['order_id']);
+            if (!$order) {
+                return false;
+            }
+            if ($data['status'] == 'confirmed') {
+                foreach ($order->orderDetail as $item) {
+                    $this->model_activity_time_slot->getModel()
+                        ::where('id', $item->activity_time_slot_id)
+                        ->decrement('available_seats', $item->quantity);
+                }
+            }
+            // If status is being set to "paid", charge the customer via Stripe
+            if ($data['status'] === 'paid') {
+                // Get the payment method from card_id
+                $customer_card = $this->model_customer_card->getModel()::findOrFail($order->card_id);
+
+                if (!$customer_card || !$customer_card->stripe_payment_method_id) {
+                    throw new Exception("No valid card found for payment.");
+                }
+
+                // Set your Stripe secret key
+                Stripe::setApiKey(config('services.stripe.secret'));
+
+                // Retrieve the Stripe customer ID from your User model (assumed)
+                $user = $this->model_user->getModel()::findOrFail($order->user_id);
+
+                if (!$user || !$user->stripe_customer_id) {
+                    throw new Exception("Stripe customer not found.");
+                }
+
+                // Create a PaymentIntent and confirm it
+                $paymentIntent = PaymentIntent::create([
+                    'amount' => intval($order->total * 100), // amount in cents
+                    'currency' => strtolower($order->currency->code ?? 'usd'),
+                    'customer' => $user->stripe_customer_id,
+                    'payment_method' => $customer_card->stripe_payment_method_id,
+                    'off_session' => true,
+                    'confirm' => true,
+                    'description' => 'Order Payment for Order #' . $order->id,
+                ]);
+
+                if ($paymentIntent->status !== 'succeeded') {
+                    throw new Exception("Payment failed. Status: " . $paymentIntent->status);
+                }
+
+                // Send email to customer after successful payment
+                Mail::to($order->email)->send(new OrderPaidMail($order));
+            }
+
+            $order->status = $data['status'];
+            $order->update();
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e);
             return false;
         }
-        if ($data['status'] == 'confirmed') {
-            foreach ($order->orderDetail as $item) {
-                $this->model_activity_time_slot->getModel()
-                    ::where('id', $item->activity_time_slot_id)
-                    ->decrement('available_seats', $item->quantity);
-            }
-        }
-        // If status is being set to "paid", charge the customer via Stripe
-        if ($data['status'] === 'paid') {
-            // Get the payment method from card_id
-            $customer_card = $this->model_customer_card->getModel()::findOrFail($order->card_id);
-
-            if (!$customer_card || !$customer_card->stripe_payment_method_id) {
-                throw new \Exception("No valid card found for payment.");
-            }
-
-            // Set your Stripe secret key
-            Stripe::setApiKey(config('services.stripe.secret_key'));
-
-            // Retrieve the Stripe customer ID from your User model (assumed)
-            $user = $this->model_user->getModel()::findOrFail($order->user_id);
-
-            if (!$user || !$user->stripe_customer_id) {
-                throw new \Exception("Stripe customer not found.");
-            }
-
-            // Create a PaymentIntent and confirm it
-            $paymentIntent = PaymentIntent::create([
-                'amount' => intval($order->total * 100), // amount in cents
-                'currency' => strtolower($order->currency->code ?? 'usd'),
-                'customer' => $user->stripe_customer_id,
-                'payment_method' => $customer_card->stripe_payment_method_id,
-                'off_session' => true,
-                'confirm' => true,
-                'description' => 'Order Payment for Order #' . $order->id,
-            ]);
-
-            if ($paymentIntent->status !== 'succeeded') {
-                throw new \Exception("Payment failed. Status: " . $paymentIntent->status);
-            }
-
-            // Send email to customer after successful payment
-            Mail::to($order->email)->send(new OrderPaidMail($order));
-        }
-
-        $order->status = $data['status'];
-        $order->update();
-
-        if (!$order)
-            return false;
 
         return $order;
     }

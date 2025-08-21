@@ -39,11 +39,11 @@
                     <div class="row mb-3">
                         <div class="col-md-4"><strong>Order Date:</strong> {{ $order->order_date }}</div>
                         <div class="col-md-4"><strong>Quantity:</strong> {{ $order->quantity }}</div>
-                        <div class="col-md-4"><strong>Sub Total:</strong> {{ $order->sub_total }}</div>
-                        <div class="col-md-4"><strong>Tax (%):</strong> {{ $order->tax_percent }}%</div>
-                        <div class="col-md-4"><strong>Tax Amount:</strong> {{ $order->tax_amount }}</div>
-                        <div class="col-md-4"><strong>Discount:</strong> {{ $order->discount }}</div>
-                        <div class="col-md-4"><strong>Total:</strong> {{ $order->total }}</div>
+                        <div class="col-md-4"><strong>Sub Total:</strong> {{ $order->currency->symbol }} {{ $order->sub_total }}</div>
+                        <div class="col-md-4"><strong>Tax (%):</strong> {{ $order->currency->symbol }} {{ $order->tax_percent }}%</div>
+                        <div class="col-md-4"><strong>Tax Amount:</strong> {{ $order->currency->symbol }} {{ $order->tax_amount }}</div>
+                        <div class="col-md-4"><strong>Discount:</strong> {{ $order->currency->symbol }} {{ $order->discount }}</div>
+                        <div class="col-md-4"><strong>Total:</strong> {{ $order->currency->symbol }} {{ $order->total }}</div>
                         <div class="col-md-4"><strong>Payment Method:</strong> {{ ucfirst($order->payment_method) }}</div>
                         <div class="col-md-4"><strong>Status:</strong> {{ ucfirst($order->status) }}</div>
                     </div>
@@ -79,9 +79,9 @@
                                     <td>{{ $detail->activity->title??'' }}</td>
                                     <td>{{ $detail->activity_date->date??'' }}</td>
                                     <td>{{ $detail->activity_time_slot->start_time}} - {{$detail->activity_time_slot->end_time }}</td>
-                                    <td>{{ $detail->price }}</td>
+                                    <td>{{ $order->currency->symbol }} {{ $detail->price }}</td>
                                     <td>{{ $detail->quantity }}</td>
-                                    <td>{{ $detail->total }}</td>
+                                    <td>{{ $order->currency->symbol }} {{ $detail->total }}</td>
                                 </tr>
                             @empty
                                 <tr>
