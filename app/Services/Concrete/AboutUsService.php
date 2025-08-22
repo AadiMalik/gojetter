@@ -62,4 +62,9 @@ class AboutUsService
         return $about_us;
     }
 
+    public function getLatest()
+    {
+        return $this->model_about_us->getModel()::orderBy('created_at','DESC')->first();
+    }
+
 }

@@ -48,6 +48,7 @@ Route::get('privacy-policy', [CommonController::class, 'privacyPolicy']);
 Route::get('faqs', [CommonController::class, 'faqs']);
 Route::get('currency-list', [CommonController::class, 'currency']);
 Route::get('country-list', [CommonController::class, 'country']);
+Route::get('about-us', [CommonController::class, 'aboutUs']);
 
 // tour
 Route::get('tour-category-list', [TourController::class, 'tourCategory']);
