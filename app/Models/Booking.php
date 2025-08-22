@@ -12,6 +12,7 @@ class Booking extends Model
         'tour_id',
         'user_id',
         'booking_date',
+        'tour_date_id',
         'first_name',
         'last_name',
         'email',
@@ -55,6 +56,10 @@ class Booking extends Model
     public function tour()
     {
         return $this->belongsTo(Tour::class, 'tour_id')->where('is_deleted', 0);
+    }
+    public function tour_date()
+    {
+        return $this->belongsTo(TourDate::class, 'tour_date_id')->where('is_deleted', 0);
     }
 
     public function user()

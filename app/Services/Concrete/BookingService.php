@@ -42,6 +42,9 @@ class BookingService
             ->addColumn('tour', function ($item) {
                 return $item->tour->title ?? '';
             })
+            ->addColumn('tour_date', function ($item) {
+                return $item->tour_date->start_date .' - '.$item->tour_date->end_date;
+            })
             ->addColumn('status', function ($item) {
                 $reflection = new ReflectionClass(BookingStatus::class);
                 $statuses = $reflection->getConstants();
@@ -66,7 +69,7 @@ class BookingService
 
                 return $action_column;
             })
-            ->rawColumns(['tour', 'status', 'action'])
+            ->rawColumns(['tour','tour_date', 'status', 'action'])
             ->make(true);
         return $data;
     }
@@ -90,7 +93,7 @@ class BookingService
     // get by id
     public function getDetailById($id)
     {
-        $booking = $this->model_booking->getModel()::with(['tour', 'user'])->find($id);
+        $booking = $this->model_booking->getModel()::with(['tour','tour_date', 'user'])->find($id);
         $booking_detail = $this->model_booking_detail->getModel()::where('booking_id', $id)->where('is_deleted', 0)->get();
         $booking->booking_detail = $booking_detail;
 
@@ -172,7 +175,12 @@ class BookingService
     //list
     public function getBookingByUser()
     {
-        return $this->model_booking->getModel()::with(['tour', 'user'])
+        return $this->model_booking->getModel()::with([
+            'tour',
+            'tour_date',
+            'user',
+            'bookingDetail'
+        ])
             ->where('is_deleted', 0)
             ->where('user_id', Auth::User()->id)
             ->get();

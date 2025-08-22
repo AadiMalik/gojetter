@@ -34,8 +34,9 @@ class BookingController extends Controller
     public function store(StoreBookingRequest $request)
     {
         $obj = $request->validated();
-        $obj['total_participants'] = $request->adults + $request->children;
+        $obj['total_participants'] = $request->quantity;
         $obj['user_id'] = Auth::User()->id;
+        $obj['booking_date'] = now();
         $booking = $this->booking_service->save($obj);
         if ($booking) {
             return $this->success(

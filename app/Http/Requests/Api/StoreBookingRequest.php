@@ -25,9 +25,9 @@ class StoreBookingRequest extends FormRequest
     {
         return [
             'tour_id'       => 'required|integer|exists:tours,id',
+            'tour_date_id'  => 'required|integer|exists:tour_dates,tour_date_id',
             'card_id'       => 'required|integer|exists:customer_cards,id',
             'currency_id'   => 'required|integer|exists:currencies,id',
-            'booking_date'  => 'required|date',
             'first_name'    => 'required|string',
             'last_name'     => 'required|string',
             'email'         => 'required|email',
@@ -35,8 +35,7 @@ class StoreBookingRequest extends FormRequest
             'country'       => 'required|string',
             'zipcode'       => 'required|string',
             'address'       => 'required|string',
-            'adults'        => 'required|integer|min:0',
-            'children'      => 'required|integer|min:0',
+            'quantity'      => 'required|integer|min:1',
             'sub_total'     => 'required|numeric|min:0',
             'tax_percent'   => 'nullable|numeric|min:0',
             'tax_amount'    => 'nullable|numeric|min:0',

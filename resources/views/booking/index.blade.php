@@ -24,11 +24,10 @@
                             <table id="booking_table" class="table table-striped display" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th scope="col">Booking Date</th>
                                         <th scope="col">Tour</th>
-                                        <th scope="col">Date</th>
+                                        <th scope="col">Tour Date</th>
                                         <th scope="col">Participants</th>
-                                        <th scope="col">Adults</th>
-                                        <th scope="col">Children</th>
                                         <th scope="col">Amount</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Action</th>
@@ -50,11 +49,10 @@
 @section('js')
     @include('includes.datatable', [
         'columns' => "
-                             {data: 'tour' , name: 'tour', 'sortable': false , searchable: false},
                              {data: 'booking_date' , name: 'booking_date'},
+                             {data: 'tour' , name: 'tour', 'sortable': false , searchable: false},
+                             {data: 'tour_date' , name: 'tour_date', 'sortable': false , searchable: false},
                              {data: 'total_participants' , name: 'total_participants'},
-                             {data: 'adults' , name: 'adults'},
-                             {data: 'children' , name: 'children'},
                              {data: 'total' , name: 'total'},
                              {data: 'status' , name: 'status' , 'sortable': false , searchable: false},
                             {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
