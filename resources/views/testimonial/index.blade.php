@@ -1,114 +1,116 @@
 @extends('layouts.master')
 @section('content')
-    <div class="main-content pt-4">
-        <div class="breadcrumb">
-            <h1>Testimonials</h1>
-            <ul>
-                <li>List</li>
-                <li>All</li>
-            </ul>
-        </div>
-        <div class="separator-breadcrumb border-top"></div>
-        @if (session()->has('success'))
-            <div class="alert alert-success">
-                {{ session()->get('success') }}
-            </div>
-        @endif
-        <div class="row mb-4">
-            <div class="col-md-12 mb-3">
-                <div class="card text-left">
-                    <div class="card-header text-right bg-transparent">
-                        <a class="btn btn-primary btn-md m-1" href="{{ url('testimonial/create') }}"><i
-                                class="fa fa-plus text-white mr-2"></i> Add Testimonial</a>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="testimonial_table" class="table table-striped display" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Profession</th>
-                                        <th scope="col">Image</th>
-                                        <th scope="col">Message</th>
-                                        <th scope="col">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+<div class="main-content pt-4">
+    <div class="breadcrumb">
+        <h1>Testimonials</h1>
+        <ul>
+            <li>List</li>
+            <li>All</li>
+        </ul>
+    </div>
+    <div class="separator-breadcrumb border-top"></div>
+    @if (session()->has('success'))
+    <div class="alert alert-success">
+        {{ session()->get('success') }}
+    </div>
+    @endif
+    <div class="row mb-4">
+        <div class="col-md-12 mb-3">
+            <div class="card text-left">
+                <div class="card-header text-right bg-transparent">
+                    @can('testimonial_create')
+                    <a class="btn btn-primary btn-md m-1" href="{{ url('testimonial/create') }}"><i
+                            class="fa fa-plus text-white mr-2"></i> Add Testimonial</a>
+                    @endcan
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="testimonial_table" class="table table-striped display" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Profession</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Message</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                                </tbody>
-                            </table>
-                        </div>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <!-- end of col-->
         </div>
-        <!-- end of row-->
+        <!-- end of col-->
     </div>
+    <!-- end of row-->
+</div>
 @endsection
 @section('js')
-    @include('includes.datatable', [
-        'columns' => "
-                     {data: 'name' , name: 'name'},
-                     {data: 'profession' , name: 'profession'},
-                     {data: 'image' , name: 'image', 'sortable': false , searchable: false},
-                     {data: 'message' , name: 'message'},
-                    {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
-        'route' => 'testimonial/data',
-        'buttons' => false,
-        'pageLength' => 10,
-        'class' => 'testimonial_table',
-        'variable' => 'testimonial_table',
-    ])
-    <script>
-        function errorMessage(message) {
+@include('includes.datatable', [
+'columns' => "
+{data: 'name' , name: 'name'},
+{data: 'profession' , name: 'profession'},
+{data: 'image' , name: 'image', 'sortable': false , searchable: false},
+{data: 'message' , name: 'message'},
+{data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
+'route' => 'testimonial/data',
+'buttons' => false,
+'pageLength' => 10,
+'class' => 'testimonial_table',
+'variable' => 'testimonial_table',
+])
+<script>
+    function errorMessage(message) {
 
-            toastr.error(message, "Error", {
-                showMethod: "slideDown",
-                hideMethod: "slideUp",
-                timeOut: 2e3,
-            });
-
-        }
-
-        function successMessage(message) {
-
-            toastr.success(message, "Success", {
-                showMethod: "slideDown",
-                hideMethod: "slideUp",
-                timeOut: 2e3,
-            });
-
-        }
-        $("body").on("click", "#deleteTestimonail", function() {
-            var testimonial_id = $(this).data("id");
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't be able to revert this!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes, delete it!",
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                            type: "get",
-                            url: "{{ url('testimonial/destroy') }}/" + testimonial_id,
-                        })
-                        .done(function(data) {
-                            if (data.Success) {
-                                successMessage(data.Message);
-                                initDataTabletestimonial_table();
-                            } else {
-                                errorMessage(data.Message);
-                            }
-                        })
-                        .catch(function(err) {
-                            errorMessage(err.Message);
-                        });
-                }
-            });
+        toastr.error(message, "Error", {
+            showMethod: "slideDown",
+            hideMethod: "slideUp",
+            timeOut: 2e3,
         });
-    </script>
+
+    }
+
+    function successMessage(message) {
+
+        toastr.success(message, "Success", {
+            showMethod: "slideDown",
+            hideMethod: "slideUp",
+            timeOut: 2e3,
+        });
+
+    }
+    $("body").on("click", "#deleteTestimonail", function() {
+        var testimonial_id = $(this).data("id");
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                        type: "get",
+                        url: "{{ url('testimonial/destroy') }}/" + testimonial_id,
+                    })
+                    .done(function(data) {
+                        if (data.Success) {
+                            successMessage(data.Message);
+                            initDataTabletestimonial_table();
+                        } else {
+                            errorMessage(data.Message);
+                        }
+                    })
+                    .catch(function(err) {
+                        errorMessage(err.Message);
+                    });
+            }
+        });
+    });
+</script>
 @endsection

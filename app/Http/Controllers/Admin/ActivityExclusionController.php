@@ -29,19 +29,19 @@ class ActivityExclusionController extends Controller
 
     public function index($activity_id)
     {
-        // abort_if(Gate::denies('activity_exclusion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_exclusion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activity = $this->activity_service->getById($activity_id);
         return view('activity_exclusion.index', compact('activity'));
     }
 
     public function getData(Request $request)
     {
-        // abort_if(Gate::denies('activity_exclusion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_exclusion_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return $this->activity_exclusion_service->getSource($request->all());
     }
     public function store(Request $request)
     {
-        // abort_if(Gate::denies('activity_exclusion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_exclusion_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -80,7 +80,7 @@ class ActivityExclusionController extends Controller
     }
     public function destroy($id)
     {
-        // abort_if(Gate::denies('activity_exclusion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_exclusion_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $activity_exclusion = $this->activity_exclusion_service->deleteById($id);
             return $this->success(

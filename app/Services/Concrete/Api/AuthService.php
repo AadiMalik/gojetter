@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\ValidationException;
+use Spatie\Permission\Models\Role;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthService
@@ -28,8 +29,8 @@ class AuthService
                 'email_otp' => $otp,
                 'email_otp_expires_at' => now()->addMinutes(config('auth.otp_expiry_minutes'))
             ]);
-
-            $user->assignRole('user');
+            $role = Role::where('name', 'user')->where('guard_name', 'web')->first();
+            $user->assignRole($role);
 
             $token = auth()->login($user);
             Mail::to($user->email)->send(new SendOtpMail($user));

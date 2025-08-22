@@ -54,7 +54,9 @@
 
                 <div class="card-footer">
                     <a href="{{ url('services') }}" class="btn btn-secondary">Back</a>
+                    @can('service_edit')
                     <a href="{{ url('services/edit/'.$service->id) }}" class="btn btn-primary">Edit</a>
+                    @endcan
                 </div>
             </div>
         </div>

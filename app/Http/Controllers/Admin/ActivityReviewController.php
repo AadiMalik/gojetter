@@ -23,13 +23,13 @@ class ActivityReviewController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('activity_review_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_review_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('activity_review.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('activity_review_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_review_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->activity_review_service->getSource();
         } catch (Exception $e) {
@@ -39,7 +39,7 @@ class ActivityReviewController extends Controller
 
     public function status($id)
     {
-        // abort_if(Gate::denies('activity_review_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_review_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $activity_review = $this->activity_review_service->statusById($id);
             return $this->success(
@@ -54,7 +54,7 @@ class ActivityReviewController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('activity_review_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_review_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $activity_review = $this->activity_review_service->deleteById($id);
             return $this->success(

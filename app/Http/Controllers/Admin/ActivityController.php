@@ -33,13 +33,13 @@ class ActivityController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('activity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('activity.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('activity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->activity_service->getSource();
         } catch (Exception $e) {
@@ -48,7 +48,7 @@ class ActivityController extends Controller
     }
     public function create()
     {
-        // abort_if(Gate::denies('activity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activity_category = $this->activity_category_service->getAllActive();
         $destinations = $this->destination_service->getAllActive();
         return view('activity.create', compact('activity_category','destinations'));
@@ -56,7 +56,7 @@ class ActivityController extends Controller
     public function store(Request $request)
     {
 
-        // abort_if(Gate::denies('activity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -118,7 +118,7 @@ class ActivityController extends Controller
 
     public function edit($id)
     {
-        // abort_if(Gate::denies('activity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activity_category = $this->activity_category_service->getAllActive();
         $destinations = $this->destination_service->getAllActive();
         $activity = $this->activity_service->getById($id);
@@ -127,14 +127,14 @@ class ActivityController extends Controller
 
     public function view($id)
     {
-        // abort_if(Gate::denies('activity_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activity = $this->activity_service->getById($id);
         return view('activity.view', compact('activity'));
     }
 
     public function status($id)
     {
-        // abort_if(Gate::denies('activity_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $activity = $this->activity_service->statusById($id);
             return $this->success(
@@ -149,7 +149,7 @@ class ActivityController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('activity_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $activity = $this->activity_service->deleteById($id);
             return $this->success(

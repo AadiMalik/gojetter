@@ -29,19 +29,19 @@ class TourFaqController extends Controller
 
     public function index($tour_id)
     {
-        // abort_if(Gate::denies('tour_faq_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_faq_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tour = $this->tour_service->getById($tour_id);
         return view('tour_faq.index', compact('tour'));
     }
 
     public function getData(Request $request)
     {
-        // abort_if(Gate::denies('tour_faq_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_faq_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return $this->tour_faq_service->getSource($request->all());
     }
     public function store(Request $request)
     {
-        // abort_if(Gate::denies('tour_faq_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_faq_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -81,7 +81,7 @@ class TourFaqController extends Controller
     }
     public function destroy($id)
     {
-        // abort_if(Gate::denies('tour_faq_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_faq_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $tour_faq = $this->tour_faq_service->deleteById($id);
             return $this->success(

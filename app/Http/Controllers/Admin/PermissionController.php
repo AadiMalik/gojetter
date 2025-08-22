@@ -24,20 +24,20 @@ class PermissionController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('permissions_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('permissions_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('permissions.index');
     }
 
 
     public function getData(Request $request)
     {
-        // abort_if(Gate::denies('permissions_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('permissions_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return $this->permission_service->getPermissionSource();
     }
 
     public function store(Request $request)
     {
-        // abort_if(Gate::denies('permissions_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('permissions_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make($request->all(), [
             'name' => ['required', 'max:50', 'string', 'unique:permissions,name,' . $request->id]
         ]);
@@ -69,7 +69,7 @@ class PermissionController extends Controller
 
     public function edit($id)
     {
-        // abort_if(Gate::denies('permissions_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('permissions_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return  $this->success(
                 $this->permission_service->getById($id),

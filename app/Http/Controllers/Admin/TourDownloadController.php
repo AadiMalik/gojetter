@@ -29,19 +29,19 @@ class TourDownloadController extends Controller
 
     public function index($tour_id)
     {
-        // abort_if(Gate::denies('tour_download_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_download_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tour = $this->tour_service->getById($tour_id);
         return view('tour_download.index', compact('tour'));
     }
 
     public function getData(Request $request)
     {
-        // abort_if(Gate::denies('tour_download_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_download_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return $this->tour_download_service->getSource($request->all());
     }
     public function store(Request $request)
     {
-        // abort_if(Gate::denies('tour_download_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_download_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $rules = [
             'tour_id'    => 'required|exists:tours,id',
             'file_type'  => 'required|string|in:document,image,audio,video',
@@ -103,7 +103,7 @@ class TourDownloadController extends Controller
     }
     public function destroy($id)
     {
-        // abort_if(Gate::denies('tour_download_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_download_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $tour_download = $this->tour_download_service->deleteById($id);
             return $this->success(

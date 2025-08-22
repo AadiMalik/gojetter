@@ -28,9 +28,9 @@ class CustomerRequestService
                         $action_column = '';
                         $view_column    = "<a class='text-warning mr-2' href='customer-requests/view/" . $item->id . "'><i title='View' class='nav-icon mr-2 fa fa-eye'></i>View</a>";
                         $delete_column    = "<a class='text-danger mr-2' id='deleteCustomerRequest' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
-                        // if (Auth::user()->can('customer_request_view'))
+                        if (Auth::user()->can('customer_request_view'))
                         $action_column .= $view_column;
-                        // if (Auth::user()->can('customer_request_delete'))
+                        if (Auth::user()->can('customer_request_delete'))
                         $action_column .= $delete_column;
 
                         return $action_column;

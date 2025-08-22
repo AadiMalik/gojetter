@@ -24,13 +24,13 @@ class CustomerRequestController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('customer_request_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('customer_request_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('customer_request.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('customer_request_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('customer_request_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->customer_request_service->getSource();
         } catch (Exception $e) {
@@ -40,14 +40,14 @@ class CustomerRequestController extends Controller
 
     public function view($id)
     {
-        // abort_if(Gate::denies('customer_request_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('customer_request_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $customer_request = $this->customer_request_service->getById($id);
         return view('customer_request.view', compact('customer_request'));
     }
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('customer_request_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('customer_request_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $customer_request = $this->customer_request_service->deleteById($id);
             return $this->success(

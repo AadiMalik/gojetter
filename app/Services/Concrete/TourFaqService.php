@@ -29,7 +29,7 @@ class TourFaqService
             ->addColumn('action', function ($item) {
                 $action_column = '';
                 $delete_column    = "<a class='text-danger mr-2' id='deleteTourFaq' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
-                // if (Auth::user()->can('tour_faq_delete'))
+                if (Auth::user()->can('tour_faq_delete'))
                 $action_column .= $delete_column;
 
                 return $action_column;

@@ -24,13 +24,13 @@ class TourCategoryController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('tour_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('tour_category.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('tour_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->tour_category_service->getSource();
         } catch (Exception $e) {
@@ -39,13 +39,13 @@ class TourCategoryController extends Controller
     }
     public function create()
     {
-        // abort_if(Gate::denies('tour_category_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_category_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('tour_category.create');
     }
     public function store(Request $request)
     {
 
-        // abort_if(Gate::denies('tour_category_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_category_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -80,14 +80,14 @@ class TourCategoryController extends Controller
 
     public function edit($id)
     {
-        // abort_if(Gate::denies('tour_category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tour_category = $this->tour_category_service->getById($id);
         return view('tour_category.create', compact('tour_category'));
     }
 
     public function status($id)
     {
-        // abort_if(Gate::denies('tour_category_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_category_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $tour_category = $this->tour_category_service->statusById($id);
             return $this->success(
@@ -102,7 +102,7 @@ class TourCategoryController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('tour_category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $tour_category = $this->tour_category_service->deleteById($id);
             return $this->success(

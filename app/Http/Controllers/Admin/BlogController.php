@@ -29,13 +29,13 @@ class BlogController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('blog_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('blog_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('blogs.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('blog_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('blog_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->blog_service->getSource();
         } catch (Exception $e) {
@@ -44,14 +44,14 @@ class BlogController extends Controller
     }
     public function create()
     {
-        // abort_if(Gate::denies('blog_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('blog_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $blog_category = $this->blog_category_service->getAllActive();
         return view('blogs.create',compact('blog_category'));
     }
     public function store(Request $request)
     {
 
-        // abort_if(Gate::denies('blog_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('blog_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -92,7 +92,7 @@ class BlogController extends Controller
 
     public function edit($id)
     {
-        // abort_if(Gate::denies('blog_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('blog_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $blog_category = $this->blog_category_service->getAllActive();
         $blog = $this->blog_service->getById($id);
         return view('blogs.create', compact('blog_category','blog'));
@@ -100,14 +100,14 @@ class BlogController extends Controller
 
     public function view($id)
     {
-        // abort_if(Gate::denies('blog_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('blog_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $blog = $this->blog_service->getById($id);
         return view('blogs.view', compact('blog'));
     }
 
     public function status($id)
     {
-        // abort_if(Gate::denies('blog_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('blog_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $blog = $this->blog_service->statusById($id);
             return $this->success(
@@ -122,7 +122,7 @@ class BlogController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('blog_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('blog_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $blog = $this->blog_service->deleteById($id);
             return $this->success(

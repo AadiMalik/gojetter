@@ -56,28 +56,28 @@ class ActivityService
                 $image = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-image/" . $item->id . "'><i class='fa fa-image mr-1'></i> Gallery</a>";
                 $support = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-support/" . $item->id . "'><i class='fa fa-users mr-1'></i> Supports</a>";
                 $not_suitable = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-not-suitable/" . $item->id . "'><i class='fa fa-exclamation mr-1'></i> Not Suitable</a>";
-                // if (Auth::user()->can('activity_edit'))
+                if (Auth::user()->can('activity_edit'))
                 $action_column .= $edit_column;
-                // if (Auth::user()->can('activity_view'))
+                if (Auth::user()->can('activity_view'))
                 $action_column .= $view_column;
-                // if (Auth::user()->can('activity_delete'))
+                if (Auth::user()->can('activity_delete'))
                 $action_column .= $delete_column;
 
-                // if (Auth::user()->can('activity_date_access'))
+                if (Auth::user()->can('activity_date_access'))
                 $additional_column .= $dates;
-                // if (Auth::user()->can('activity_inclusion_access'))
+                if (Auth::user()->can('activity_inclusion_access'))
                 $additional_column .= $inclusion;
-                // if (Auth::user()->can('activity_exclusion_access'))
+                if (Auth::user()->can('activity_exclusion_access'))
                 $additional_column .= $exclusion;
-                // if (Auth::user()->can('activity_expectation_access'))
+                if (Auth::user()->can('activity_expectation_access'))
                 $additional_column .= $expectation;
-                // if (Auth::user()->can('activity_policy_access'))
+                if (Auth::user()->can('activity_policy_access'))
                 $additional_column .= $policy;
-                // if (Auth::user()->can('activity_image_access'))
+                if (Auth::user()->can('activity_image_access'))
                 $additional_column .= $image;
-                // if (Auth::user()->can('activity_support_access'))
+                if (Auth::user()->can('activity_support_access'))
                 $additional_column .= $support;
-                // if (Auth::user()->can('activity_support_access'))
+                if (Auth::user()->can('activity_support_access'))
                 $additional_column .= $not_suitable;
                 // Main button with dropdown    
                 $dropdown = '

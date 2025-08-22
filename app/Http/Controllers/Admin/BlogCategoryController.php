@@ -24,13 +24,13 @@ class BlogCategoryController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('blog_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('blog_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('blog_category.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('blog_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('blog_category_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->blog_category_service->getSource();
         } catch (Exception $e) {
@@ -41,7 +41,7 @@ class BlogCategoryController extends Controller
     public function store(Request $request)
     {
 
-        // abort_if(Gate::denies('blog_category_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('blog_category_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -89,7 +89,7 @@ class BlogCategoryController extends Controller
 
     public function edit($id)
     {
-        // abort_if(Gate::denies('blog_category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('blog_category_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return  $this->success(
                 $this->blog_category_service->getById($id),
@@ -103,7 +103,7 @@ class BlogCategoryController extends Controller
 
     public function status($id)
     {
-        // abort_if(Gate::denies('blog_category_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('blog_category_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $blog_category = $this->blog_category_service->statusById($id);
             return $this->success(
@@ -118,7 +118,7 @@ class BlogCategoryController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('blog_category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('blog_category_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $blog_category = $this->blog_category_service->deleteById($id);
             return $this->success(

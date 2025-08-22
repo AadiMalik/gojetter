@@ -23,7 +23,7 @@ class PolicyService
             ->addColumn('action', function ($item) {
                 $action_column = '';
                 $edit_column    = "<a class='text-success mr-2' href='policy/edit/" . $item->id . "'><i title='Add' class='nav-icon mr-2 fa fa-edit'></i>Edit</a>";
-                // if (Auth::user()->can('private_policy_edit'))
+                if (Auth::user()->can('private_policy_edit'))
                 $action_column .= $edit_column;
 
                 return $action_column;

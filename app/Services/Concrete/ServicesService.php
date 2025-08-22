@@ -44,11 +44,11 @@ class ServicesService
                         $edit_column    = "<a class='text-success mr-2' href='services/edit/" . $item->id . "'><i title='Add' class='nav-icon mr-2 fa fa-edit'></i>Edit</a>";
                         $view_column    = "<a class='text-warning mr-2' href='services/view/" . $item->id . "'><i title='View' class='nav-icon mr-2 fa fa-eye'></i>View</a>";
                         $delete_column    = "<a class='text-danger mr-2' id='deleteService' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
-                        // if (Auth::user()->can('service_edit'))
+                        if (Auth::user()->can('service_edit'))
                         $action_column .= $edit_column;
-                        // if (Auth::user()->can('service_view'))
+                        if (Auth::user()->can('service_view'))
                         $action_column .= $view_column;
-                        // if (Auth::user()->can('service_delete'))
+                        if (Auth::user()->can('service_delete'))
                         $action_column .= $delete_column;
 
                         return $action_column;

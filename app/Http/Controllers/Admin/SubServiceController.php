@@ -29,13 +29,13 @@ class SubServiceController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('sub_service_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sub_service_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('sub_services.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('sub_service_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sub_service_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->sub_services_service->getSource();
         } catch (Exception $e) {
@@ -44,14 +44,14 @@ class SubServiceController extends Controller
     }
     public function create()
     {
-        // abort_if(Gate::denies('sub_service_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sub_service_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $services = $this->services_service->getActiveAll();
         return view('sub_services.create',compact('services'));
     }
     public function store(Request $request)
     {
 
-        // abort_if(Gate::denies('sub_service_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sub_service_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -90,7 +90,7 @@ class SubServiceController extends Controller
 
     public function edit($id)
     {
-        // abort_if(Gate::denies('sub_service_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sub_service_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $services = $this->services_service->getActiveAll();
         $sub_service = $this->sub_services_service->getById($id);
         return view('sub_services.create', compact('services','sub_service'));
@@ -98,14 +98,14 @@ class SubServiceController extends Controller
 
     public function view($id)
     {
-        // abort_if(Gate::denies('sub_service_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sub_service_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $sub_service = $this->sub_services_service->getById($id);
         return view('sub_services.view', compact('sub_service'));
     }
 
     public function status($id)
     {
-        // abort_if(Gate::denies('sub_service_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sub_service_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $sub_service = $this->sub_services_service->statusById($id);
             return $this->success(
@@ -120,7 +120,7 @@ class SubServiceController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('sub_service_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('sub_service_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $sub_service = $this->sub_services_service->deleteById($id);
             return $this->success(

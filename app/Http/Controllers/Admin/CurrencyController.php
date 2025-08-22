@@ -24,13 +24,13 @@ class CurrencyController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('currency_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('currency_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('currency.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('currency_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('currency_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->currency_service->getSource();
         } catch (Exception $e) {
@@ -41,7 +41,7 @@ class CurrencyController extends Controller
     public function store(Request $request)
     {
 
-        // abort_if(Gate::denies('currency_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('currency_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -95,7 +95,7 @@ class CurrencyController extends Controller
 
     public function edit($id)
     {
-        // abort_if(Gate::denies('currency_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('currency_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return  $this->success(
                 $this->currency_service->getById($id),
@@ -109,7 +109,7 @@ class CurrencyController extends Controller
 
     public function default($id)
     {
-        // abort_if(Gate::denies('currency_default'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('currency_default'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $currency = $this->currency_service->defaultById($id);
             return $this->success(
@@ -124,7 +124,7 @@ class CurrencyController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('currency_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('currency_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $currency = $this->currency_service->deleteById($id);
             return $this->success(

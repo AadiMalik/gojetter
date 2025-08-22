@@ -24,13 +24,13 @@ class AboutUsController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('about_us_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('about_us_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('about_us.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('about_us_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('about_us_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->about_us_service->getSource();
         } catch (Exception $e) {
@@ -41,7 +41,7 @@ class AboutUsController extends Controller
     public function store(Request $request)
     {
 
-        // abort_if(Gate::denies('about_us_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('about_us_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -72,7 +72,7 @@ class AboutUsController extends Controller
 
     public function edit($id)
     {
-        // abort_if(Gate::denies('about_us_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('about_us_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $about_us = $this->about_us_service->getById($id);
         return view('about_us.create', compact('about_us'));
     }

@@ -23,7 +23,7 @@ class TermAndConditionService
             ->addColumn('action', function ($item) {
                 $action_column = '';
                 $edit_column    = "<a class='text-success mr-2' href='terms/edit/" . $item->id . "'><i title='Add' class='nav-icon mr-2 fa fa-edit'></i>Edit</a>";
-                // if (Auth::user()->can('term_and_condition_edit'))
+                if (Auth::user()->can('term_and_condition_edit'))
                 $action_column .= $edit_column;
 
                 return $action_column;

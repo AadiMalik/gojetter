@@ -61,7 +61,7 @@ class User extends Authenticatable implements JWTSubject
         'email_otp',
         'email_otp_expires_at',
     ];
-    protected $guard_name = 'api';
+    protected $guard_name = 'web';
     /**
      * The attributes that should be cast.
      *

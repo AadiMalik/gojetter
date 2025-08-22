@@ -23,13 +23,13 @@ class BookingController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('booking_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('booking_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('booking.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('booking_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('booking_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->booking_service->getSource();
         } catch (Exception $e) {
@@ -39,7 +39,7 @@ class BookingController extends Controller
 
     public function view($id)
     {
-        // abort_if(Gate::denies('booking_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('booking_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $booking = $this->booking_service->getDetailById($id);
             return view('booking.view', compact('booking'));
@@ -50,7 +50,7 @@ class BookingController extends Controller
 
     public function status(Request $request)
     {
-        // abort_if(Gate::denies('booking_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('booking_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $booking = $this->booking_service->statusById($request->all());
             return $this->success(
@@ -65,7 +65,7 @@ class BookingController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('booking_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('booking_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $booking = $this->booking_service->deleteById($id);
             return $this->success(

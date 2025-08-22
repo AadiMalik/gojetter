@@ -29,19 +29,19 @@ class ActivityNotSuitableController extends Controller
 
     public function index($activity_id)
     {
-        // abort_if(Gate::denies('activity_not_suitable_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_not_suitable_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activity = $this->activity_service->getById($activity_id);
         return view('activity_not_suitable.index', compact('activity'));
     }
 
     public function getData(Request $request)
     {
-        // abort_if(Gate::denies('activity_not_suitable_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_not_suitable_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return $this->activity_not_suitable_service->getSource($request->all());
     }
     public function store(Request $request)
     {
-        // abort_if(Gate::denies('activity_not_suitable_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_not_suitable_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -80,7 +80,7 @@ class ActivityNotSuitableController extends Controller
     }
     public function destroy($id)
     {
-        // abort_if(Gate::denies('activity_not_suitable_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_not_suitable_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $activity_not_suitable = $this->activity_not_suitable_service->deleteById($id);
             return $this->success(

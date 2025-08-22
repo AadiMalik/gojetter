@@ -23,14 +23,14 @@ class ContactUsMessageController extends Controller
     }
     public function index()
     {
-        // abort_if(Gate::denies('contact_us_message_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('contact_us_message_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $messages = $this->contact_us_message->getAll();
         return view('contact_us_message.index', compact('messages'));
     }
 
     public function show($id)
     {
-        // abort_if(Gate::denies('contact_us_message_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('contact_us_message_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         // try {
         $message = $this->contact_us_message->getById($id);
         $contact_us_message = [
@@ -60,7 +60,7 @@ class ContactUsMessageController extends Controller
 
     public function reply(Request $request)
     {
-        // abort_if(Gate::denies('contact_us_message_reply'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('contact_us_message_reply'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $request->validate([
             'parent_id' => 'required|exists:contact_us_messages,id',
             'reply' => 'required|string|max:5000',
@@ -92,7 +92,7 @@ class ContactUsMessageController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('contact_us_message_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('contact_us_message_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $contact_us_message = $this->contact_us_message->deleteById($id);
             return $this->success(

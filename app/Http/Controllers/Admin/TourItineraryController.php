@@ -29,19 +29,19 @@ class TourItineraryController extends Controller
 
     public function index($tour_id)
     {
-        // abort_if(Gate::denies('tour_itinerary_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_itinerary_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $tour = $this->tour_service->getById($tour_id);
         return view('tour_itinerary.index', compact('tour'));
     }
 
     public function getData(Request $request)
     {
-        // abort_if(Gate::denies('tour_itinerary_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_itinerary_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return $this->tour_itinerary_service->getSource($request->all());
     }
     public function store(Request $request)
     {
-        // abort_if(Gate::denies('tour_itinerary_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_itinerary_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -88,7 +88,7 @@ class TourItineraryController extends Controller
     }
     public function destroy($id)
     {
-        // abort_if(Gate::denies('tour_itinerary_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_itinerary_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $tour_itinerary = $this->tour_itinerary_service->deleteById($id);
             return $this->success(

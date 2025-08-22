@@ -31,9 +31,9 @@ class ActivityDateService
                 $action_column = '';
                 $time_slot_column = "<a class='text-warning mr-2' href='".url('activity-time-slot')."/" . $item->id . "'><i class='fa fa-calendar mr-1'></i> Time Slots</a>";
                 $delete_column    = "<a class='text-danger mr-2' id='deleteActivityDate' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
-                // if (Auth::user()->can('activity_time_slot_access'))
+                if (Auth::user()->can('activity_time_slot_access'))
                 $action_column .= $time_slot_column;
-                // if (Auth::user()->can('activity_date_delete'))
+                if (Auth::user()->can('activity_date_delete'))
                 $action_column .= $delete_column;
 
                 return $action_column;

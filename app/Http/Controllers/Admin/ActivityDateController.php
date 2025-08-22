@@ -29,19 +29,19 @@ class ActivityDateController extends Controller
 
     public function index($activity_id)
     {
-        // abort_if(Gate::denies('activity_date_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_date_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activity = $this->activity_service->getById($activity_id);
         return view('activity_date.index', compact('activity'));
     }
 
     public function getData(Request $request)
     {
-        // abort_if(Gate::denies('activity_date_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_date_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return $this->activity_date_service->getSource($request->all());
     }
     public function store(Request $request)
     {
-        // abort_if(Gate::denies('activity_date_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_date_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -83,7 +83,7 @@ class ActivityDateController extends Controller
     }
     public function destroy($id)
     {
-        // abort_if(Gate::denies('activity_date_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_date_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $activity_date = $this->activity_date_service->deleteById($id);
             return $this->success(

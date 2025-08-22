@@ -29,19 +29,19 @@ class ActivityTimeSlotController extends Controller
 
     public function index($activity_date_id)
     {
-        // abort_if(Gate::denies('activity_time_slot_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_time_slot_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activity_date = $this->activity_date_service->getById($activity_date_id);
         return view('activity_time_slot.index', compact('activity_date'));
     }
 
     public function getData(Request $request)
     {
-        // abort_if(Gate::denies('activity_time_slot_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_time_slot_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return $this->activity_time_slot_service->getSource($request->all());
     }
     public function store(Request $request)
     {
-        // abort_if(Gate::denies('activity_time_slot_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_time_slot_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             [
                 'activity_date_id' => 'required|exists:activity_dates,id',
@@ -85,7 +85,7 @@ class ActivityTimeSlotController extends Controller
     }
     public function destroy($id)
     {
-        // abort_if(Gate::denies('activity_time_slot_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_time_slot_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $activity_time_slot = $this->activity_time_slot_service->deleteById($id);
             return $this->success(

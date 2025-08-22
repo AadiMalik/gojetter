@@ -24,13 +24,13 @@ class TermAndConditionController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('term_and_condition_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('term_and_condition_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('terms.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('term_and_condition_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('term_and_condition_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->term_service->getSource();
         } catch (Exception $e) {
@@ -41,7 +41,7 @@ class TermAndConditionController extends Controller
     public function store(Request $request)
     {
 
-        // abort_if(Gate::denies('term_and_condition_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('term_and_condition_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -72,7 +72,7 @@ class TermAndConditionController extends Controller
 
     public function edit($id)
     {
-        // abort_if(Gate::denies('term_and_condition_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('term_and_condition_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $term = $this->term_service->getById($id);
         return view('terms.create', compact('term'));
     }

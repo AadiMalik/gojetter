@@ -59,26 +59,26 @@ class TourService
                 $faqs = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='tour-faq/" . $item->id . "'><i class='fa fa-question-circle mr-1'></i> FAQs</a>";
                 $image = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='tour-image/" . $item->id . "'><i class='fa fa-image mr-1'></i> Gallery</a>";
                 $download = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='tour-download/" . $item->id . "'><i class='fa fa-download mr-1'></i> Downloads</a>";
-                // if (Auth::user()->can('tour_edit'))
+                if (Auth::user()->can('tour_edit'))
                 $action_column .= $edit_column;
-                // if (Auth::user()->can('tour_view'))
+                if (Auth::user()->can('tour_view'))
                 $action_column .= $view_column;
-                // if (Auth::user()->can('tour_delete'))
+                if (Auth::user()->can('tour_delete'))
                 $action_column .= $delete_column;
 
-                // if (Auth::user()->can('tour_date_access'))
+                if (Auth::user()->can('tour_date_access'))
                 $additional_column .= $dates;
-                // if (Auth::user()->can('tour_itinerary_access'))
+                if (Auth::user()->can('tour_itinerary_access'))
                 $additional_column .= $itinerary;
-                // if (Auth::user()->can('tour_inclusion_access'))
+                if (Auth::user()->can('tour_inclusion_access'))
                 $additional_column .= $inclusion;
-                // if (Auth::user()->can('tour_exclusion_access'))
+                if (Auth::user()->can('tour_exclusion_access'))
                 $additional_column .= $exclusion;
-                // if (Auth::user()->can('tour_faqs_access'))
+                if (Auth::user()->can('tour_faqs_access'))
                 $additional_column .= $faqs;
-                // if (Auth::user()->can('tour_image_access'))
+                if (Auth::user()->can('tour_image_access'))
                 $additional_column .= $image;
-                // if (Auth::user()->can('tour_download_access'))
+                if (Auth::user()->can('tour_download_access'))
                 $additional_column .= $download;
                 // Main button with dropdown    
                 $dropdown = '
@@ -186,7 +186,7 @@ class TourService
             ->addColumn('action', function ($item) {
                 $action_column = '';
                 $delete_column    = "<a class='text-danger mr-2' id='deleteTourDate' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
-                // if (Auth::user()->can('tour_date_delete'))
+                if (Auth::user()->can('tour_date_delete'))
                 $action_column .= $delete_column;
 
                 return $action_column;
@@ -237,7 +237,7 @@ class TourService
             ->addColumn('action', function ($item) {
                 $action_column = '';
                 $delete_column    = "<a class='text-danger mr-2' id='deleteTourItinerary' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
-                // if (Auth::user()->can('tour_itinerary_delete'))
+                if (Auth::user()->can('tour_itinerary_delete'))
                 $action_column .= $delete_column;
 
                 return $action_column;

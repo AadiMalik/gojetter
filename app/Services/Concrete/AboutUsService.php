@@ -23,7 +23,7 @@ class AboutUsService
             ->addColumn('action', function ($item) {
                 $action_column = '';
                 $edit_column    = "<a class='text-success mr-2' href='about-us/edit/" . $item->id . "'><i title='Add' class='nav-icon mr-2 fa fa-edit'></i>Edit</a>";
-                // if (Auth::user()->can('about_us_edit'))
+                if (Auth::user()->can('about_us_edit'))
                 $action_column .= $edit_column;
 
                 return $action_column;

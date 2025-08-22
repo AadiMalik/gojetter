@@ -23,13 +23,13 @@ class OrderController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('order_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('order_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('order.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('order_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('order_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->order_service->getSource();
         } catch (Exception $e) {
@@ -39,7 +39,7 @@ class OrderController extends Controller
 
     public function view($id)
     {
-        // abort_if(Gate::denies('order_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('order_view'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $order = $this->order_service->getById($id);
             return view('order.view', compact('order'));
@@ -50,7 +50,7 @@ class OrderController extends Controller
 
     public function status(Request $request)
     {
-        // abort_if(Gate::denies('order_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('order_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $order = $this->order_service->statusById($request->all());
         if ($order) {
             return $this->success(
@@ -67,7 +67,7 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('order_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('order_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $order = $this->order_service->deleteById($id);
             return $this->success(

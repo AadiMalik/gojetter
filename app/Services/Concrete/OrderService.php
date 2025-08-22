@@ -63,9 +63,9 @@ class OrderService
                 $action_column = '';
                 $view_column    = "<a class='text-success mr-2' href='order/view/" . $item->id . "'><i title='view' class='nav-icon mr-2 fa fa-eye'></i>View</a>";
                 $delete_column    = "<a class='text-danger mr-2' id='deleteOrder' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
-                // if (Auth::user()->can('order_view'))
+                if (Auth::user()->can('order_view'))
                 $action_column .= $view_column;
-                // if (Auth::user()->can('order_delete'))
+                if (Auth::user()->can('order_delete'))
                 $action_column .= $delete_column;
 
                 return $action_column;

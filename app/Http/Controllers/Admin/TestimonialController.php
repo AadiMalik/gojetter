@@ -24,13 +24,13 @@ class TestimonialController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('testimonial_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('testimonial_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('testimonial.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('testimonial_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('testimonial_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->testimonial_service->getSource();
         } catch (Exception $e) {
@@ -39,13 +39,13 @@ class TestimonialController extends Controller
     }
     public function create()
     {
-        // abort_if(Gate::denies('testimonial_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('testimonial_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('testimonial.create');
     }
     public function store(Request $request)
     {
 
-        // abort_if(Gate::denies('testimonial_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('testimonial_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -82,14 +82,14 @@ class TestimonialController extends Controller
 
     public function edit($id)
     {
-        // abort_if(Gate::denies('testimonial_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('testimonial_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $testimonial = $this->testimonial_service->getById($id);
         return view('testimonial.create', compact('testimonial'));
     }
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('testimonial_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('testimonial_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $testimonial = $this->testimonial_service->deleteById($id);
             return $this->success(

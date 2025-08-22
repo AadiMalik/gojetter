@@ -24,13 +24,13 @@ class TourReviewController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('tour_review_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_review_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('tour_review.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('tour_review_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_review_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->tour_review_service->getSource();
         } catch (Exception $e) {
@@ -40,7 +40,7 @@ class TourReviewController extends Controller
 
     public function status($id)
     {
-        // abort_if(Gate::denies('tour_review_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_review_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $tour_review = $this->tour_review_service->statusById($id);
             return $this->success(
@@ -55,7 +55,7 @@ class TourReviewController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('tour_review_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('tour_review_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $tour_review = $this->tour_review_service->deleteById($id);
             return $this->success(

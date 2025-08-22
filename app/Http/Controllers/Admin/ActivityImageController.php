@@ -29,19 +29,19 @@ class ActivityImageController extends Controller
 
     public function index($activity_id)
     {
-        // abort_if(Gate::denies('activity_image_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_image_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activity = $this->activity_service->getById($activity_id);
         return view('activity_image.index', compact('activity'));
     }
 
     public function getData(Request $request)
     {
-        // abort_if(Gate::denies('activity_image_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_image_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return $this->activity_image_service->getSource($request->all());
     }
     public function store(Request $request)
     {
-        // abort_if(Gate::denies('activity_image_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_image_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -86,7 +86,7 @@ class ActivityImageController extends Controller
     }
     public function destroy($id)
     {
-        // abort_if(Gate::denies('activity_image_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('activity_image_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $activity_image = $this->activity_image_service->deleteById($id);
             return $this->success(

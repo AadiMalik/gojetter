@@ -26,18 +26,18 @@ class GalleryController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('gallery_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('gallery_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('gallery.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('gallery_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('gallery_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return $this->gallery_service->getSource();
     }
     public function store(Request $request)
     {
-        // abort_if(Gate::denies('gallery_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('gallery_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -83,7 +83,7 @@ class GalleryController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('gallery_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('gallery_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $gallery = $this->gallery_service->deleteById($id);
             return $this->success(

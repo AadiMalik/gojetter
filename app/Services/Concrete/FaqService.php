@@ -33,9 +33,9 @@ class FaqService
                 $action_column = '';
                 $edit_column    = "<a class='text-success mr-2' href='faqs/edit/" . $item->id . "'><i title='Add' class='nav-icon mr-2 fa fa-edit'></i>Edit</a>";
                 $delete_column    = "<a class='text-danger mr-2' id='deleteFaq' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
-                // if (Auth::user()->can('faq_edit'))
+                if (Auth::user()->can('faq_edit'))
                 $action_column .= $edit_column;
-                // if (Auth::user()->can('faq_delete'))
+                if (Auth::user()->can('faq_delete'))
                 $action_column .= $delete_column;
 
                 return $action_column;

@@ -24,13 +24,13 @@ class FaqController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('faq_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('faq_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('faqs.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('faq_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('faq_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->faq_service->getSource();
         } catch (Exception $e) {
@@ -39,13 +39,13 @@ class FaqController extends Controller
     }
     public function create()
     {
-        // abort_if(Gate::denies('faq_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('faq_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('faqs.create');
     }
     public function store(Request $request)
     {
 
-        // abort_if(Gate::denies('faq_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('faq_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -76,14 +76,14 @@ class FaqController extends Controller
 
     public function edit($id)
     {
-        // abort_if(Gate::denies('faq_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('faq_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $faq = $this->faq_service->getById($id);
         return view('faqs.create', compact('faq'));
     }
 
     public function status($id)
     {
-        // abort_if(Gate::denies('faq_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('faq_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $faq = $this->faq_service->statusById($id);
             return $this->success(
@@ -98,7 +98,7 @@ class FaqController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('faq_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('faq_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $faq = $this->faq_service->deleteById($id);
             return $this->success(

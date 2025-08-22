@@ -24,13 +24,13 @@ class CountryController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('country_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('country_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('country.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('country_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('country_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->country_service->getSource();
         } catch (Exception $e) {
@@ -41,7 +41,7 @@ class CountryController extends Controller
     public function store(Request $request)
     {
 
-        // abort_if(Gate::denies('country_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('country_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -89,7 +89,7 @@ class CountryController extends Controller
 
     public function edit($id)
     {
-        // abort_if(Gate::denies('country_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('country_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return  $this->success(
                 $this->country_service->getById($id),
@@ -103,7 +103,7 @@ class CountryController extends Controller
 
     public function status($id)
     {
-        // abort_if(Gate::denies('country_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('country_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $country = $this->country_service->statusById($id);
             return $this->success(
@@ -118,7 +118,7 @@ class CountryController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('country_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('country_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $country = $this->country_service->deleteById($id);
             return $this->success(

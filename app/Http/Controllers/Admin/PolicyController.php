@@ -24,13 +24,13 @@ class PolicyController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('private_policy_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('private_policy_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('policy.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('private_policy_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('private_policy_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->policy_service->getSource();
         } catch (Exception $e) {
@@ -41,7 +41,7 @@ class PolicyController extends Controller
     public function store(Request $request)
     {
 
-        // abort_if(Gate::denies('private_policy_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('private_policy_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -72,7 +72,7 @@ class PolicyController extends Controller
 
     public function edit($id)
     {
-        // abort_if(Gate::denies('private_policy_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('private_policy_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $policy = $this->policy_service->getById($id);
         return view('policy.create', compact('policy'));
     }

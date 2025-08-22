@@ -24,13 +24,13 @@ class CouponController extends Controller
 
     public function index()
     {
-        // abort_if(Gate::denies('coupon_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('coupon_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('coupon.index');
     }
 
     public function getData()
     {
-        // abort_if(Gate::denies('coupon_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('coupon_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             return $this->coupon_service->getSource();
         } catch (Exception $e) {
@@ -39,13 +39,13 @@ class CouponController extends Controller
     }
     public function create()
     {
-        // abort_if(Gate::denies('coupon_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('coupon_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         return view('coupon.create');
     }
     public function store(Request $request)
     {
 
-        // abort_if(Gate::denies('coupon_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('coupon_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $validation = Validator::make(
             $request->all(),
             [
@@ -80,14 +80,14 @@ class CouponController extends Controller
 
     public function edit($id)
     {
-        // abort_if(Gate::denies('coupon_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('coupon_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $coupon = $this->coupon_service->getById($id);
         return view('coupon.create', compact('coupon'));
     }
 
     public function status($id)
     {
-        // abort_if(Gate::denies('coupon_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('coupon_status'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $coupon = $this->coupon_service->statusById($id);
             return $this->success(
@@ -102,7 +102,7 @@ class CouponController extends Controller
 
     public function destroy($id)
     {
-        // abort_if(Gate::denies('coupon_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('coupon_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         try {
             $coupon = $this->coupon_service->deleteById($id);
             return $this->success(
