@@ -13,10 +13,10 @@
             <div class="col-md-12 mb-3">
                 <div class="card text-left">
                     <div class="card-header text-right bg-transparent">
-                        {{-- @can('permission_create') --}}
+                        @can('permissions_create')
                         <a class="btn btn-primary btn-md m-1" href="javascript:void(0)" id="createNewPermission"><i
                                 class="fa fa-plus text-white mr-2"></i> Add Permission</a>
-                        {{-- @endcan --}}
+                        @endcan
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

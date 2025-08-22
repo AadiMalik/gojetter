@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Traits\ResponseAPI;
 use Exception;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class TourExclusionController extends Controller
 {

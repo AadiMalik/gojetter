@@ -317,7 +317,9 @@
 
                     <div class="card-footer">
                         <a href="{{ url('tours') }}" class="btn btn-secondary">Back</a>
+                        {{-- @can('tour_edit') --}}
                         <a href="{{ url('tours/edit/' . $tour->id) }}" class="btn btn-primary">Edit</a>
+                        {{-- @endcan --}}
                     </div>
                 </div>
             </div>

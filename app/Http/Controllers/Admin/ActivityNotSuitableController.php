@@ -10,6 +10,8 @@ use App\Traits\ResponseAPI;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class ActivityNotSuitableController extends Controller
 {

@@ -18,8 +18,10 @@
             <div class="col-md-12 mb-3">
                 <div class="card text-left">
                     <div class="card-header text-right bg-transparent">
+                        {{-- @can('tour_create') --}}
                         <a class="btn btn-primary btn-md m-1" href="{{ url('tours/create') }}" id="createNewProject"><i
                                 class="fa fa-plus text-white mr-2"></i> Add Tour</a>
+                                {{-- @endcan --}}
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

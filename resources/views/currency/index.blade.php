@@ -15,10 +15,10 @@
                 <div class="col-md-12 mb-4">
                     <div class="card text-left">
                         <div class="card-header text-right bg-transparent">
-                            {{--@can('currency_create')--}}
+                            @can('currency_create')
                                 <a class="btn btn-primary btn-md m-1" href="javascript:void(0)" id="createNewCurrency"><i
                                         class="fa fa-plus text-white mr-2"></i> Add Currency</a>
-                            {{--@endcan--}}
+                            @endcan
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">

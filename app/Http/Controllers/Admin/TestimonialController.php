@@ -9,6 +9,8 @@ use App\Traits\ResponseAPI;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use App\Enums\ResponseMessage;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class TestimonialController extends Controller
 {

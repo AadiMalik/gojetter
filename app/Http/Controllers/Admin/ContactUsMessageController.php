@@ -9,6 +9,8 @@ use App\Traits\ResponseAPI;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class ContactUsMessageController extends Controller
 {

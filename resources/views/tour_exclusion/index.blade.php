@@ -14,41 +14,7 @@
             <div class="col-md-4 text-right">
                 <a class="btn btn-primary btn-md m-1" href="{{ url('tours') }}"><i class="fa fa-retweet text-white mr-2"></i>
                     Back</a>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-dark dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        Other
-                    </button>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{ url('tour-date') }}/{{ $tour->id }}">
-                            <i class="fa fa-calendar mr-1"></i> Dates
-                        </a>
-                        <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{ url('tour-itinerary') }}/{{ $tour->id }}">
-                            <i class="fa fa-calendar mr-1"></i> Itinerary
-                        </a>
-                        <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{ url('tour-inclusion') }}/{{ $tour->id }}">
-                            <i class="fa fa-check mr-1"></i> Inclusion
-                        </a>
-                        <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{ url('tour-exclusion') }}/{{ $tour->id }}">
-                            <i class="fa fa-close mr-1"></i> Exclusion
-                        </a>
-                        <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{ url('tour-faq') }}/{{ $tour->id }}">
-                            <i class="fa fa-question-circle mr-1"></i> FAQs
-                        </a>
-                        <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{ url('tour-image') }}/{{ $tour->id }}">
-                            <i class="fa fa-image mr-1"></i> Gallery
-                        </a>
-                        <a class="dropdown-item text-dark" style="padding: 1px 10px;"
-                            href="{{ url('tour-download') }}/{{ $tour->id }}">
-                            <i class="fa fa-download mr-1"></i> Downloads
-                        </a>
-                    </div>
-                </div>
+                @include('tours.partials.other_link')
             </div>
         </div>
         <div class="separator-breadcrumb border-top"></div>
@@ -120,8 +86,8 @@
 @section('js')
     @include('includes.datatable', [
         'columns' => "
-                {data: 'item' , name: 'item'},
-                {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
+                    {data: 'item' , name: 'item'},
+                    {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
         'route' => 'data',
         'buttons' => false,
         'pageLength' => 10,

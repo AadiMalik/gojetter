@@ -18,8 +18,10 @@
             <div class="col-md-12 mb-3">
                 <div class="card text-left">
                     <div class="card-header text-right bg-transparent">
-                        <a class="btn btn-primary btn-md m-1" href="{{ url('activity/create') }}" id="createNewProject"><i
-                                class="fa fa-plus text-white mr-2"></i> Add Activity</a>
+                        @can('activity_access')
+                            <a class="btn btn-primary btn-md m-1" href="{{ url('activity/create') }}" id="createNewProject"><i
+                                    class="fa fa-plus text-white mr-2"></i> Add Activity</a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -51,13 +53,13 @@
 @section('js')
     @include('includes.datatable', [
         'columns' => "
-                 {data: 'title' , name: 'title'},
-                 {data: 'category' , name: 'category' , 'sortable': false , searchable: false},
-                 {data: 'activity_type' , name: 'activity_type'},
-                 {data: 'duration' , name: 'duration'},
-                 {data: 'destination' , name: 'destination', 'sortable': false , searchable: false},
-                 {data: 'is_active' , name: 'is_active' , 'sortable': false , searchable: false},
-                {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
+                     {data: 'title' , name: 'title'},
+                     {data: 'category' , name: 'category' , 'sortable': false , searchable: false},
+                     {data: 'activity_type' , name: 'activity_type'},
+                     {data: 'duration' , name: 'duration'},
+                     {data: 'destination' , name: 'destination', 'sortable': false , searchable: false},
+                     {data: 'is_active' , name: 'is_active' , 'sortable': false , searchable: false},
+                    {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
         'route' => 'activity/data',
         'buttons' => false,
         'pageLength' => 10,

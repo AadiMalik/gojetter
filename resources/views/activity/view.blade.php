@@ -318,7 +318,9 @@
 
                 <div class="card-footer">
                     <a href="{{ url('activity') }}" class="btn btn-secondary">Back</a>
+                    @can('activity_edit')
                     <a href="{{ url('activity/edit/' . $activity->id) }}" class="btn btn-primary">Edit</a>
+                    @endcan
                 </div>
             </div>
         </div>

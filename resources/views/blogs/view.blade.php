@@ -86,7 +86,9 @@
 
                 <div class="card-footer">
                     <a href="{{ url('blogs') }}" class="btn btn-secondary">Back</a>
+                    @can('blog_edit')
                     <a href="{{ url('blogs/edit/'.$blog->id) }}" class="btn btn-primary">Edit</a>
+                    @endcan
                 </div>
             </div>
         </div>

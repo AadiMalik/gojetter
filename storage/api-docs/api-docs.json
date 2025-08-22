@@ -10,7 +10,7 @@
     },
     "servers": [
         {
-            "url": "http://my-default-host.com",
+            "url": "http://localhost/gojetter",
             "description": "GoJetter API Server"
         }
     ],
@@ -21,7 +21,7 @@
                     "Activity"
                 ],
                 "summary": "Get list of active activities",
-                "description": "Returns a list of active activities filtered by search, category_id, type, and sorted by price if specified.",
+                "description": "Returns a list of active activities filtered by search, category_id, type, location, duration, and sorted by price if specified.",
                 "operationId": "getActivityList",
                 "parameters": [
                     {
@@ -54,6 +54,24 @@
                         "required": false,
                         "schema": {
                             "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "description": "Filter activities by location name",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "duration",
+                        "in": "query",
+                        "description": "Filter activities by duration (e.g., '2 hours', '1 day')",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
                         }
                     },
                     {
@@ -2583,7 +2601,9 @@
                             "schema": {
                                 "required": [
                                     "tour_id",
-                                    "booking_date",
+                                    "tour_date_id",
+                                    "card_id",
+                                    "currency_id",
                                     "first_name",
                                     "last_name",
                                     "email",
@@ -2591,8 +2611,7 @@
                                     "country",
                                     "zipcode",
                                     "address",
-                                    "adults",
-                                    "children",
+                                    "quantity",
                                     "sub_total",
                                     "total",
                                     "payment_method",
@@ -2603,10 +2622,17 @@
                                         "type": "integer",
                                         "example": 1
                                     },
-                                    "booking_date": {
-                                        "type": "string",
-                                        "format": "date",
-                                        "example": "2025-08-15"
+                                    "tour_date_id": {
+                                        "type": "integer",
+                                        "example": 10
+                                    },
+                                    "card_id": {
+                                        "type": "integer",
+                                        "example": 5
+                                    },
+                                    "currency_id": {
+                                        "type": "integer",
+                                        "example": 2
                                     },
                                     "first_name": {
                                         "type": "string",
@@ -2637,13 +2663,9 @@
                                         "type": "string",
                                         "example": "123 Street"
                                     },
-                                    "adults": {
+                                    "quantity": {
                                         "type": "integer",
-                                        "example": 2
-                                    },
-                                    "children": {
-                                        "type": "integer",
-                                        "example": 1
+                                        "example": 3
                                     },
                                     "sub_total": {
                                         "type": "number",
@@ -2755,14 +2777,21 @@
                                                     "type": "integer",
                                                     "example": 1
                                                 },
+                                                "tour_date_id": {
+                                                    "type": "integer",
+                                                    "example": 10
+                                                },
+                                                "card_id": {
+                                                    "type": "integer",
+                                                    "example": 5
+                                                },
+                                                "currency_id": {
+                                                    "type": "integer",
+                                                    "example": 2
+                                                },
                                                 "user_id": {
                                                     "type": "integer",
                                                     "example": 13
-                                                },
-                                                "booking_date": {
-                                                    "type": "string",
-                                                    "format": "date",
-                                                    "example": "2025-08-15"
                                                 },
                                                 "first_name": {
                                                     "type": "string",
@@ -2792,15 +2821,7 @@
                                                     "type": "string",
                                                     "example": "123 Street"
                                                 },
-                                                "adults": {
-                                                    "type": "integer",
-                                                    "example": 2
-                                                },
-                                                "children": {
-                                                    "type": "integer",
-                                                    "example": 1
-                                                },
-                                                "total_participants": {
+                                                "quantity": {
                                                     "type": "integer",
                                                     "example": 3
                                                 },
@@ -3777,6 +3798,64 @@
                 }
             }
         },
+        "/api/about-us": {
+            "get": {
+                "tags": [
+                    "Common"
+                ],
+                "summary": "Get About Us Content",
+                "operationId": "4443d25ea262c70cecc0cf8a90044794",
+                "responses": {
+                    "200": {
+                        "description": "Records retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "for a tours website and mobile app should outline user responsibilities..."
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-09T17:01:21.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-09T17:02:15.000000Z"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/save-contact-us": {
             "post": {
                 "tags": [
@@ -4474,6 +4553,1544 @@
                 }
             }
         },
+        "/api/order-list": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get order list",
+                "description": "Retrieve a list of orders for the authenticated user with order details, user info, card info, and currency info.",
+                "operationId": "3882c1feab46d224676bcd8c4fd4af45",
+                "responses": {
+                    "200": {
+                        "description": "Records retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "user_id": {
+                                                        "type": "integer",
+                                                        "example": 13
+                                                    },
+                                                    "order_date": {
+                                                        "type": "string",
+                                                        "format": "date",
+                                                        "example": "2025-08-10"
+                                                    },
+                                                    "first_name": {
+                                                        "type": "string",
+                                                        "example": "John"
+                                                    },
+                                                    "last_name": {
+                                                        "type": "string",
+                                                        "example": "Doe"
+                                                    },
+                                                    "email": {
+                                                        "type": "string",
+                                                        "example": "john.doe@example.com"
+                                                    },
+                                                    "phone": {
+                                                        "type": "string",
+                                                        "example": "+1234567890"
+                                                    },
+                                                    "country": {
+                                                        "type": "string",
+                                                        "example": "USA"
+                                                    },
+                                                    "zipcode": {
+                                                        "type": "string",
+                                                        "example": "90210"
+                                                    },
+                                                    "address": {
+                                                        "type": "string",
+                                                        "example": "123 Beverly Hills Street"
+                                                    },
+                                                    "quantity": {
+                                                        "type": "integer",
+                                                        "example": 4
+                                                    },
+                                                    "sub_total": {
+                                                        "type": "string",
+                                                        "example": "240.00"
+                                                    },
+                                                    "tax_percent": {
+                                                        "type": "string",
+                                                        "example": "0.00"
+                                                    },
+                                                    "tax_amount": {
+                                                        "type": "string",
+                                                        "example": "0.00"
+                                                    },
+                                                    "discount": {
+                                                        "type": "string",
+                                                        "example": "0.00"
+                                                    },
+                                                    "total": {
+                                                        "type": "string",
+                                                        "example": "240.00"
+                                                    },
+                                                    "payment_method": {
+                                                        "type": "string",
+                                                        "example": "credit_card"
+                                                    },
+                                                    "currency_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "card_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "coupon_id": {
+                                                        "type": "integer",
+                                                        "example": null,
+                                                        "nullable": true
+                                                    },
+                                                    "status": {
+                                                        "type": "string",
+                                                        "example": "pending"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-08-10T16:54:40.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-08-10T16:54:40.000000Z"
+                                                    },
+                                                    "order_detail": {
+                                                        "type": "array",
+                                                        "items": {
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "integer",
+                                                                    "example": 3
+                                                                },
+                                                                "order_id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "activity_id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "activity_date_id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "activity_time_slot_id": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "quantity": {
+                                                                    "type": "integer",
+                                                                    "example": 1
+                                                                },
+                                                                "price": {
+                                                                    "type": "string",
+                                                                    "example": "60.00"
+                                                                },
+                                                                "total": {
+                                                                    "type": "string",
+                                                                    "example": "60.00"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time",
+                                                                    "example": "2025-08-10T16:54:40.000000Z"
+                                                                },
+                                                                "updated_at": {
+                                                                    "type": "string",
+                                                                    "format": "date-time",
+                                                                    "example": "2025-08-10T16:54:40.000000Z"
+                                                                }
+                                                            },
+                                                            "type": "object"
+                                                        }
+                                                    },
+                                                    "user": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 13
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "new user 6"
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "example": "user6@gmail.com"
+                                                            },
+                                                            "username": {
+                                                                "type": "string",
+                                                                "example": "user6"
+                                                            },
+                                                            "phone": {
+                                                                "type": "string",
+                                                                "example": "03000000001"
+                                                            },
+                                                            "home_airport": {
+                                                                "type": "string",
+                                                                "example": "lahore"
+                                                            },
+                                                            "gender": {
+                                                                "type": "string",
+                                                                "example": "Male"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "card": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "stripe_payment_method_id": {
+                                                                "type": "string",
+                                                                "example": "pm_1RoPFoRXlgMmIgSkS39eKxZK"
+                                                            },
+                                                            "card_holder_name": {
+                                                                "type": "string",
+                                                                "example": "test"
+                                                            },
+                                                            "card_brand": {
+                                                                "type": "string",
+                                                                "example": "mastercard"
+                                                            },
+                                                            "card_last_four": {
+                                                                "type": "string",
+                                                                "example": "4242"
+                                                            },
+                                                            "exp_month": {
+                                                                "type": "string",
+                                                                "example": "1"
+                                                            },
+                                                            "exp_year": {
+                                                                "type": "string",
+                                                                "example": "28"
+                                                            },
+                                                            "is_default": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "currency": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "code": {
+                                                                "type": "string",
+                                                                "example": "USD"
+                                                            },
+                                                            "symbol": {
+                                                                "type": "string",
+                                                                "example": "$"
+                                                            },
+                                                            "rate": {
+                                                                "type": "string",
+                                                                "example": "1.0000"
+                                                            },
+                                                            "is_default": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "authbearer": []
+                    }
+                ]
+            }
+        },
+        "/api/save-order": {
+            "post": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Save a new order",
+                "operationId": "76c10a00edae286e411f0f15eb50c482",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "card_id",
+                                    "currency_id",
+                                    "first_name",
+                                    "last_name",
+                                    "email",
+                                    "phone",
+                                    "country",
+                                    "zipcode",
+                                    "address",
+                                    "payment_method"
+                                ],
+                                "properties": {
+                                    "card_id": {
+                                        "description": "ID of the customer card",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "currency_id": {
+                                        "description": "ID of the currency",
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "first_name": {
+                                        "type": "string",
+                                        "example": "John"
+                                    },
+                                    "last_name": {
+                                        "type": "string",
+                                        "example": "Doe"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "john.doe@example.com"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+1234567890"
+                                    },
+                                    "country": {
+                                        "type": "string",
+                                        "example": "USA"
+                                    },
+                                    "zipcode": {
+                                        "type": "string",
+                                        "example": "90210"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "123 Beverly Hills Street"
+                                    },
+                                    "discount": {
+                                        "description": "Optional discount",
+                                        "type": "number",
+                                        "format": "float",
+                                        "example": 5,
+                                        "nullable": true
+                                    },
+                                    "payment_method": {
+                                        "type": "string",
+                                        "example": "credit_card"
+                                    },
+                                    "coupon_id": {
+                                        "type": "integer",
+                                        "example": 10,
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Order saved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Record saved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/order-detail/{id}": {
+            "get": {
+                "tags": [
+                    "Order"
+                ],
+                "summary": "Get order detail by ID",
+                "operationId": "cd396051ed2d933aef5e4c9a7b4a524f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Order ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Record details retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Record details retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "user_id": {
+                                                    "type": "integer",
+                                                    "example": 13
+                                                },
+                                                "order_date": {
+                                                    "type": "string",
+                                                    "format": "date",
+                                                    "example": "2025-08-10"
+                                                },
+                                                "first_name": {
+                                                    "type": "string",
+                                                    "example": "John"
+                                                },
+                                                "last_name": {
+                                                    "type": "string",
+                                                    "example": "Doe"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "john.doe@example.com"
+                                                },
+                                                "phone": {
+                                                    "type": "string",
+                                                    "example": "+1234567890"
+                                                },
+                                                "country": {
+                                                    "type": "string",
+                                                    "example": "USA"
+                                                },
+                                                "zipcode": {
+                                                    "type": "string",
+                                                    "example": "90210"
+                                                },
+                                                "address": {
+                                                    "type": "string",
+                                                    "example": "123 Beverly Hills Street"
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": 4
+                                                },
+                                                "sub_total": {
+                                                    "type": "string",
+                                                    "example": "240.00"
+                                                },
+                                                "tax_percent": {
+                                                    "type": "string",
+                                                    "example": "0.00"
+                                                },
+                                                "tax_amount": {
+                                                    "type": "string",
+                                                    "example": "0.00"
+                                                },
+                                                "discount": {
+                                                    "type": "string",
+                                                    "example": "0.00"
+                                                },
+                                                "total": {
+                                                    "type": "string",
+                                                    "example": "240.00"
+                                                },
+                                                "payment_method": {
+                                                    "type": "string",
+                                                    "example": "credit_card"
+                                                },
+                                                "currency_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "card_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "coupon_id": {
+                                                    "type": "integer",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "status": {
+                                                    "type": "string",
+                                                    "example": "pending"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-08-10T16:54:40.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-08-10T16:54:40.000000Z"
+                                                },
+                                                "order_detail": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 3
+                                                            },
+                                                            "order_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "activity_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "activity_date_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "activity_time_slot_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "quantity": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "price": {
+                                                                "type": "string",
+                                                                "example": "60.00"
+                                                            },
+                                                            "total": {
+                                                                "type": "string",
+                                                                "example": "60.00"
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-08-10T16:54:40.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-08-10T16:54:40.000000Z"
+                                                            },
+                                                            "activity": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "title": {
+                                                                        "type": "string",
+                                                                        "example": "Deserunt veniam eos"
+                                                                    },
+                                                                    "slug": {
+                                                                        "type": "string",
+                                                                        "example": "deserunt-veniam-eos"
+                                                                    },
+                                                                    "thumbnail": {
+                                                                        "type": "string",
+                                                                        "example": "activity/oaGYJKQdsi89E6TpOSyBw5AnI5JvusXdOok3litt.jpg"
+                                                                    },
+                                                                    "overview": {
+                                                                        "type": "string",
+                                                                        "example": "Voluptatem rem fugia"
+                                                                    },
+                                                                    "short_description": {
+                                                                        "type": "string",
+                                                                        "example": "Similique quam illum"
+                                                                    },
+                                                                    "highlights": {
+                                                                        "type": "string",
+                                                                        "example": "Irure pariatur Ipsa"
+                                                                    },
+                                                                    "full_description": {
+                                                                        "type": "string",
+                                                                        "example": "Eos cillum est qui p"
+                                                                    },
+                                                                    "tags": {
+                                                                        "type": "string",
+                                                                        "example": "Est velit quis quis"
+                                                                    },
+                                                                    "category_id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "is_featured": {
+                                                                        "type": "integer",
+                                                                        "example": 0
+                                                                    },
+                                                                    "difficulty_level": {
+                                                                        "type": "string",
+                                                                        "example": "easy"
+                                                                    },
+                                                                    "age_limit": {
+                                                                        "type": "integer",
+                                                                        "example": 74
+                                                                    },
+                                                                    "pickup_info": {
+                                                                        "type": "string",
+                                                                        "example": "Excepturi consectetu"
+                                                                    },
+                                                                    "dropoff_info": {
+                                                                        "type": "string",
+                                                                        "example": "Maxime voluptas quas"
+                                                                    },
+                                                                    "location": {
+                                                                        "type": "string",
+                                                                        "example": "Aut dignissimos iste"
+                                                                    },
+                                                                    "duration": {
+                                                                        "type": "string",
+                                                                        "example": "Cumque assumenda nul"
+                                                                    },
+                                                                    "languages": {
+                                                                        "type": "string",
+                                                                        "example": "Ratione aliquid sed"
+                                                                    },
+                                                                    "min_adults": {
+                                                                        "type": "integer",
+                                                                        "example": null,
+                                                                        "nullable": true
+                                                                    },
+                                                                    "group_size": {
+                                                                        "type": "integer",
+                                                                        "example": 29
+                                                                    },
+                                                                    "activity_type": {
+                                                                        "type": "string",
+                                                                        "example": "private"
+                                                                    },
+                                                                    "is_wheelchair_accessible": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "is_stroller_friendly": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "cut_of_day": {
+                                                                        "type": "integer",
+                                                                        "example": 25
+                                                                    },
+                                                                    "rules": {
+                                                                        "type": "string",
+                                                                        "example": "Eum voluptas hic qui"
+                                                                    },
+                                                                    "requirements": {
+                                                                        "type": "string",
+                                                                        "example": "Error dignissimos ex"
+                                                                    },
+                                                                    "disclaimers": {
+                                                                        "type": "string",
+                                                                        "example": "Incidunt quisquam d"
+                                                                    },
+                                                                    "is_active": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-08-10T16:37:20.000000Z"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-08-10T16:37:20.000000Z"
+                                                                    },
+                                                                    "thumbnail_url": {
+                                                                        "type": "string",
+                                                                        "example": "http://localhost/gojetter/storage/app/public/activity/oaGYJKQdsi89E6TpOSyBw5AnI5JvusXdOok3litt.jpg"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "activity_date": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "activity_id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "date": {
+                                                                        "type": "string",
+                                                                        "format": "date",
+                                                                        "example": "2025-08-11"
+                                                                    },
+                                                                    "price": {
+                                                                        "type": "string",
+                                                                        "example": "60.00"
+                                                                    },
+                                                                    "discount_price": {
+                                                                        "type": "string",
+                                                                        "example": "0.00"
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-08-10T16:37:38.000000Z"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-08-10T16:37:38.000000Z"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "activity_time_slot": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "activity_date_id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "start_time": {
+                                                                        "type": "string",
+                                                                        "example": "09 PM"
+                                                                    },
+                                                                    "end_time": {
+                                                                        "type": "string",
+                                                                        "example": "10 PM"
+                                                                    },
+                                                                    "total_seats": {
+                                                                        "type": "integer",
+                                                                        "example": 120
+                                                                    },
+                                                                    "available_seats": {
+                                                                        "type": "integer",
+                                                                        "example": 116
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-08-10T16:38:24.000000Z"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-08-10T16:54:40.000000Z"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "user": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 13
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "new user 6"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "user6@gmail.com"
+                                                        },
+                                                        "email_verified_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-07-14T17:30:12.000000Z"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-07-14T12:21:22.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-07-17T15:21:49.000000Z"
+                                                        },
+                                                        "username": {
+                                                            "type": "string",
+                                                            "example": "user6"
+                                                        },
+                                                        "phone": {
+                                                            "type": "string",
+                                                            "example": "03000000001"
+                                                        },
+                                                        "paypal_email": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "is_show_email_phone": {
+                                                            "type": "integer",
+                                                            "example": 0
+                                                        },
+                                                        "about_yourself": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "avatar": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "home_airport": {
+                                                            "type": "string",
+                                                            "example": "lahore"
+                                                        },
+                                                        "address": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "city": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "state": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "zip_code": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "country_id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "alternative_phone": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "gender": {
+                                                            "type": "string",
+                                                            "example": "Male"
+                                                        },
+                                                        "stripe_customer_id": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "card": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "user_id": {
+                                                            "type": "integer",
+                                                            "example": 13
+                                                        },
+                                                        "stripe_payment_method_id": {
+                                                            "type": "string",
+                                                            "example": "pm_1RoPFoRXlgMmIgSkS39eKxZK"
+                                                        },
+                                                        "card_holder_name": {
+                                                            "type": "string",
+                                                            "example": "test"
+                                                        },
+                                                        "card_brand": {
+                                                            "type": "string",
+                                                            "example": "mastercard"
+                                                        },
+                                                        "card_last_four": {
+                                                            "type": "string",
+                                                            "example": "4242"
+                                                        },
+                                                        "exp_month": {
+                                                            "type": "string",
+                                                            "example": "1"
+                                                        },
+                                                        "exp_year": {
+                                                            "type": "string",
+                                                            "example": "28"
+                                                        },
+                                                        "cvc": {
+                                                            "type": "string",
+                                                            "example": "123"
+                                                        },
+                                                        "is_default": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "example": null,
+                                                            "nullable": true
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                },
+                                                "currency": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "code": {
+                                                            "type": "string",
+                                                            "example": "USD"
+                                                        },
+                                                        "symbol": {
+                                                            "type": "string",
+                                                            "example": "$"
+                                                        },
+                                                        "rate": {
+                                                            "type": "string",
+                                                            "example": "1.0000"
+                                                        },
+                                                        "is_default": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-07-08T16:36:49.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-07-08T16:38:17.000000Z"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/service-list": {
+            "get": {
+                "tags": [
+                    "Service"
+                ],
+                "summary": "Get list of services",
+                "operationId": "c4d2650232d8ddd8a9bccda84c623cf8",
+                "responses": {
+                    "200": {
+                        "description": "Records retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Ulla Heath"
+                                                    },
+                                                    "slug": {
+                                                        "type": "string",
+                                                        "example": "ulla-heath"
+                                                    },
+                                                    "image": {
+                                                        "type": "string",
+                                                        "example": "services/hdqlUEIoEZ0d5Yg1sW0PkSjrYgkG6NkcW7BqOeB8.png"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": "Tempor amet, invento..."
+                                                    },
+                                                    "has_contact_form": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "is_active": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-29T22:22:51.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-29T22:59:26.000000Z"
+                                                    },
+                                                    "image_url": {
+                                                        "type": "string",
+                                                        "format": "url",
+                                                        "example": "http://localhost/gojetter/storage/app/public/services/hdqlUEIoEZ0d5Yg1sW0PkSjrYgkG6NkcW7BqOeB8.png"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/service-by-slug/{slug}": {
+            "get": {
+                "tags": [
+                    "Service"
+                ],
+                "summary": "Get service detail by slug",
+                "operationId": "8db609b1175b76847cebee01c089bd4a",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Slug of the service",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "ulla-heath"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Record details retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Record details retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Ulla Heath"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "example": "ulla-heath"
+                                                },
+                                                "image": {
+                                                    "type": "string",
+                                                    "example": "services/hdqlUEIoEZ0d5Yg1sW0PkSjrYgkG6NkcW7BqOeB8.png"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": "Tempor amet, invento..."
+                                                },
+                                                "has_contact_form": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-29T22:22:51.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-29T22:59:26.000000Z"
+                                                },
+                                                "image_url": {
+                                                    "type": "string",
+                                                    "format": "url",
+                                                    "example": "http://localhost/gojetter/storage/app/public/services/hdqlUEIoEZ0d5Yg1sW0PkSjrYgkG6NkcW7BqOeB8.png"
+                                                },
+                                                "sub_services": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "service_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Wallace Riddle"
+                                                            },
+                                                            "slug": {
+                                                                "type": "string",
+                                                                "example": "wallace-riddle"
+                                                            },
+                                                            "image": {
+                                                                "type": "string",
+                                                                "example": "sub_services/estqqXIykGrRIM65BZPzLndEBhEllwx688psr7PR.png"
+                                                            },
+                                                            "description": {
+                                                                "type": "string",
+                                                                "example": null,
+                                                                "nullable": true
+                                                            },
+                                                            "has_customer_form": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
+                                                            "is_active": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-07-29T22:59:18.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-07-29T22:59:18.000000Z"
+                                                            },
+                                                            "image_url": {
+                                                                "type": "string",
+                                                                "format": "url",
+                                                                "example": "http://localhost/gojetter/storage/app/public/sub_services/estqqXIykGrRIM65BZPzLndEBhEllwx688psr7PR.png"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/sub-service-list": {
+            "get": {
+                "tags": [
+                    "Service"
+                ],
+                "summary": "Get list of sub-services with parent service info",
+                "operationId": "d15465077f11250acb6028f0e06544dd",
+                "responses": {
+                    "200": {
+                        "description": "Records retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "service_id": {
+                                                        "type": "integer",
+                                                        "example": 1
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Wallace Riddle"
+                                                    },
+                                                    "slug": {
+                                                        "type": "string",
+                                                        "example": "wallace-riddle"
+                                                    },
+                                                    "image": {
+                                                        "type": "string",
+                                                        "example": "sub_services/estqqXIykGrRIM65BZPzLndEBhEllwx688psr7PR.png"
+                                                    },
+                                                    "description": {
+                                                        "type": "string",
+                                                        "example": null,
+                                                        "nullable": true
+                                                    },
+                                                    "has_customer_form": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "is_active": {
+                                                        "type": "boolean",
+                                                        "example": true
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-29T22:59:18.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-07-29T22:59:18.000000Z"
+                                                    },
+                                                    "image_url": {
+                                                        "type": "string",
+                                                        "format": "url",
+                                                        "example": "http://localhost/gojetter/storage/app/public/sub_services/estqqXIykGrRIM65BZPzLndEBhEllwx688psr7PR.png"
+                                                    },
+                                                    "service": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "Ulla Heath"
+                                                            },
+                                                            "slug": {
+                                                                "type": "string",
+                                                                "example": "ulla-heath"
+                                                            },
+                                                            "image": {
+                                                                "type": "string",
+                                                                "example": "services/hdqlUEIoEZ0d5Yg1sW0PkSjrYgkG6NkcW7BqOeB8.png"
+                                                            },
+                                                            "description": {
+                                                                "type": "string",
+                                                                "example": "Tempor amet, invento..."
+                                                            },
+                                                            "has_contact_form": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
+                                                            "is_active": {
+                                                                "type": "boolean",
+                                                                "example": true
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-07-29T22:22:51.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-07-29T22:59:26.000000Z"
+                                                            },
+                                                            "image_url": {
+                                                                "type": "string",
+                                                                "format": "url",
+                                                                "example": "http://localhost/gojetter/storage/app/public/services/hdqlUEIoEZ0d5Yg1sW0PkSjrYgkG6NkcW7BqOeB8.png"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/sub-service-by-slug/{slug}": {
+            "get": {
+                "tags": [
+                    "Service"
+                ],
+                "summary": "Get sub-service details by slug",
+                "operationId": "a38926f0ba8c8863174f80896edce5d5",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Slug of the sub-service",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "example": "wallace-riddle"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Records retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "service_id": {
+                                                    "type": "integer",
+                                                    "example": 1
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Wallace Riddle"
+                                                },
+                                                "slug": {
+                                                    "type": "string",
+                                                    "example": "wallace-riddle"
+                                                },
+                                                "image": {
+                                                    "type": "string",
+                                                    "example": "sub_services/estqqXIykGrRIM65BZPzLndEBhEllwx688psr7PR.png"
+                                                },
+                                                "description": {
+                                                    "type": "string",
+                                                    "example": null,
+                                                    "nullable": true
+                                                },
+                                                "has_customer_form": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "is_active": {
+                                                    "type": "boolean",
+                                                    "example": true
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-29T22:59:18.000000Z"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time",
+                                                    "example": "2025-07-29T22:59:18.000000Z"
+                                                },
+                                                "image_url": {
+                                                    "type": "string",
+                                                    "format": "url",
+                                                    "example": "http://localhost/gojetter/storage/app/public/sub_services/estqqXIykGrRIM65BZPzLndEBhEllwx688psr7PR.png"
+                                                },
+                                                "service": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "Ulla Heath"
+                                                        },
+                                                        "slug": {
+                                                            "type": "string",
+                                                            "example": "ulla-heath"
+                                                        },
+                                                        "image": {
+                                                            "type": "string",
+                                                            "example": "services/hdqlUEIoEZ0d5Yg1sW0PkSjrYgkG6NkcW7BqOeB8.png"
+                                                        },
+                                                        "description": {
+                                                            "type": "string",
+                                                            "example": "Tempor amet, invento..."
+                                                        },
+                                                        "has_contact_form": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "is_active": {
+                                                            "type": "boolean",
+                                                            "example": true
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-07-29T22:22:51.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2025-07-29T22:59:26.000000Z"
+                                                        },
+                                                        "image_url": {
+                                                            "type": "string",
+                                                            "format": "url",
+                                                            "example": "http://localhost/gojetter/storage/app/public/services/hdqlUEIoEZ0d5Yg1sW0PkSjrYgkG6NkcW7BqOeB8.png"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/social-media-list": {
             "get": {
                 "tags": [
@@ -4539,6 +6156,84 @@
                                         "Status": {
                                             "type": "integer",
                                             "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/testimonial-list": {
+            "get": {
+                "tags": [
+                    "Testimonial"
+                ],
+                "summary": "Get testimonial list",
+                "description": "Fetch all active testimonials",
+                "operationId": "getTestimonials",
+                "responses": {
+                    "200": {
+                        "description": "Records retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        },
+                                        "Data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "integer",
+                                                        "example": 2
+                                                    },
+                                                    "name": {
+                                                        "type": "string",
+                                                        "example": "Daniel Morgan"
+                                                    },
+                                                    "image": {
+                                                        "type": "string",
+                                                        "example": "testimonial/RbXBilEDEnaIvMxE535WORpjNVA2hkdKhYDxaSFR.webp"
+                                                    },
+                                                    "profession": {
+                                                        "type": "string",
+                                                        "example": "Manager"
+                                                    },
+                                                    "message": {
+                                                        "type": "string",
+                                                        "example": "Exceptional service delivery and innovative solutions have transformed our business operations, leading to remarkable growth and enhanced customer satisfaction across all touchpoints."
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-08-16T17:23:36.000000Z"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string",
+                                                        "format": "date-time",
+                                                        "example": "2025-08-16T17:23:36.000000Z"
+                                                    },
+                                                    "image_url": {
+                                                        "type": "string",
+                                                        "example": "http://localhost/gojetter/storage/app/public/testimonial/RbXBilEDEnaIvMxE535WORpjNVA2hkdKhYDxaSFR.webp"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -4629,7 +6324,7 @@
                     "Tour"
                 ],
                 "summary": "Get list of active tours or activities",
-                "description": "Returns a list of active tours or activities filtered by search, category_id, type, and sorted by price if specified.",
+                "description": "Returns a list of active tours or activities filtered by search, category_id, type, location, duration, and sorted by price if specified.",
                 "operationId": "getTourList",
                 "parameters": [
                     {
@@ -4662,6 +6357,24 @@
                         "required": false,
                         "schema": {
                             "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "location",
+                        "in": "query",
+                        "description": "Filter tours by location",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "duration",
+                        "in": "query",
+                        "description": "Filter tours by duration (e.g., '2 hours', '3 days')",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
                         }
                     },
                     {
@@ -4747,6 +6460,9 @@
                                                         "type": "integer"
                                                     },
                                                     "location": {
+                                                        "type": "string"
+                                                    },
+                                                    "duration": {
                                                         "type": "string"
                                                     },
                                                     "is_active": {
@@ -5968,8 +7684,20 @@
             "description": "Gallery"
         },
         {
+            "name": "Order",
+            "description": "Order"
+        },
+        {
+            "name": "Service",
+            "description": "Service"
+        },
+        {
             "name": "Social Media",
             "description": "Social Media"
+        },
+        {
+            "name": "Testimonial",
+            "description": "Testimonial"
         },
         {
             "name": "Tour",

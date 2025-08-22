@@ -9,9 +9,11 @@
         <div class="side-nav">
             <div class="main-menu">
                 <ul class="metismenu" id="menu">
+                    {{-- @can('dashboard_access') --}}
                     <li class="Ul_li--hover"><a href="{{ url('home') }}"><i
                                 class="fa fa-dashboard text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Dashboard</span></a></li>
+                    {{-- @endcan --}}
                     {{-- @can('user_management_access') --}}
                     <li
                         class="Ul_li--hover {{ Request::is('permissions*') || Request::is('roles*') || Request::is('users*') ? 'mm-active' : '' }}">

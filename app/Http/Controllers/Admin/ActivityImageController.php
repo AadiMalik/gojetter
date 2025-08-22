@@ -10,6 +10,8 @@ use App\Enums\ResponseMessage;
 use App\Services\Concrete\ActivityImageService;
 use App\Services\Concrete\ActivityService;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class ActivityImageController extends Controller
 {

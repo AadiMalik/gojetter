@@ -18,8 +18,10 @@
             <div class="col-md-12 mb-3">
                 <div class="card text-left">
                     <div class="card-header text-right bg-transparent">
-                        <a class="btn btn-primary btn-md m-1" href="{{ url('faqs/create') }}" id="createNewProject"><i
-                                class="fa fa-plus text-white mr-2"></i> Add FAQ</a>
+                        @can('faq_create')
+                            <a class="btn btn-primary btn-md m-1" href="{{ url('faqs/create') }}" id="createNewProject"><i
+                                    class="fa fa-plus text-white mr-2"></i> Add FAQ</a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -48,10 +50,10 @@
 @section('js')
     @include('includes.datatable', [
         'columns' => "
-                     {data: 'question' , name: 'question'},
-                     {data: 'answer' , name: 'answer'},
-                     {data: 'is_active' , name: 'is_active' , 'sortable': false , searchable: false},
-                    {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
+                         {data: 'question' , name: 'question'},
+                         {data: 'answer' , name: 'answer'},
+                         {data: 'is_active' , name: 'is_active' , 'sortable': false , searchable: false},
+                        {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
         'route' => 'faqs/data',
         'buttons' => false,
         'pageLength' => 10,

@@ -15,10 +15,10 @@
                 <div class="col-md-12 mb-4">
                     <div class="card text-left">
                         <div class="card-header text-right bg-transparent">
-                            {{--@can('blog_category_create')--}}
+                            @can('blog_category_create')
                                 <a class="btn btn-primary btn-md m-1" href="javascript:void(0)" id="createNewBlogCategory"><i
                                         class="fa fa-plus text-white mr-2"></i> Add Blog Category</a>
-                            {{--@endcan--}}
+                            @endcan
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">

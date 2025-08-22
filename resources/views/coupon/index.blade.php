@@ -18,8 +18,10 @@
             <div class="col-md-12 mb-3">
                 <div class="card text-left">
                     <div class="card-header text-right bg-transparent">
-                        <a class="btn btn-primary btn-md m-1" href="{{ url('coupon/create') }}" id="createNewProject"><i
-                                class="fa fa-plus text-white mr-2"></i> Add Coupon</a>
+                        @can('coupon_create')
+                            <a class="btn btn-primary btn-md m-1" href="{{ url('coupon/create') }}" id="createNewProject"><i
+                                    class="fa fa-plus text-white mr-2"></i> Add Coupon</a>
+                        @endcan
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -51,13 +53,13 @@
 @section('js')
     @include('includes.datatable', [
         'columns' => "
-                     {data: 'code' , name: 'code'},
-                     {data: 'type' , name: 'type'},
-                     {data: 'value' , name: 'value'},
-                     {data: 'valid_from' , name: 'valid_from'},
-                     {data: 'valid_until' , name: 'valid_until'},
-                     {data: 'is_active' , name: 'is_active' , 'sortable': false , searchable: false},
-                    {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
+                         {data: 'code' , name: 'code'},
+                         {data: 'type' , name: 'type'},
+                         {data: 'value' , name: 'value'},
+                         {data: 'valid_from' , name: 'valid_from'},
+                         {data: 'valid_until' , name: 'valid_until'},
+                         {data: 'is_active' , name: 'is_active' , 'sortable': false , searchable: false},
+                        {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
         'route' => 'coupon/data',
         'buttons' => false,
         'pageLength' => 10,

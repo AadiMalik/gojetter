@@ -8,6 +8,8 @@ use App\Services\Concrete\BookingService;
 use App\Traits\ResponseAPI;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
+use Symfony\Component\HttpFoundation\Response;
 
 class BookingController extends Controller
 {
