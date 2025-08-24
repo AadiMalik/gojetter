@@ -30,6 +30,7 @@ class GetTourListRequest extends FormRequest
             'destination_id'  => 'sometimes|string',
             'duration'  => 'sometimes|string',
             'sort_by'  => 'sometimes|string|max:255',
+            'user_id'  => 'sometimes|integer|exists:users,id',
         ];
     }
 }

@@ -57,6 +57,13 @@ class ActivityController extends Controller
        *         required=false,
        *         @OA\Schema(type="string", enum={"price_low_high", "price_high_low"}, maxLength=255)
        *     ),
+       *      @OA\Parameter(
+       *         name="user_id",
+       *         in="query",
+       *         description="User id for wishlist",
+       *         required=false,
+       *         @OA\Schema(type="integer")
+       *     ),
        *
        *     @OA\Response(
        *         response=200,

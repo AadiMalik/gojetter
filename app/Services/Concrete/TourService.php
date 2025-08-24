@@ -60,26 +60,26 @@ class TourService
                 $image = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='tour-image/" . $item->id . "'><i class='fa fa-image mr-1'></i> Gallery</a>";
                 $download = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='tour-download/" . $item->id . "'><i class='fa fa-download mr-1'></i> Downloads</a>";
                 if (Auth::user()->can('tour_edit'))
-                $action_column .= $edit_column;
+                    $action_column .= $edit_column;
                 if (Auth::user()->can('tour_view'))
-                $action_column .= $view_column;
+                    $action_column .= $view_column;
                 if (Auth::user()->can('tour_delete'))
-                $action_column .= $delete_column;
+                    $action_column .= $delete_column;
 
                 if (Auth::user()->can('tour_date_access'))
-                $additional_column .= $dates;
+                    $additional_column .= $dates;
                 if (Auth::user()->can('tour_itinerary_access'))
-                $additional_column .= $itinerary;
+                    $additional_column .= $itinerary;
                 if (Auth::user()->can('tour_inclusion_access'))
-                $additional_column .= $inclusion;
+                    $additional_column .= $inclusion;
                 if (Auth::user()->can('tour_exclusion_access'))
-                $additional_column .= $exclusion;
+                    $additional_column .= $exclusion;
                 if (Auth::user()->can('tour_faqs_access'))
-                $additional_column .= $faqs;
+                    $additional_column .= $faqs;
                 if (Auth::user()->can('tour_image_access'))
-                $additional_column .= $image;
+                    $additional_column .= $image;
                 if (Auth::user()->can('tour_download_access'))
-                $additional_column .= $download;
+                    $additional_column .= $download;
                 // Main button with dropdown    
                 $dropdown = '
                     <div class="btn-group">
@@ -187,7 +187,7 @@ class TourService
                 $action_column = '';
                 $delete_column    = "<a class='text-danger mr-2' id='deleteTourDate' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
                 if (Auth::user()->can('tour_date_delete'))
-                $action_column .= $delete_column;
+                    $action_column .= $delete_column;
 
                 return $action_column;
             })
@@ -238,7 +238,7 @@ class TourService
                 $action_column = '';
                 $delete_column    = "<a class='text-danger mr-2' id='deleteTourItinerary' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
                 if (Auth::user()->can('tour_itinerary_delete'))
-                $action_column .= $delete_column;
+                    $action_column .= $delete_column;
 
                 return $action_column;
             })
@@ -348,7 +348,11 @@ class TourService
         }
 
         foreach ($tours as $item) {
-            $item['is_wishlist'] = $this->isTourWishlist($item->id);
+            if (!empty($data['user_id']) && $data['user_id'] != '') {
+                $item['is_wishlist'] = $this->isTourWishlist($item->id, $data['user_id']);
+            } else {
+                $item['is_wishlist'] = 0;
+            }
         }
 
         $tour_data = [];
@@ -421,15 +425,15 @@ class TourService
         ];
     }
 
-    public function isTourWishlist($tour_id)
+    public function isTourWishlist($tour_id, $user_id)
     {
-        $user = auth('api')->user();
-        if (!$user) {
-            return 0; // guest users can't have wishlist
-        }
+        // $user = auth('api')->user();
+        // if (!$user) {
+        //     return 0; // guest users can't have wishlist
+        // }
 
         return Wishlist::where('tour_id', $tour_id)
-            ->where('user_id', $user->id)
+            ->where('user_id', $user_id)
             ->exists() ? 1 : 0;
     }
 }

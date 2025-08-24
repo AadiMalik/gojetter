@@ -249,7 +249,11 @@ class ActivityService
         }
 
         foreach ($activities as $item) {
-            $item['is_wishlist'] = $this->isActivityWishlist($item->id);
+            if (!empty($data['user_id']) && $data['user_id'] != '') {
+            $item['is_wishlist'] = $this->isActivityWishlist($item->id,$data['user_id']);
+            }else{
+                $item['is_wishlist'] = 0;
+            }
         }
 
         $activity_data = [];
@@ -328,15 +332,15 @@ class ActivityService
         ];
     }
 
-    public function isActivityWishlist($activity_id)
+    public function isActivityWishlist($activity_id,$user_id)
     {
-        $user = auth('api')->user();
-        if (!$user) {
-            return 0; // guest users can't have wishlist
-        }
+        // $user = auth('api')->user();
+        // if (!$user) {
+        //     return 0; // guest users can't have wishlist
+        // }
 
         return Wishlist::where('activity_id', $activity_id)
-            ->where('user_id', $user->id)
+            ->where('user_id', $user_id)
             ->exists() ? 1 : 0;
     }
 }
