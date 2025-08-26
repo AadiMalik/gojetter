@@ -179,6 +179,7 @@ class BookingService
             'tour',
             'tour_date',
             'user',
+            'currency',
             'bookingDetail'
         ])
             ->where('is_deleted', 0)
