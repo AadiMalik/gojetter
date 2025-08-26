@@ -224,51 +224,6 @@ class TourService
         return $tour_date;
     }
 
-    ////////////////////////
-    //tour itinerary
-    public function getSourceTourItinerary()
-    {
-        $model = $this->model_tour_date->getModel()::with('tour');
-        $data = DataTables::of($model)
-            ->addColumn('image', function ($item) {
-                $imageUrl = asset('storage/app/public/' . $item->image); // Correct path
-                return '<img src="' . $imageUrl . '" style="width:100px;" />';
-            })
-            ->addColumn('action', function ($item) {
-                $action_column = '';
-                $delete_column    = "<a class='text-danger mr-2' id='deleteTourItinerary' href='javascript:void(0)' data-toggle='tooltip'  data-id='" . $item->id . "' data-original-title='delete'><i title='Delete' class='nav-icon mr-2 fa fa-trash'></i>Delete</a>";
-                if (Auth::user()->can('tour_itinerary_delete'))
-                    $action_column .= $delete_column;
-
-                return $action_column;
-            })
-            ->rawColumns(['price_type', 'action'])
-            ->make(true);
-        return $data;
-    }
-
-    // save tour itinerary
-    public function saveTourItinerary($obj)
-    {
-        $saved_obj = $this->model_tour_date->create($obj);
-
-        if (!$saved_obj)
-            return false;
-
-        return $saved_obj;
-    }
-
-    // delete tour itinerary by id
-    public function deleteTourItineraryById($id)
-    {
-        $tour_itinerary = $this->model_tour_date->getModel()::find($id);
-        $tour_itinerary->delete();
-
-        if (!$tour_itinerary)
-            return false;
-
-        return $tour_itinerary;
-    }
 
     //tour list for api
     public function listActiveTours($data)

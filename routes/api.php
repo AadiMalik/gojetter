@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\CustomerCardController;
 use App\Http\Controllers\Api\CustomerRequestController;
 use App\Http\Controllers\Api\GalleryController;
+use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\SocialMediaController;
@@ -40,6 +41,10 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('verify-email-otp', [AuthController::class, 'verifyEmailOtp']);
 Route::post('resend-email-otp', [AuthController::class, 'resendEmailOtp'])->middleware('throttle:3,1');
 Route::post('forget-password', [AuthController::class, 'forgetPassword'])->middleware('throttle:3,1');
+
+//web home
+Route::get('web', [HomeController::class, 'web']);
+
 // social media
 Route::get('social-media-list', [SocialMediaController::class, 'index']);
 // common
