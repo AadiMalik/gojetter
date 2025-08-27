@@ -57,28 +57,28 @@ class ActivityService
                 $support = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-support/" . $item->id . "'><i class='fa fa-users mr-1'></i> Supports</a>";
                 $not_suitable = "<a class='dropdown-item text-dark' style='padding: 1px 10px;' href='activity-not-suitable/" . $item->id . "'><i class='fa fa-exclamation mr-1'></i> Not Suitable</a>";
                 if (Auth::user()->can('activity_edit'))
-                $action_column .= $edit_column;
+                    $action_column .= $edit_column;
                 if (Auth::user()->can('activity_view'))
-                $action_column .= $view_column;
+                    $action_column .= $view_column;
                 if (Auth::user()->can('activity_delete'))
-                $action_column .= $delete_column;
+                    $action_column .= $delete_column;
 
                 if (Auth::user()->can('activity_date_access'))
-                $additional_column .= $dates;
+                    $additional_column .= $dates;
                 if (Auth::user()->can('activity_inclusion_access'))
-                $additional_column .= $inclusion;
+                    $additional_column .= $inclusion;
                 if (Auth::user()->can('activity_exclusion_access'))
-                $additional_column .= $exclusion;
+                    $additional_column .= $exclusion;
                 if (Auth::user()->can('activity_expectation_access'))
-                $additional_column .= $expectation;
+                    $additional_column .= $expectation;
                 if (Auth::user()->can('activity_policy_access'))
-                $additional_column .= $policy;
+                    $additional_column .= $policy;
                 if (Auth::user()->can('activity_image_access'))
-                $additional_column .= $image;
+                    $additional_column .= $image;
                 if (Auth::user()->can('activity_support_access'))
-                $additional_column .= $support;
+                    $additional_column .= $support;
                 if (Auth::user()->can('activity_support_access'))
-                $additional_column .= $not_suitable;
+                    $additional_column .= $not_suitable;
                 // Main button with dropdown    
                 $dropdown = '
                     <div class="btn-group">
@@ -250,8 +250,8 @@ class ActivityService
 
         foreach ($activities as $item) {
             if (!empty($data['user_id']) && $data['user_id'] != '') {
-            $item['is_wishlist'] = $this->isActivityWishlist($item->id,$data['user_id']);
-            }else{
+                $item['is_wishlist'] = $this->isActivityWishlist($item->id, $data['user_id']);
+            } else {
                 $item['is_wishlist'] = 0;
             }
         }
@@ -272,7 +272,7 @@ class ActivityService
     }
 
     //get activity detail
-    public function activityDetailById($slug)
+    public function activityDetailById($slug, $data)
     {
         $activity = $this->model_activity->getModel()::with([
             'destination',
@@ -301,6 +301,13 @@ class ActivityService
             ->where('is_active', 1)
             ->where('is_deleted', 0)
             ->first();
+        if ($activity) {
+            if (!empty($data['user_id']) && $data['user_id'] != '') {
+                $activity['is_wishlist'] = $this->isActivityWishlist($activity->id, $data['user_id']);
+            } else {
+                $activity['is_wishlist'] = 0;
+            }
+        }
 
         $related_activities = $this->model_activity->getModel()::select('activities.*')
             ->with([
@@ -326,13 +333,21 @@ class ActivityService
             ->take(4)
             ->get();
 
+        foreach ($related_activities as $item) {
+            if (!empty($data['user_id']) && $data['user_id'] != '') {
+                $item['is_wishlist'] = $this->isActivityWishlist($item->id, $data['user_id']);
+            } else {
+                $item['is_wishlist'] = 0;
+            }
+        }
+
         return [
             "detail" => $activity,
             "related_activities" => $related_activities
         ];
     }
 
-    public function isActivityWishlist($activity_id,$user_id)
+    public function isActivityWishlist($activity_id, $user_id)
     {
         // $user = auth('api')->user();
         // if (!$user) {

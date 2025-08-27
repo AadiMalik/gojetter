@@ -52,8 +52,8 @@ class TourController extends Controller
     }
 
     //tour by slug
-    public function tourBySlug($slug){
-        $tour = $this->tour_service->tourDetailById($slug);
+    public function tourBySlug($slug,Request $request){
+        $tour = $this->tour_service->tourDetailById($slug,$request->all());
         return $this->success(
             $tour,
             ResponseMessage::FETCHED

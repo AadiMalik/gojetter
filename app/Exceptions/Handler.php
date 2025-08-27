@@ -75,12 +75,12 @@ class Handler extends ExceptionHandler
                 return $this->error('UnAuthorized', 401);
             }
 
-            // Fallback for API errors
-            Log::error([
-                'url' => $request->fullUrl(),
-                'user_id' => auth()->id() ?? null,
-                'exception_type' => get_class($exception),
-                'message' => $exception->getMessage(),
+            // Log date/time, file, line, message, and request parameters
+            Log::error($exception->getMessage(), [
+                'datetime' => now()->toDateTimeString(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getLine(),
+                'parameters' => $request->all(),
             ]);
 
             return $this->error(
@@ -92,6 +92,7 @@ class Handler extends ExceptionHandler
         // For non-API (web), use Laravel's default behavior
         return parent::render($request, $exception);
     }
+
 
     protected function unauthenticated($request, AuthenticationException $exception)
     {

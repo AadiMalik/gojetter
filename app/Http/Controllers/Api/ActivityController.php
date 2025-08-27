@@ -9,6 +9,7 @@ use App\Http\Requests\Api\StoreActivityReviewRequest;
 use App\Services\Concrete\ActivityReviewService;
 use App\Services\Concrete\ActivityService;
 use App\Traits\ResponseAPI;
+use Illuminate\Http\Request;
 
 class ActivityController extends Controller
 {
@@ -34,8 +35,8 @@ class ActivityController extends Controller
     }
 
     //activity by slug
-    public function activityBySlug($slug){
-        $activity = $this->activity_service->activityDetailById($slug);
+    public function activityBySlug($slug,Request $request){
+        $activity = $this->activity_service->activityDetailById($slug, $request->all());
         return $this->success(
             $activity,
             ResponseMessage::FETCHED

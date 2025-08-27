@@ -326,7 +326,7 @@ class TourService
     }
 
     //get tour detail
-    public function tourDetailById($slug)
+    public function tourDetailById($slug, $data)
     {
         $tour = Tour::with([
             'destination',
@@ -353,6 +353,14 @@ class TourService
             ->where('is_active', 1)
             ->where('is_deleted', 0)
             ->first();
+        if ($tour) {
+            if (!empty($data['user_id']) && $data['user_id'] != '') {
+                $tour['is_wishlist'] = $this->isTourWishlist($tour->id, $data['user_id']);
+            } else {
+                $tour['is_wishlist'] = 0;
+            }
+        }
+
         $related_tours = Tour::select('tours.*')
             ->with([
                 'destination',
@@ -374,6 +382,13 @@ class TourService
             ->inRandomOrder()
             ->take(4)
             ->get();
+        foreach ($related_tours as $item) {
+            if (!empty($data['user_id']) && $data['user_id'] != '') {
+                $item['is_wishlist'] = $this->isTourWishlist($item->id, $data['user_id']);
+            } else {
+                $item['is_wishlist'] = 0;
+            }
+        }
         return [
             "detail" => $tour,
             "related_tours" => $related_tours
