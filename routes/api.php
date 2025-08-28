@@ -42,6 +42,8 @@ Route::post('verify-email-otp', [AuthController::class, 'verifyEmailOtp']);
 Route::post('resend-email-otp', [AuthController::class, 'resendEmailOtp'])->middleware('throttle:3,1');
 Route::post('forget-password', [AuthController::class, 'forgetPassword'])->middleware('throttle:3,1');
 
+//api home
+Route::get('home', [HomeController::class, 'api']);
 //web home
 Route::get('web', [HomeController::class, 'web']);
 

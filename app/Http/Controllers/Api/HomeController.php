@@ -26,4 +26,12 @@ class HomeController extends Controller
             ResponseMessage::FETCHED
         );
     }
+
+    public function api(Request $request){
+        $data = $this->home_service->apiData($request->all());
+        return $this->success(
+            $data,
+            ResponseMessage::FETCHED
+        );
+    }
 }
