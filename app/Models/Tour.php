@@ -14,6 +14,8 @@ class Tour extends Model
         'destination_id',
         'thumbnail',
         'tour_category_id',
+        'price',
+        'discount_price',
         'overview',
         'short_description',
         'full_description',

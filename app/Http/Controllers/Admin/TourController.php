@@ -63,6 +63,8 @@ class TourController extends Controller
                 'title'             => 'required|string|max:255',
                 'slug'              => 'required|string|unique:tours,slug,' . ($request->id ?? 'null') . ',id',
                 'tour_category_id'  => 'required',
+                'price'             => 'required|min:0.1',
+                'discount_price'    => 'required|min:0',
                 'tags'              => 'required|string|max:255',
                 'destination_id'    => 'required',
                 'thumbnail'         => 'nullable|image',

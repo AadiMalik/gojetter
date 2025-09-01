@@ -4,10 +4,10 @@
     </button>
     <div class="dropdown-menu">
         {{-- @can('tour_date_access') --}}
-        <a class="dropdown-item text-dark" style="padding: 1px 10px;"
+        {{-- <a class="dropdown-item text-dark" style="padding: 1px 10px;"
             href="{{ url('tour-date') }}/{{ $tour->id }}">
             <i class="fa fa-calendar mr-1"></i> Dates
-        </a>
+        </a> --}}
         {{-- @endcan --}}
         {{-- @can('tour_itinerary_access') --}}
         <a class="dropdown-item text-dark" style="padding: 1px 10px;"

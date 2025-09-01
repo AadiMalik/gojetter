@@ -58,6 +58,24 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
+                            {{-- Price --}}
+                            <div class="col-md-4 form-group mb-3">
+                                <label for="price">Price($) <span class="text-danger">*</span></label>
+                                <input id="price" class="form-control" type="text" name="price"
+                                    value="{{ old('price', isset($tour) ? $tour->price : '') }}" required>
+                                @error('price')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            {{-- discount_price --}}
+                            <div class="col-md-4 form-group mb-3">
+                                <label for="discount_price">Discount Price($) <span class="text-danger">*</span></label>
+                                <input id="discount_price" class="form-control" type="text" name="discount_price"
+                                    value="{{ old('discount_price', isset($tour) ? $tour->discount_price : 0) }}" required>
+                                @error('discount_price')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
 
                             {{-- Category --}}
                             <div class="col-md-4 form-group mb-3">

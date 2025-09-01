@@ -12,6 +12,7 @@ class Booking extends Model
         'tour_id',
         'user_id',
         'booking_date',
+        'tour_date',
         'tour_date_id',
         'first_name',
         'last_name',

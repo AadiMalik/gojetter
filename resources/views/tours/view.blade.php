@@ -33,6 +33,14 @@
                                     <p>{{ $tour->title }}</p>
                                 </div>
                                 <div class="col-md-4 mb-2">
+                                    <label><strong>Price:</strong></label>
+                                    <p>{{ $tour->price }}</p>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <label><strong>Discount Price:</strong></label>
+                                    <p>{{ $tour->discount_price }}</p>
+                                </div>
+                                <div class="col-md-4 mb-2">
                                     <label><strong>Category:</strong></label>
                                     <p>{{ $tour->tour_category->name ?? '' }}</p>
                                 </div>

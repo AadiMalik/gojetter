@@ -30,6 +30,8 @@
                                 <tr>
                                     <th scope="col">Title</th>
                                     <th scope="col">Category</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Discount Price</th>
                                     <th scope="col">Type</th>
                                     <th scope="col">Duration</th>
                                     <th scope="col">Destination</th>
@@ -55,6 +57,8 @@
 'columns' => "
 {data: 'title' , name: 'title'},
 {data: 'category' , name: 'category' , 'sortable': false , searchable: false},
+{data: 'price' , name: 'price'},
+{data: 'discount_price' , name: 'discount_price'},
 {data: 'tour_type' , name: 'tour_type'},
 {data: 'duration' , name: 'duration'},
 {data: 'destination' , name: 'destination' , 'sortable': false , searchable: false},

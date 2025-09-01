@@ -42,9 +42,9 @@ class BookingService
             ->addColumn('tour', function ($item) {
                 return $item->tour->title ?? '';
             })
-            ->addColumn('tour_date', function ($item) {
-                return $item->tour_date->start_date .' - '.$item->tour_date->end_date;
-            })
+            // ->addColumn('tour_date', function ($item) {
+            //     return $item->tour_date->start_date .' - '.$item->tour_date->end_date;
+            // })
             ->addColumn('status', function ($item) {
                 $reflection = new ReflectionClass(BookingStatus::class);
                 $statuses = $reflection->getConstants();
@@ -69,7 +69,7 @@ class BookingService
 
                 return $action_column;
             })
-            ->rawColumns(['tour','tour_date', 'status', 'action'])
+            ->rawColumns(['tour', 'status', 'action'])
             ->make(true);
         return $data;
     }

@@ -66,8 +66,8 @@ class TourService
                 if (Auth::user()->can('tour_delete'))
                     $action_column .= $delete_column;
 
-                if (Auth::user()->can('tour_date_access'))
-                    $additional_column .= $dates;
+                // if (Auth::user()->can('tour_date_access'))
+                //     $additional_column .= $dates;
                 if (Auth::user()->can('tour_itinerary_access'))
                     $additional_column .= $itinerary;
                 if (Auth::user()->can('tour_inclusion_access'))
@@ -288,14 +288,28 @@ class TourService
 
         $tours = $query->get();
 
+        // if (!empty($data['sort_by'])) {
+        //     if ($data['sort_by'] == 'price_low_high') {
+        //         $tours = $tours->sortBy(function ($tour) {
+        //             return $tour->tourDate->min('price'); // lowest price in the dates
+        //         })->values();
+        //     } elseif ($data['sort_by'] == 'price_high_low') {
+        //         $tours = $tours->sortByDesc(function ($tour) {
+        //             return $tour->tourDate->max('price'); // highest price in the dates
+        //         })->values();
+        //     }
+        // } else {
+        //     $tours = $tours->sortByDesc('title')->values(); // Default sorting
+        // }
+
         if (!empty($data['sort_by'])) {
             if ($data['sort_by'] == 'price_low_high') {
                 $tours = $tours->sortBy(function ($tour) {
-                    return $tour->tourDate->min('price'); // lowest price in the dates
+                    return $tour->discount_price ?? $tour->price; // prefer discount_price if available
                 })->values();
             } elseif ($data['sort_by'] == 'price_high_low') {
                 $tours = $tours->sortByDesc(function ($tour) {
-                    return $tour->tourDate->max('price'); // highest price in the dates
+                    return $tour->discount_price ?? $tour->price;
                 })->values();
             }
         } else {

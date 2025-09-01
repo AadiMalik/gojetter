@@ -25,7 +25,8 @@ class StoreBookingRequest extends FormRequest
     {
         return [
             'tour_id'       => 'required|integer|exists:tours,id',
-            'tour_date_id'  => 'required|integer|exists:tour_dates,id',
+            'tour_date'     => 'required|date|date_format:Y-m-d',
+            // 'tour_date_id'  => 'required|integer|exists:tour_dates,id',
             'card_id'       => 'required|integer|exists:customer_cards,id',
             'currency_id'   => 'required|integer|exists:currencies,id',
             'first_name'    => 'required|string',
