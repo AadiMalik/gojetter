@@ -46,7 +46,7 @@
                     <h5>Booking Summary</h5>
                     <div class="row mb-3">
                         <div class="col-md-4"><strong>Booking Date:</strong> {{ $booking->booking_date }}</div>
-                        <div class="col-md-4"><strong>Tour Date:</strong> {{ $booking->tour_date->start_date }} - {{ $booking->tour_date->end_date }}</div>
+                        <div class="col-md-4"><strong>Tour Date:</strong> {{ $booking->tour_date??'' }}</div>
                         <div class="col-md-4"><strong>Total Participants:</strong> {{ $booking->total_participants }}</div>
                         <div class="col-md-4"><strong>Sub Total:</strong> {{ $booking->sub_total }}</div>
                         <div class="col-md-4"><strong>Tax (%):</strong> {{ $booking->tax_percent }}%</div>
