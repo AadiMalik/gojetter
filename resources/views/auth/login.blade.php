@@ -18,7 +18,7 @@
                     <div class="col-md-12">
                         <div class="p-4">
                             <div class="auth-logo text-center mb-4">
-                                <img style="width:auto;" src="{{ getSetting()->admin_panel_logo 
+                                <img style="width:auto;" src="{{ getSetting()?->admin_panel_logo 
                 ? asset('storage/app/public/' . getSetting()->admin_panel_logo) 
                 : asset('public/dist-assets/images/logo.png') }}" alt="">
                             </div>
