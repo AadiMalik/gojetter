@@ -1,7 +1,9 @@
 <div class="sidebar-panel bg-white">
     <div class="gull-brand pr-3 text-center mt-4 mb-2 d-flex justify-content-center align-items-center"><img
-            class="pl-3" src="{{ asset('public/dist-assets/images/logo.png') }}" alt="alt" />
-        <!--  <span class=" item-name text-20 text-primary font-weight-700">GULL</span> -->
+            class="pl-3"src="{{ getSetting()->admin_panel_logo 
+                ? asset('storage/app/public/' . getSetting()->admin_panel_logo) 
+                : asset('public/dist-assets/images/logo.png') }}" alt="alt" />
+         <span class=" item-name text-20 text-primary font-weight-700">{{ getSetting()->app_name ?? 'Go Jetter' }}</span>
         <div class="sidebar-compact-switch ml-auto"><span></span></div>
     </div>
     <!--  user -->
@@ -287,6 +289,11 @@
 
                         </ul>
                     </li>
+                    {{-- @endcan --}}
+                    {{-- @can('setting_access') --}}
+                    <li class="Ul_li--hover"><a href="{{ url('setting') }}"><i
+                                class="fa fa-cog text-20 mr-2 text-muted"></i><span
+                                class="item-name text-15 text-muted">Setting</span></a></li>
                     {{-- @endcan --}}
                 </ul>
             </div>

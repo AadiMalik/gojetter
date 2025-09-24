@@ -10,7 +10,7 @@
     },
     "servers": [
         {
-            "url": "http://localhost/gojetter",
+            "url": "http://my-default-host.com",
             "description": "GoJetter API Server"
         }
     ],
@@ -86,6 +86,15 @@
                                 "price_low_high",
                                 "price_high_low"
                             ]
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "User id for wishlist",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 ],
@@ -4553,6 +4562,1140 @@
                 }
             }
         },
+        "/api/home": {
+            "get": {
+                "tags": [
+                    "Home"
+                ],
+                "summary": "Retrieve home page data",
+                "description": "Fetches top-selling activities, discount tours, and discount destinations. Optionally accepts a user_id to personalize the response (e.g., for wishlist status).",
+                "operationId": "cad79e9d971c8c3e288b8e47ef7f25b6",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "Optional user ID to personalize the response (e.g., for wishlist status).",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response with home page data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "Message": {
+                                            "type": "string",
+                                            "example": "Records retrieved successfully."
+                                        },
+                                        "Success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "Data": {
+                                            "properties": {
+                                                "top_selling_activities": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "Deserunt veniam eos"
+                                                            },
+                                                            "slug": {
+                                                                "type": "string",
+                                                                "example": "deserunt-veniam-eos"
+                                                            },
+                                                            "thumbnail": {
+                                                                "type": "string",
+                                                                "example": "activity/oaGYJKQdsi89E6TpOSyBw5AnI5JvusXdOok3litt.jpg"
+                                                            },
+                                                            "thumbnail_url": {
+                                                                "type": "string",
+                                                                "format": "uri",
+                                                                "example": "http://localhost/gojetter/storage/app/public/activity/oaGYJKQdsi89E6TpOSyBw5AnI5JvusXdOok3litt.jpg"
+                                                            },
+                                                            "overview": {
+                                                                "type": "string",
+                                                                "example": "Voluptatem rem fugia"
+                                                            },
+                                                            "short_description": {
+                                                                "type": "string",
+                                                                "example": "Similique quam illum"
+                                                            },
+                                                            "highlights": {
+                                                                "type": "string",
+                                                                "example": "Irure pariatur Ipsa"
+                                                            },
+                                                            "full_description": {
+                                                                "type": "string",
+                                                                "example": "Eos cillum est qui p"
+                                                            },
+                                                            "tags": {
+                                                                "type": "string",
+                                                                "example": "Est velit quis quis"
+                                                            },
+                                                            "category_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "is_featured": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "difficulty_level": {
+                                                                "type": "string",
+                                                                "example": "easy"
+                                                            },
+                                                            "age_limit": {
+                                                                "type": "integer",
+                                                                "example": 74
+                                                            },
+                                                            "pickup_info": {
+                                                                "type": "string",
+                                                                "example": "Excepturi consectetu"
+                                                            },
+                                                            "dropoff_info": {
+                                                                "type": "string",
+                                                                "example": "Maxime voluptas quas"
+                                                            },
+                                                            "location": {
+                                                                "type": "string",
+                                                                "example": "Aut dignissimos iste"
+                                                            },
+                                                            "duration": {
+                                                                "type": "string",
+                                                                "example": "Cumque assumenda nul"
+                                                            },
+                                                            "languages": {
+                                                                "type": "string",
+                                                                "example": "Ratione aliquid sed"
+                                                            },
+                                                            "min_adults": {
+                                                                "type": "integer",
+                                                                "nullable": true
+                                                            },
+                                                            "group_size": {
+                                                                "type": "integer",
+                                                                "example": 29
+                                                            },
+                                                            "activity_type": {
+                                                                "type": "string",
+                                                                "example": "private"
+                                                            },
+                                                            "is_wheelchair_accessible": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "is_stroller_friendly": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "cut_of_day": {
+                                                                "type": "integer",
+                                                                "example": 25
+                                                            },
+                                                            "rules": {
+                                                                "type": "string",
+                                                                "example": "Eum voluptas hic qui"
+                                                            },
+                                                            "requirements": {
+                                                                "type": "string",
+                                                                "example": "Error dignissimos ex"
+                                                            },
+                                                            "disclaimers": {
+                                                                "type": "string",
+                                                                "example": "Incidunt quisquam d"
+                                                            },
+                                                            "is_active": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-08-10T16:37:20.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-08-19T18:26:09.000000Z"
+                                                            },
+                                                            "destination_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "total_sales": {
+                                                                "type": "integer",
+                                                                "example": 4
+                                                            },
+                                                            "average_rating": {
+                                                                "type": "number",
+                                                                "nullable": true
+                                                            },
+                                                            "is_wishlist": {
+                                                                "type": "integer",
+                                                                "example": 0
+                                                            },
+                                                            "destination": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "string",
+                                                                        "example": "Swat"
+                                                                    },
+                                                                    "is_active": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-08-19T11:38:55.000000Z"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-08-19T11:38:55.000000Z"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "activity_category": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "string",
+                                                                        "example": "Adventure"
+                                                                    },
+                                                                    "thumbnail": {
+                                                                        "type": "string",
+                                                                        "example": "tour_category/QHUepWqheiPqsqbcNmeYkbuaXrivC0koChYk2hwl.jpg"
+                                                                    },
+                                                                    "is_active": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-07-15T14:40:26.000000Z"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-07-15T14:41:16.000000Z"
+                                                                    },
+                                                                    "thumbnail_url": {
+                                                                        "type": "string",
+                                                                        "format": "uri",
+                                                                        "example": "http://localhost/gojetter/storage/app/public/tour_category/QHUepWqheiPqsqbcNmeYkbuaXrivC0koChYk2hwl.jpg"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "activity_image": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "activity_date": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "activity_id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "date": {
+                                                                            "type": "string",
+                                                                            "format": "date",
+                                                                            "example": "2025-08-11"
+                                                                        },
+                                                                        "price": {
+                                                                            "type": "string",
+                                                                            "example": "60.00"
+                                                                        },
+                                                                        "discount_price": {
+                                                                            "type": "string",
+                                                                            "example": "0.00"
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-10T16:37:38.000000Z"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-10T16:37:38.000000Z"
+                                                                        },
+                                                                        "activity_time_slot": {
+                                                                            "type": "array",
+                                                                            "items": {
+                                                                                "properties": {
+                                                                                    "id": {
+                                                                                        "type": "integer",
+                                                                                        "example": 1
+                                                                                    },
+                                                                                    "activity_date_id": {
+                                                                                        "type": "integer",
+                                                                                        "example": 1
+                                                                                    },
+                                                                                    "start_time": {
+                                                                                        "type": "string",
+                                                                                        "example": "09 PM"
+                                                                                    },
+                                                                                    "end_time": {
+                                                                                        "type": "string",
+                                                                                        "example": "10 PM"
+                                                                                    },
+                                                                                    "total_seats": {
+                                                                                        "type": "integer",
+                                                                                        "example": 120
+                                                                                    },
+                                                                                    "available_seats": {
+                                                                                        "type": "integer",
+                                                                                        "example": 112
+                                                                                    },
+                                                                                    "created_at": {
+                                                                                        "type": "string",
+                                                                                        "format": "date-time",
+                                                                                        "example": "2025-08-10T16:38:24.000000Z"
+                                                                                    },
+                                                                                    "updated_at": {
+                                                                                        "type": "string",
+                                                                                        "format": "date-time",
+                                                                                        "example": "2025-08-10T17:42:14.000000Z"
+                                                                                    }
+                                                                                },
+                                                                                "type": "object"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "activity_expectation": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "activity_exclusion": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "activity_policy": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "activity_inclusion": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "activity_reviews": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "activity_not_suitable": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "activity_id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "item": {
+                                                                            "type": "string",
+                                                                            "example": "Dinner in the Sky entry tickets"
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-18T17:42:38.000000Z"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-18T17:42:38.000000Z"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "discount_tours": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "title": {
+                                                                "type": "string",
+                                                                "example": "Desert Safari"
+                                                            },
+                                                            "slug": {
+                                                                "type": "string",
+                                                                "example": "desert-safari"
+                                                            },
+                                                            "thumbnail": {
+                                                                "type": "string",
+                                                                "example": "tours/6EAGsI1AToXBe0EghcVItdlqWS8O5YVCFTsYYOGQ.jpg"
+                                                            },
+                                                            "thumbnail_url": {
+                                                                "type": "string",
+                                                                "format": "uri",
+                                                                "example": "http://localhost/gojetter/storage/app/public/tours/6EAGsI1AToXBe0EghcVItdlqWS8O5YVCFTsYYOGQ.jpg"
+                                                            },
+                                                            "overview": {
+                                                                "type": "string",
+                                                                "example": "<p>Discover the essence of Dubai or the UAE with our captivating desert safari tour...</p>"
+                                                            },
+                                                            "short_description": {
+                                                                "type": "string",
+                                                                "example": "<h2>Highlights</h2><ul>...</ul>"
+                                                            },
+                                                            "full_description": {
+                                                                "type": "string",
+                                                                "example": "<h2>Included/Excluded</h2><div>...</div>"
+                                                            },
+                                                            "tour_type": {
+                                                                "type": "string",
+                                                                "example": "private"
+                                                            },
+                                                            "group_size": {
+                                                                "type": "integer",
+                                                                "example": 10
+                                                            },
+                                                            "languages": {
+                                                                "type": "string",
+                                                                "example": "English"
+                                                            },
+                                                            "min_adults": {
+                                                                "type": "integer",
+                                                                "example": 2
+                                                            },
+                                                            "location": {
+                                                                "type": "string",
+                                                                "example": "DAE"
+                                                            },
+                                                            "is_active": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "created_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-07-17T19:00:44.000000Z"
+                                                            },
+                                                            "updated_at": {
+                                                                "type": "string",
+                                                                "format": "date-time",
+                                                                "example": "2025-08-19T11:44:56.000000Z"
+                                                            },
+                                                            "tour_category_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "duration": {
+                                                                "type": "string",
+                                                                "example": "5 Days, 4 Nights"
+                                                            },
+                                                            "tags": {
+                                                                "type": "string",
+                                                                "example": "burj , khalifa , amazon , jungle, expedition"
+                                                            },
+                                                            "is_featured": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "highlights": {
+                                                                "type": "string",
+                                                                "example": "333"
+                                                            },
+                                                            "difficulty_level": {
+                                                                "type": "string",
+                                                                "example": "easy"
+                                                            },
+                                                            "age_limit": {
+                                                                "type": "integer",
+                                                                "example": 33
+                                                            },
+                                                            "pickup_info": {
+                                                                "type": "string",
+                                                                "example": "Excepturi consectetu"
+                                                            },
+                                                            "dropoff_info": {
+                                                                "type": "string",
+                                                                "example": "Maxime voluptas quas"
+                                                            },
+                                                            "cut_of_day": {
+                                                                "type": "integer",
+                                                                "example": 0
+                                                            },
+                                                            "destination_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "average_rating": {
+                                                                "type": "number",
+                                                                "nullable": true
+                                                            },
+                                                            "is_wishlist": {
+                                                                "type": "integer",
+                                                                "example": 0
+                                                            },
+                                                            "destination": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "string",
+                                                                        "example": "Swat"
+                                                                    },
+                                                                    "is_active": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-08-19T11:38:55.000000Z"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-08-19T11:38:55.000000Z"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "tour_category": {
+                                                                "properties": {
+                                                                    "id": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "name": {
+                                                                        "type": "string",
+                                                                        "example": "Adventure"
+                                                                    },
+                                                                    "thumbnail": {
+                                                                        "type": "string",
+                                                                        "example": "tour_category/QHUepWqheiPqsqbcNmeYkbuaXrivC0koChYk2hwl.jpg"
+                                                                    },
+                                                                    "is_active": {
+                                                                        "type": "integer",
+                                                                        "example": 1
+                                                                    },
+                                                                    "created_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-07-15T14:40:26.000000Z"
+                                                                    },
+                                                                    "updated_at": {
+                                                                        "type": "string",
+                                                                        "format": "date-time",
+                                                                        "example": "2025-07-15T14:41:16.000000Z"
+                                                                    },
+                                                                    "thumbnail_url": {
+                                                                        "type": "string",
+                                                                        "format": "uri",
+                                                                        "example": "http://localhost/gojetter/storage/app/public/tour_category/QHUepWqheiPqsqbcNmeYkbuaXrivC0koChYk2hwl.jpg"
+                                                                    }
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "tour_image": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "example": 3
+                                                                        },
+                                                                        "name": {
+                                                                            "type": "string",
+                                                                            "example": "Testing Data"
+                                                                        },
+                                                                        "image": {
+                                                                            "type": "string",
+                                                                            "example": "tours/xEsGCb5Osek2l8gAQoA1RdhBd5cZ2qPEbSVXRkuz.jpg"
+                                                                        },
+                                                                        "tour_id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-05T15:24:06.000000Z"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-05T15:24:06.000000Z"
+                                                                        },
+                                                                        "image_url": {
+                                                                            "type": "string",
+                                                                            "format": "uri",
+                                                                            "example": "http://localhost/gojetter/storage/app/public/tours/xEsGCb5Osek2l8gAQoA1RdhBd5cZ2qPEbSVXRkuz.jpg"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "tour_date": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "example": 2
+                                                                        },
+                                                                        "tour_id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "start_date": {
+                                                                            "type": "string",
+                                                                            "format": "date",
+                                                                            "example": "2025-08-30"
+                                                                        },
+                                                                        "end_date": {
+                                                                            "type": "string",
+                                                                            "format": "date",
+                                                                            "example": "2025-09-03"
+                                                                        },
+                                                                        "price": {
+                                                                            "type": "string",
+                                                                            "example": "250.00"
+                                                                        },
+                                                                        "discount_price": {
+                                                                            "type": "string",
+                                                                            "example": "200.00"
+                                                                        },
+                                                                        "price_type": {
+                                                                            "type": "string",
+                                                                            "example": "per_person"
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-19T18:53:24.000000Z"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-19T18:53:24.000000Z"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "tour_download": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "tour_id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "file_type": {
+                                                                            "type": "string",
+                                                                            "example": "image"
+                                                                        },
+                                                                        "file_path": {
+                                                                            "type": "string",
+                                                                            "example": "tours/qEsQOjLX3DuOaA5iZR6OmUsbyvd0t07wH0emRT3q.jpg"
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-07T19:46:29.000000Z"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-07T19:46:29.000000Z"
+                                                                        },
+                                                                        "file_path_url": {
+                                                                            "type": "string",
+                                                                            "format": "uri",
+                                                                            "example": "http://localhost/gojetter/storage/app/public/tours/qEsQOjLX3DuOaA5iZR6OmUsbyvd0t07wH0emRT3q.jpg"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "tour_exclusion": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "tour_id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "item": {
+                                                                            "type": "string",
+                                                                            "example": "❌ International or domestic flight tickets"
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-07T19:45:03.000000Z"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-07T19:45:03.000000Z"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "tour_faq": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "example": 2
+                                                                        },
+                                                                        "tour_id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "question": {
+                                                                            "type": "string",
+                                                                            "example": "❓ What is included in the tour package?"
+                                                                        },
+                                                                        "answer": {
+                                                                            "type": "string",
+                                                                            "example": "The package includes guided tours, transportation, entry tickets to all listed attractions, and bottled water. Please refer to the inclusions section for a complete list."
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-07T19:45:54.000000Z"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-07T19:45:54.000000Z"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "tour_inclusion": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "example": 2
+                                                                        },
+                                                                        "tour_id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "item": {
+                                                                            "type": "string",
+                                                                            "example": "Professional English-speaking tour guide"
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-07T19:44:04.000000Z"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-07T19:44:04.000000Z"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "tour_itinerary": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "example": 2
+                                                                        },
+                                                                        "tour_id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "day_number": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "title": {
+                                                                            "type": "string",
+                                                                            "example": "Day 1"
+                                                                        },
+                                                                        "description": {
+                                                                            "type": "string",
+                                                                            "example": "Align images with the helper float classes or text alignment classes. block-level images can be centered using the .mx-auto margin utility class."
+                                                                        },
+                                                                        "image": {
+                                                                            "type": "string",
+                                                                            "example": "tours/7ol9Wn56wQb2DKct09MGgIzooB5DHKTsAeF382EI.jpg"
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-07T19:41:12.000000Z"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-07T19:41:12.000000Z"
+                                                                        },
+                                                                        "image_url": {
+                                                                            "type": "string",
+                                                                            "format": "uri",
+                                                                            "example": "http://localhost/gojetter/storage/app/public/tours/7ol9Wn56wQb2DKct09MGgIzooB5DHKTsAeF382EI.jpg"
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            },
+                                                            "tour_reviews": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "type": "object"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                },
+                                                "discount_destinations": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "destination_id": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "destination_name": {
+                                                                "type": "string",
+                                                                "example": "Swat"
+                                                            },
+                                                            "is_active": {
+                                                                "type": "integer",
+                                                                "example": 1
+                                                            },
+                                                            "tours": {
+                                                                "type": "array",
+                                                                "items": {
+                                                                    "properties": {
+                                                                        "id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "title": {
+                                                                            "type": "string",
+                                                                            "example": "Desert Safari"
+                                                                        },
+                                                                        "slug": {
+                                                                            "type": "string",
+                                                                            "example": "desert-safari"
+                                                                        },
+                                                                        "thumbnail": {
+                                                                            "type": "string",
+                                                                            "example": "tours/6EAGsI1AToXBe0EghcVItdlqWS8O5YVCFTsYYOGQ.jpg"
+                                                                        },
+                                                                        "thumbnail_url": {
+                                                                            "type": "string",
+                                                                            "format": "uri",
+                                                                            "example": "http://localhost/gojetter/storage/app/public/tours/6EAGsI1AToXBe0EghcVItdlqWS8O5YVCFTsYYOGQ.jpg"
+                                                                        },
+                                                                        "overview": {
+                                                                            "type": "string",
+                                                                            "example": "<p>Discover the essence of Dubai or the UAE with our captivating desert safari tour...</p>"
+                                                                        },
+                                                                        "short_description": {
+                                                                            "type": "string",
+                                                                            "example": "<h2>Highlights</h2><ul>...</ul>"
+                                                                        },
+                                                                        "full_description": {
+                                                                            "type": "string",
+                                                                            "example": "<h2>Included/Excluded</h2><div>...</div>"
+                                                                        },
+                                                                        "tour_type": {
+                                                                            "type": "string",
+                                                                            "example": "private"
+                                                                        },
+                                                                        "group_size": {
+                                                                            "type": "integer",
+                                                                            "example": 10
+                                                                        },
+                                                                        "languages": {
+                                                                            "type": "string",
+                                                                            "example": "English"
+                                                                        },
+                                                                        "min_adults": {
+                                                                            "type": "integer",
+                                                                            "example": 2
+                                                                        },
+                                                                        "location": {
+                                                                            "type": "string",
+                                                                            "example": "DAE"
+                                                                        },
+                                                                        "is_active": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "created_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-07-17T19:00:44.000000Z"
+                                                                        },
+                                                                        "updated_at": {
+                                                                            "type": "string",
+                                                                            "format": "date-time",
+                                                                            "example": "2025-08-19T11:44:56.000000Z"
+                                                                        },
+                                                                        "tour_category_id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "duration": {
+                                                                            "type": "string",
+                                                                            "example": "5 Days, 4 Nights"
+                                                                        },
+                                                                        "tags": {
+                                                                            "type": "string",
+                                                                            "example": "burj , khalifa , amazon , jungle, expedition"
+                                                                        },
+                                                                        "is_featured": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "highlights": {
+                                                                            "type": "string",
+                                                                            "example": "333"
+                                                                        },
+                                                                        "difficulty_level": {
+                                                                            "type": "string",
+                                                                            "example": "easy"
+                                                                        },
+                                                                        "age_limit": {
+                                                                            "type": "integer",
+                                                                            "example": 33
+                                                                        },
+                                                                        "pickup_info": {
+                                                                            "type": "string",
+                                                                            "example": "Excepturi consectetu"
+                                                                        },
+                                                                        "dropoff_info": {
+                                                                            "type": "string",
+                                                                            "example": "Maxime voluptas quas"
+                                                                        },
+                                                                        "cut_of_day": {
+                                                                            "type": "integer",
+                                                                            "example": 0
+                                                                        },
+                                                                        "destination_id": {
+                                                                            "type": "integer",
+                                                                            "example": 1
+                                                                        },
+                                                                        "average_rating": {
+                                                                            "type": "number",
+                                                                            "nullable": true
+                                                                        },
+                                                                        "is_wishlist": {
+                                                                            "type": "integer",
+                                                                            "example": 0
+                                                                        },
+                                                                        "destination": {
+                                                                            "properties": {
+                                                                                "id": {
+                                                                                    "type": "integer",
+                                                                                    "example": 1
+                                                                                },
+                                                                                "name": {
+                                                                                    "type": "string",
+                                                                                    "example": "Swat"
+                                                                                },
+                                                                                "is_active": {
+                                                                                    "type": "integer",
+                                                                                    "example": 1
+                                                                                },
+                                                                                "created_at": {
+                                                                                    "type": "string",
+                                                                                    "format": "date-time",
+                                                                                    "example": "2025-08-19T11:38:55.000000Z"
+                                                                                },
+                                                                                "updated_at": {
+                                                                                    "type": "string",
+                                                                                    "format": "date-time",
+                                                                                    "example": "2025-08-19T11:38:55.000000Z"
+                                                                                }
+                                                                            },
+                                                                            "type": "object"
+                                                                        },
+                                                                        "tour_category": {
+                                                                            "properties": {
+                                                                                "id": {
+                                                                                    "type": "integer",
+                                                                                    "example": 1
+                                                                                },
+                                                                                "name": {
+                                                                                    "type": "string",
+                                                                                    "example": "Adventure"
+                                                                                },
+                                                                                "thumbnail": {
+                                                                                    "type": "string",
+                                                                                    "example": "tour_category/QHUepWqheiPqsqbcNmeYkbuaXrivC0koChYk2hwl.jpg"
+                                                                                },
+                                                                                "is_active": {
+                                                                                    "type": "integer",
+                                                                                    "example": 1
+                                                                                },
+                                                                                "created_at": {
+                                                                                    "type": "string",
+                                                                                    "format": "date-time",
+                                                                                    "example": "2025-07-15T14:40:26.000000Z"
+                                                                                },
+                                                                                "updated_at": {
+                                                                                    "type": "string",
+                                                                                    "format": "date-time",
+                                                                                    "example": "2025-07-15T14:41:16.000000Z"
+                                                                                },
+                                                                                "thumbnail_url": {
+                                                                                    "type": "string",
+                                                                                    "format": "uri",
+                                                                                    "example": "http://localhost/gojetter/storage/app/public/tour_category/QHUepWqheiPqsqbcNmeYkbuaXrivC0koChYk2hwl.jpg"
+                                                                                }
+                                                                            },
+                                                                            "type": "object"
+                                                                        },
+                                                                        "tour_image": {
+                                                                            "type": "array",
+                                                                            "items": {
+                                                                                "type": "object"
+                                                                            }
+                                                                        },
+                                                                        "tour_date": {
+                                                                            "type": "array",
+                                                                            "items": {
+                                                                                "type": "object"
+                                                                            }
+                                                                        },
+                                                                        "tour_download": {
+                                                                            "type": "array",
+                                                                            "items": {
+                                                                                "type": "object"
+                                                                            }
+                                                                        },
+                                                                        "tour_exclusion": {
+                                                                            "type": "array",
+                                                                            "items": {
+                                                                                "type": "object"
+                                                                            }
+                                                                        },
+                                                                        "tour_faq": {
+                                                                            "type": "array",
+                                                                            "items": {
+                                                                                "type": "object"
+                                                                            }
+                                                                        },
+                                                                        "tour_inclusion": {
+                                                                            "type": "array",
+                                                                            "items": {
+                                                                                "type": "object"
+                                                                            }
+                                                                        },
+                                                                        "tour_itinerary": {
+                                                                            "type": "array",
+                                                                            "items": {
+                                                                                "type": "object"
+                                                                            }
+                                                                        },
+                                                                        "tour_reviews": {
+                                                                            "type": "array",
+                                                                            "items": {
+                                                                                "type": "object"
+                                                                            }
+                                                                        }
+                                                                    },
+                                                                    "type": "object"
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "Status": {
+                                            "type": "integer",
+                                            "example": 200
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/order-list": {
             "get": {
                 "tags": [
@@ -6091,6 +7234,68 @@
                 }
             }
         },
+        "/api/setting": {
+            "get": {
+                "tags": [
+                    "Settings"
+                ],
+                "summary": "Get application & website settings",
+                "description": "Retrieve global application and website settings including logos and URLs.",
+                "operationId": "getSettings",
+                "responses": {
+                    "200": {
+                        "description": "Records retrieved successfully.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "Message": "Records retrieved successfully.",
+                                    "Success": true,
+                                    "Data": {
+                                        "id": 1,
+                                        "app_name": "Go Jetter",
+                                        "tab_logo": "settings/4LUKR7D4D58McJqcxHLLUyjUIc9l848bmR9fIgK5.png",
+                                        "admin_panel_logo": "settings/QOzoXO0QqxymNJ2vZZyNKioFc7UqN6GZUhMsgJVM.png",
+                                        "mobile_application_logo": "settings/a9Wvgq7guL8ld8zYbJnp5ohjNUYhZhzLs4LbDW04.png",
+                                        "mobile_application_home_image": "settings/BFXJFHQY4wpo51Bh7lxFeRCjcPrU9ZkBLrwkqcqz.webp",
+                                        "website_logo": "settings/KYiaoUhwYcuORwdoeQI9rTwtas0M8JHQM8tWn11q.png",
+                                        "website_page_image": "settings/tB27BjQ3s69v5xe33SDBHbienAvcxWTyi1n3LczY.webp",
+                                        "support_email": null,
+                                        "contact_number": null,
+                                        "created_at": "2025-09-24T22:27:24.000000Z",
+                                        "updated_at": "2025-09-24T22:27:24.000000Z",
+                                        "tab_logo_url": "http://localhost/gojetter/storage/app/public/settings/4LUKR7D4D58McJqcxHLLUyjUIc9l848bmR9fIgK5.png",
+                                        "admin_panel_logo_url": "http://localhost/gojetter/storage/app/public/settings/QOzoXO0QqxymNJ2vZZyNKioFc7UqN6GZUhMsgJVM.png",
+                                        "mobile_application_logo_url": "http://localhost/gojetter/storage/app/public/settings/a9Wvgq7guL8ld8zYbJnp5ohjNUYhZhzLs4LbDW04.png",
+                                        "mobile_application_home_image_url": "http://localhost/gojetter/storage/app/public/settings/BFXJFHQY4wpo51Bh7lxFeRCjcPrU9ZkBLrwkqcqz.webp",
+                                        "website_logo_url": "http://localhost/gojetter/storage/app/public/settings/KYiaoUhwYcuORwdoeQI9rTwtas0M8JHQM8tWn11q.png",
+                                        "website_page_image_url": "http://localhost/gojetter/storage/app/public/settings/tB27BjQ3s69v5xe33SDBHbienAvcxWTyi1n3LczY.webp"
+                                    },
+                                    "Status": 200
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Settings not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "Message": "Settings not found",
+                                    "Success": false,
+                                    "Status": 404
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/social-media-list": {
             "get": {
                 "tags": [
@@ -6389,6 +7594,15 @@
                                 "price_low_high",
                                 "price_high_low"
                             ]
+                        }
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "User id for wishlist",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 ],
@@ -7684,12 +8898,20 @@
             "description": "Gallery"
         },
         {
+            "name": "Home",
+            "description": "Home"
+        },
+        {
             "name": "Order",
             "description": "Order"
         },
         {
             "name": "Service",
             "description": "Service"
+        },
+        {
+            "name": "Settings",
+            "description": "Settings"
         },
         {
             "name": "Social Media",

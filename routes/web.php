@@ -45,6 +45,7 @@ use App\Http\Controllers\Admin\TourItineraryController;
 use App\Http\Controllers\Admin\TourReviewController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
@@ -554,5 +555,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('order-detail-report', [ReportController::class, 'orderDetailReport']);
         Route::get('get-order-detail-report', [ReportController::class, 'getOrderDetailReport']);
         Route::get('get-preview-order-detail-report', [ReportController::class, 'getPreviewOrderDetailReport'])->name('report.get-preview-order-detail-report');
+    });
+
+    //setting
+    Route::group(['prefix' => 'setting'], function () {
+        Route::get('/', [SettingController::class, 'create']);
+        Route::post('store', [SettingController::class, 'store']);
     });
 });
