@@ -23,11 +23,19 @@ class ActivityService
     //Bead type
     public function getSource()
     {
-        $model = $this->model_activity->getModel()::with(['activity_category', 'destination'])->where('is_deleted', 0);
+        $model = $this->model_activity->getModel()::with(['country', 'city', 'activity_category', 'destination'])->where('is_deleted', 0);
         $data = DataTables::of($model)
             ->addColumn('category', function ($item) {
 
                 return $item->activity_category->name ?? '';
+            })
+            ->addColumn('country', function ($item) {
+
+                return $item->country->name ?? '';
+            })
+            ->addColumn('city', function ($item) {
+
+                return $item->city->name ?? '';
             })
             ->addColumn('destination', function ($item) {
 
@@ -93,7 +101,7 @@ class ActivityService
 
                 return $action_column . $dropdown;
             })
-            ->rawColumns(['category', 'destination', 'is_active', 'action'])
+            ->rawColumns(['category', 'country','city', 'destination', 'is_active', 'action'])
             ->make(true);
         return $data;
     }
@@ -182,6 +190,8 @@ class ActivityService
         }
         $query = $this->model_activity->getModel()::select('activities.*')
             ->with([
+                'country',
+                'city',
                 'destination',
                 'activity_category',
                 'activityImage',
@@ -204,7 +214,15 @@ class ActivityService
         if (!empty($data['type'])) {
             $query->where('activity_type', $data['type']);
         }
-        // Filter by type
+        // Filter by country
+        if (!empty($data['country_id'])) {
+            $query->where('country_id', $data['country_id']);
+        }
+        // Filter by city
+        if (!empty($data['city_id'])) {
+            $query->where('city_id', $data['city_id']);
+        }
+        // Filter by category
         if (!empty($data['category_id'])) {
             $query->where('category_id', $data['category_id']);
         }
@@ -275,6 +293,8 @@ class ActivityService
     public function activityDetailById($slug, $data)
     {
         $activity = $this->model_activity->getModel()::with([
+            'country',
+            'city',
             'destination',
             'activity_category',
             'activityReviews' => function ($query) {
@@ -311,6 +331,8 @@ class ActivityService
 
         $related_activities = $this->model_activity->getModel()::select('activities.*')
             ->with([
+                'country',
+                'city',
                 'destination',
                 'activity_category',
                 'activityImage',

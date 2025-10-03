@@ -12,6 +12,8 @@ class Activity extends Model
         'title',
         'slug',
         'destination_id',
+        'country_id',
+        'city_id',
         'thumbnail',
         'category_id',
         'overview',
@@ -66,6 +68,15 @@ class Activity extends Model
     public function activity_category()
     {
         return $this->belongsTo(TourCategory::class, 'category_id');
+    }
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
     }
     public function destination()
     {

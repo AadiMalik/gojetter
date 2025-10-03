@@ -146,6 +146,14 @@
                                 <p>{{ $activity->languages }}</p>
                             </div>
                             <div class="col-md-6 mb-2">
+                                <label><strong>Country:</strong></label>
+                                <p>{{ $activity->country->name??'' }}</p>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <label><strong>City:</strong></label>
+                                <p>{{ $activity->city->name??'' }}</p>
+                            </div>
+                            <div class="col-md-6 mb-2">
                                 <label><strong>Location:</strong></label>
                                 <p>{{ $activity->location }}</p>
                             </div>

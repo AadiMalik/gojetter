@@ -32,6 +32,8 @@
                                         <th scope="col">Category</th>
                                         <th scope="col">Type</th>
                                         <th scope="col">Duration</th>
+                                        <th scope="col">Country</th>
+                                        <th scope="col">City</th>
                                         <th scope="col">Destination</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Action</th>
@@ -57,6 +59,8 @@
                      {data: 'category' , name: 'category' , 'sortable': false , searchable: false},
                      {data: 'activity_type' , name: 'activity_type'},
                      {data: 'duration' , name: 'duration'},
+                     {data: 'country' , name: 'country', 'sortable': false , searchable: false},
+                     {data: 'city' , name: 'city', 'sortable': false , searchable: false},
                      {data: 'destination' , name: 'destination', 'sortable': false , searchable: false},
                      {data: 'is_active' , name: 'is_active' , 'sortable': false , searchable: false},
                     {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",

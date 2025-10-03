@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ActivityTimeSlotController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BookingController;
+use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ContactUsMessageController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CouponController;
@@ -388,6 +389,28 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('status/{id}', [CountryController::class, 'status']);
         Route::get('/js/country.js', function () {
             $path = resource_path('views/country/js/country.js');
+            if (file_exists($path)) {
+                return Response::file($path, [
+                    'Content-Type' => 'application/javascript',
+                ]);
+            }
+            abort(404);
+        });
+    });
+
+    //city
+    Route::group(['prefix' => 'city'], function () {
+        Route::get('/', [CityController::class, 'index']);
+        Route::post('data', [CityController::class, 'getData'])->name('city.data');
+        Route::get('create', [CityController::class, 'create']);
+        Route::post('store', [CityController::class, 'store']);
+        Route::get('edit/{id}', [CityController::class, 'edit']);
+        Route::post('update', [CityController::class, 'update']);
+        Route::get('destroy/{id}', [CityController::class, 'destroy']);
+        Route::get('status/{id}', [CityController::class, 'status']);
+        Route::get('by-country-id/{country_id}', [CityController::class, 'cityByCountryId']);
+        Route::get('/js/city.js', function () {
+            $path = resource_path('views/city/js/city.js');
             if (file_exists($path)) {
                 return Response::file($path, [
                     'Content-Type' => 'application/javascript',

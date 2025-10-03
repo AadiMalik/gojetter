@@ -49,6 +49,8 @@ class TourItineraryController extends Controller
                 'day_number' => 'required|integer|min:1',
                 'title' => 'required|string|max:255',
                 'image' => 'nullable',
+                'latitude' => 'nullable',
+                'longitude' => 'nullable',
                 'description' => 'required'
             ],
             $this->validationMessage()

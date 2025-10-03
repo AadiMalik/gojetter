@@ -144,7 +144,7 @@
                     {{-- @endcan --}}
                     {{-- @can('common_access') --}}
                     <li
-                        class="Ul_li--hover {{ Request::is('currency*') || Request::is('destination*') || Request::is('social-media*') ? 'mm-active' : '' }}">
+                        class="Ul_li--hover {{ Request::is('currency*') || Request::is('country*') || Request::is('city*') || Request::is('destination*') || Request::is('social-media*') ? 'mm-active' : '' }}">
                         <a class="has-arrow" href="#"><i class="fa fa-box text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Common</span></a>
                         <ul class="mm-collapse">
@@ -157,6 +157,11 @@
                             <li class="item-name"><a class="{{ Request::is('country*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('country') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
                                         class="text-muted">Countries</span></a></li>
+                            {{-- @endcan --}}
+                            {{-- @can('city_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('city*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('city') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
+                                        class="text-muted">Cities</span></a></li>
                             {{-- @endcan --}}
                             {{-- @can('destination_access') --}}
                             <li class="item-name"><a class="{{ Request::is('destination*') ? 'sidebar_active' : '' }}"

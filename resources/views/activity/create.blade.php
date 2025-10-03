@@ -139,6 +139,29 @@
                                 @enderror
                             </div>
 
+                            {{-- country --}}
+                            <div class="col-md-4 form-group mb-3">
+                                <label>Country <span class="text-danger">*</span></label>
+                                <select name="country_id" class="form-control" id="country_id" required>
+                                    <option value="">--Select Country--</option>
+                                    @foreach($country as $item)
+                                    <option value="{{ $item->id }}" @if (isset($activity) && $activity->country_id == $item->id) selected @endif>{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('country_id')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            {{-- city --}}
+                            <div class="col-md-4 form-group mb-3">
+                                <label>City <span class="text-danger">*</span></label>
+                                <select name="city_id" class="form-control" id="city_id" required>
+                                    <option value="">--Select City--</option>
+                                </select>
+                                @error('city_id')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
 
                             {{-- destination --}}
                             <div class="col-md-4 form-group mb-3">
@@ -220,95 +243,125 @@
 
                                 @error('is_wheelchair_accessible')
                                 <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div> --}}
-                            {{-- is_stroller_friendly --}}
-                            {{-- <div class="col-md-4 form-group mb-3 mt-4">
+                            @enderror
+                        </div> --}}
+                        {{-- is_stroller_friendly --}}
+                        {{-- <div class="col-md-4 form-group mb-3 mt-4">
                                 <label class="switch pr-5 switch-primary mr-3"><input type="checkbox" name="is_stroller_friendly" id="is_stroller_friendly" @if(isset($activity) && $activity->is_stroller_friendly==1) checked @endif ><span class="slider"></span> Stroller Friendly</label>
 
                                 @error('is_stroller_friendly')
                                 <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div> --}}
-                            
-                            {{-- rules --}}
-                            <div class="col-md-6 form-group mb-3">
-                                <label for="rules">Rules</label>
-                                <textarea class="form-control" name="rules">{{ old('rules', isset($activity) ? $activity->rules : '') }}</textarea>
-                                @error('rules')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>{{-- requirements --}}
-                            <div class="col-md-6 form-group mb-3">
-                                <label for="requirements">Requirements</label>
-                                <textarea class="form-control" name="requirements">{{ old('requirements', isset($activity) ? $activity->requirements : '') }}</textarea>
-                                @error('requirements')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>{{-- disclaimers --}}
-                            <div class="col-md-6 form-group mb-3">
-                                <label for="disclaimers">Disclaimers</label>
-                                <textarea class="form-control" name="disclaimers">{{ old('disclaimers', isset($activity) ? $activity->disclaimers : '') }}</textarea>
-                                @error('disclaimers')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                        @enderror
+                    </div> --}}
 
-                            {{-- highlights --}}
-                            <div class="col-md-6 form-group mb-3">
-                                <label for="highlights">Highlights</label>
-                                <textarea class="form-control" name="highlights">{{ old('highlights', isset($activity) ? $activity->highlights : '') }}</textarea>
-                                @error('highlights')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            {{-- Overview --}}
-                            <div class="col-md-12 form-group mb-3">
-                                <label for="overview">Overview</label>
-                                <textarea class="form-control" name="overview">{{ old('overview', isset($activity) ? $activity->overview : '') }}</textarea>
-                                @error('overview')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                            {{-- Short Description --}}
-                            <div class="col-md-12 form-group mb-3">
-                                <label for="short_description">Short Description</label>
-                                <textarea class="form-control" name="short_description">{{ old('short_description', isset($activity) ? $activity->short_description : '') }}</textarea>
-                                @error('short_description')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            {{-- Full Description --}}
-                            <div class="col-md-12 form-group mb-3">
-                                <label for="full_description">Full Description</label>
-                                <textarea class="form-control" name="full_description">{{ old('full_description', isset($activity) ? $activity->full_description : '') }}</textarea>
-                                @error('full_description')
-                                <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                        </div>
+                    {{-- rules --}}
+                    <div class="col-md-6 form-group mb-3">
+                        <label for="rules">Rules</label>
+                        <textarea class="form-control" name="rules">{{ old('rules', isset($activity) ? $activity->rules : '') }}</textarea>
+                        @error('rules')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>{{-- requirements --}}
+                    <div class="col-md-6 form-group mb-3">
+                        <label for="requirements">Requirements</label>
+                        <textarea class="form-control" name="requirements">{{ old('requirements', isset($activity) ? $activity->requirements : '') }}</textarea>
+                        @error('requirements')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>{{-- disclaimers --}}
+                    <div class="col-md-6 form-group mb-3">
+                        <label for="disclaimers">Disclaimers</label>
+                        <textarea class="form-control" name="disclaimers">{{ old('disclaimers', isset($activity) ? $activity->disclaimers : '') }}</textarea>
+                        @error('disclaimers')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
 
-                    <div class="card-footer">
-                        <a href="{{ url('activity') }}" class="btn btn-danger">Cancel</a>
-                        <button class="btn btn-primary">Save</button>
+                    {{-- highlights --}}
+                    <div class="col-md-6 form-group mb-3">
+                        <label for="highlights">Highlights</label>
+                        <textarea class="form-control" name="highlights">{{ old('highlights', isset($activity) ? $activity->highlights : '') }}</textarea>
+                        @error('highlights')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </div>
-                </form>
+                    {{-- Overview --}}
+                    <div class="col-md-12 form-group mb-3">
+                        <label for="overview">Overview</label>
+                        <textarea class="form-control" name="overview">{{ old('overview', isset($activity) ? $activity->overview : '') }}</textarea>
+                        @error('overview')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    {{-- Short Description --}}
+                    <div class="col-md-12 form-group mb-3">
+                        <label for="short_description">Short Description</label>
+                        <textarea class="form-control" name="short_description">{{ old('short_description', isset($activity) ? $activity->short_description : '') }}</textarea>
+                        @error('short_description')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    {{-- Full Description --}}
+                    <div class="col-md-12 form-group mb-3">
+                        <label for="full_description">Full Description</label>
+                        <textarea class="form-control" name="full_description">{{ old('full_description', isset($activity) ? $activity->full_description : '') }}</textarea>
+                        @error('full_description')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+
             </div>
         </div>
+
+        <div class="card-footer">
+            <a href="{{ url('activity') }}" class="btn btn-danger">Cancel</a>
+            <button class="btn btn-primary">Save</button>
+        </div>
+        </form>
     </div>
+</div>
+</div>
 </div><!-- end of main-content -->
 </div>
 @endsection
 @section('js')
 <script>
     $(document).ready(function() {
-        $('')({
-            height: 150,
-        });
+        
+        $('#destination_id').select2();
         $('#category_id').select2();
+        $('#country_id').select2();
+        $('#city_id').select2();
+        function loadCities(countryId, selectedCityId = null) {
+            if (countryId) {
+                $.ajax({
+                    url: "{{ url('city/by-country-id') }}/" + countryId,
+                    type: "GET",
+                    success: function(res) {
+                        var res = res.Data;
+                        $('#city_id').empty().append('<option value="">--Select City--</option>');
+                        $.each(res, function(key, city) {
+                            let selected = (selectedCityId == city.id) ? 'selected' : '';
+                            $('#city_id').append('<option value="' + city.id + '" ' + selected + '>' + city.name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#city_id').empty().append('<option value="">--Select City--</option>');
+            }
+        }
+
+        // On country change
+        $('#country_id').on('change', function() {
+            var countryId = $(this).val();
+            loadCities(countryId);
+        });
+
+        // If edit mode
+        @if(isset($activity))
+        loadCities("{{ $activity->country_id }}", "{{ $activity->city_id }}");
+        @endif
     });
 
     function slugify(text) {
