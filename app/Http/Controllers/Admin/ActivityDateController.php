@@ -49,6 +49,19 @@ class ActivityDateController extends Controller
                 'date' => 'required|date',
                 'price' => 'required|min:1',
                 'discount_price' => 'required|min:0',
+                'start_time.*' => 'required|date_format:H:i',
+                'end_time.*' => [
+                    'required',
+                    'date_format:H:i',
+                    function ($attribute, $value, $fail) use ($request) {
+                        $index = explode('.', $attribute)[1];
+                        $start = $request->start_time[$index] ?? null;
+                        if ($start && $value <= $start) {
+                            $fail('The end time must be after the start time.');
+                        }
+                    }
+                ],
+                'total_seats.*' => 'required|integer|min:1',
             ],
             $this->validationMessage()
         );
