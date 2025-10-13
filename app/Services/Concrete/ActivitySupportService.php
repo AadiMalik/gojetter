@@ -5,6 +5,7 @@ namespace App\Services\Concrete;
 use App\Models\ActivitySupport;
 use App\Repository\Repository;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Auth;
 
 class ActivitySupportService
 {
