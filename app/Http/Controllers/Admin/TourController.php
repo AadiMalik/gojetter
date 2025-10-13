@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class TourController extends Controller
 {
@@ -56,7 +57,7 @@ class TourController extends Controller
         $tour_category = $this->tour_category_service->getAllActive();
         $country = $this->country_service->getAllActive();
         $destinations = $this->destination_service->getAllActive();
-        return view('tours.create', compact('tour_category', 'country','destinations'));
+        return view('tours.create', compact('tour_category', 'country', 'destinations'));
     }
     public function store(Request $request)
     {
@@ -66,7 +67,15 @@ class TourController extends Controller
             $request->all(),
             [
                 'title'             => 'required|string|max:255',
-                'slug'              => 'required|string|unique:tours,slug,' . ($request->id ?? 'null') . ',id',
+                'slug'              => [
+                    'required',
+                    'string',
+                    Rule::unique('tours', 'slug')
+                        ->ignore($request->id)
+                        ->where(function ($query) {
+                            $query->where('is_deleted', 0);
+                        }),
+                ],
                 'tour_category_id'  => 'required',
                 'price'             => 'required|min:0.1',
                 'discount_price'    => 'required|min:0',
@@ -125,7 +134,7 @@ class TourController extends Controller
         $destinations = $this->destination_service->getAllActive();
         $country = $this->country_service->getAllActive();
         $tour = $this->tour_service->getById($id);
-        return view('tours.create', compact('tour_category', 'country', 'tour','destinations'));
+        return view('tours.create', compact('tour_category', 'country', 'tour', 'destinations'));
     }
     public function additional($id)
     {
@@ -171,5 +180,4 @@ class TourController extends Controller
             return $this->error(ResponseMessage::ERROR);
         }
     }
-
 }

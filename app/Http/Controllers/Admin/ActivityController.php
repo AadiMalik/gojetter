@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 
 class ActivityController extends Controller
 {
@@ -56,7 +57,7 @@ class ActivityController extends Controller
         $activity_category = $this->activity_category_service->getAllActive();
         $country = $this->country_service->getAllActive();
         $destinations = $this->destination_service->getAllActive();
-        return view('activity.create', compact('activity_category','country','destinations'));
+        return view('activity.create', compact('activity_category', 'country', 'destinations'));
     }
     public function store(Request $request)
     {
@@ -66,7 +67,15 @@ class ActivityController extends Controller
             $request->all(),
             [
                 'title'             => 'required|string|max:255',
-                'slug'              => 'required|string|unique:activities,slug,' . ($request->id ?? 'null') . ',id',
+                'slug'              => [
+                    'required',
+                    'string',
+                    Rule::unique('activities', 'slug')
+                        ->ignore($request->id)
+                        ->where(function ($query) {
+                            $query->where('is_deleted', 0);
+                        }),
+                ],
                 'category_id'       => 'required',
                 'tags'              => 'required|string|max:255',
                 'thumbnail'         => 'nullable|image',
@@ -130,7 +139,7 @@ class ActivityController extends Controller
         $destinations = $this->destination_service->getAllActive();
         $country = $this->country_service->getAllActive();
         $activity = $this->activity_service->getById($id);
-        return view('activity.create', compact('activity_category','country', 'activity','destinations'));
+        return view('activity.create', compact('activity_category', 'country', 'activity', 'destinations'));
     }
 
     public function view($id)
@@ -169,5 +178,4 @@ class ActivityController extends Controller
             return $this->error(ResponseMessage::ERROR);
         }
     }
-
 }
