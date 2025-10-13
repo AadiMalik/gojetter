@@ -45,11 +45,20 @@
                         @endif
                         <div class="card-body">
                             <div class="row">
-                                {{-- date --}}
+                                {{-- start_date --}}
                                 <div class="col-md-6 form-group mb-3">
-                                    <label for="date">Date <span class="text-danger">*</span></label>
-                                    <input id="date" class="form-control" type="date" name="date" required>
-                                    @error('date')
+                                    <label for="start_date">Start Date <span class="text-danger">*</span></label>
+                                    <input id="start_date" class="form-control" type="date" name="start_date" required>
+                                    @error('start_date')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+
+                                {{-- end_date --}}
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="end_date">End Date <span class="text-danger">*</span></label>
+                                    <input id="end_date" class="form-control" type="date" name="end_date" required>
+                                    @error('end_date')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
@@ -139,10 +148,10 @@
 @section('js')
     @include('includes.datatable', [
         'columns' => "
-                        {data: 'date' , name: 'date'},
-                        {data: 'price' , name: 'price'},
-                        {data: 'discount_price' , name: 'discount_price'},
-                        {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
+                            {data: 'date' , name: 'date'},
+                            {data: 'price' , name: 'price'},
+                            {data: 'discount_price' , name: 'discount_price'},
+                            {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",
         'route' => 'data',
         'buttons' => false,
         'pageLength' => 10,

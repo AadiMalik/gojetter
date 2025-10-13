@@ -46,7 +46,8 @@ class ActivityDateController extends Controller
             $request->all(),
             [
                 'activity_id' => 'required',
-                'date' => 'required|date',
+                'start_date'     => 'required|date',
+                'end_date'       => 'required|date|after_or_equal:start_date',
                 'price' => 'required|min:1',
                 'discount_price' => 'required|min:0',
                 'start_time.*' => 'required|date_format:H:i',

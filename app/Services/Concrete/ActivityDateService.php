@@ -53,26 +53,46 @@ class ActivityDateService
         try {
             DB::beginTransaction();
             $obj['createdby_id'] = Auth::User()->id;
-            $saved_obj = $this->model_activity_date->create($obj);
-            if (!$saved_obj) {
-                DB::rollBack();
-                return false;
+
+            $startDate = Carbon::parse($obj['start_date']);
+            $endDate   = Carbon::parse($obj['end_date']);
+            $allDates  = [];
+
+            while ($startDate->lte($endDate)) {
+                $allDates[] = $startDate->toDateString();
+                $startDate->addDay();
             }
 
-            foreach ($obj['start_time'] as $key => $start) {
-                $time_slot_obj = [
-                    'activity_date_id' => $saved_obj->id,
-                    'start_time'       => $start,
-                    'end_time'         => $obj['end_time'][$key],
-                    'total_seats'      => $obj['total_seats'][$key],
-                    'available_seats'  => $obj['total_seats'][$key],
-                    'createdby_id'     => Auth::user()->id,
+            foreach ($allDates as $date) {
+                $activityDate = [
+                    'activity_id'    => $obj['activity_id'],
+                    'date'           => $date,
+                    'price'          => $obj['price'],
+                    'discount_price' => $obj['discount_price'] ?? 0,
+                    'createdby_id'   => Auth::user()->id,
                 ];
 
-                $time_slot = $this->model_activity_time_slot->create($time_slot_obj);
-                if (!$time_slot) {
+                $saved_obj = $this->model_activity_date->create($activityDate);
+                if (!$saved_obj) {
                     DB::rollBack();
                     return false;
+                }
+
+                foreach ($obj['start_time'] as $key => $start) {
+                    $time_slot_obj = [
+                        'activity_date_id' => $saved_obj->id,
+                        'start_time'       => $start,
+                        'end_time'         => $obj['end_time'][$key],
+                        'total_seats'      => $obj['total_seats'][$key],
+                        'available_seats'  => $obj['total_seats'][$key],
+                        'createdby_id'     => Auth::user()->id,
+                    ];
+
+                    $time_slot = $this->model_activity_time_slot->create($time_slot_obj);
+                    if (!$time_slot) {
+                        DB::rollBack();
+                        return false;
+                    }
                 }
             }
 
