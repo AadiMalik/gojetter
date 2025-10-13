@@ -4,6 +4,7 @@ namespace App\Services\Concrete;
 
 use App\Models\ActivityPolicy;
 use App\Repository\Repository;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
 
 class ActivityPolicyService
