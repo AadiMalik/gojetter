@@ -33,6 +33,8 @@ class Tour extends Model
         'dropoff_info',
         'min_adults',
         'cut_of_day',
+        'country_id',
+        'city_id',
         'is_active',
         'createdby_id',
         'updatedby_id',
@@ -67,6 +69,15 @@ class Tour extends Model
     public function tour_category()
     {
         return $this->belongsTo(TourCategory::class, 'tour_category_id');
+    }
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class, 'city_id');
     }
     public function destination()
     {

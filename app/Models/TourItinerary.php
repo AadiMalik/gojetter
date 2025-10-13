@@ -13,6 +13,8 @@ class TourItinerary extends Model
         'day_number',
         'title',
         'description',
+        'latitude',
+        'longitude',
         'image'
     ];
     protected $appends = ['image_url'];

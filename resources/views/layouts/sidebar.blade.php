@@ -1,7 +1,9 @@
 <div class="sidebar-panel bg-white">
     <div class="gull-brand pr-3 text-center mt-4 mb-2 d-flex justify-content-center align-items-center"><img
-            class="pl-3" src="{{ asset('public/dist-assets/images/logo.png') }}" alt="alt" />
-        <!--  <span class=" item-name text-20 text-primary font-weight-700">GULL</span> -->
+            class="pl-3" src="{{ getSetting()?->admin_panel_logo 
+                ? asset('storage/app/public/' . getSetting()->admin_panel_logo) 
+                : asset('public/dist-assets/images/logo.png') }}" alt="alt" />
+         <span class=" item-name text-20 text-primary font-weight-700">{{ getSetting()?->app_name ?? 'Go Jetter' }}</span>
         <div class="sidebar-compact-switch ml-auto"><span></span></div>
     </div>
     <!--  user -->
@@ -142,7 +144,7 @@
                     {{-- @endcan --}}
                     {{-- @can('common_access') --}}
                     <li
-                        class="Ul_li--hover {{ Request::is('currency*') || Request::is('destination*') || Request::is('social-media*') ? 'mm-active' : '' }}">
+                        class="Ul_li--hover {{ Request::is('currency*') || Request::is('country*') || Request::is('city*') || Request::is('destination*') || Request::is('social-media*') ? 'mm-active' : '' }}">
                         <a class="has-arrow" href="#"><i class="fa fa-box text-20 mr-2 text-muted"></i><span
                                 class="item-name text-15 text-muted">Common</span></a>
                         <ul class="mm-collapse">
@@ -155,6 +157,11 @@
                             <li class="item-name"><a class="{{ Request::is('country*') ? 'sidebar_active' : '' }}"
                                     href="{{ url('country') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
                                         class="text-muted">Countries</span></a></li>
+                            {{-- @endcan --}}
+                            {{-- @can('city_access') --}}
+                            <li class="item-name"><a class="{{ Request::is('city*') ? 'sidebar_active' : '' }}"
+                                    href="{{ url('city') }}"><i class="fa fa-circle mr-2 text-muted"></i><span
+                                        class="text-muted">Cities</span></a></li>
                             {{-- @endcan --}}
                             {{-- @can('destination_access') --}}
                             <li class="item-name"><a class="{{ Request::is('destination*') ? 'sidebar_active' : '' }}"
@@ -287,6 +294,11 @@
 
                         </ul>
                     </li>
+                    {{-- @endcan --}}
+                    {{-- @can('setting_access') --}}
+                    <li class="Ul_li--hover"><a href="{{ url('setting') }}"><i
+                                class="fa fa-cog text-20 mr-2 text-muted"></i><span
+                                class="item-name text-15 text-muted">Setting</span></a></li>
                     {{-- @endcan --}}
                 </ul>
             </div>

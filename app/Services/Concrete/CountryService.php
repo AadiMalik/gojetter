@@ -52,7 +52,7 @@ class CountryService
     // get all active
     public function getAllActive()
     {
-        return $this->model_country->getModel()::where('is_deleted', 0)->where('is_active', 1)->get();
+        return $this->model_country->getModel()::with('cities')->where('is_deleted', 0)->where('is_active', 1)->get();
     }
     // save
     public function save($obj)

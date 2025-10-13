@@ -124,6 +124,14 @@
                                     <p>{{ $tour->languages }}</p>
                                 </div>
                                 <div class="col-md-6 mb-2">
+                                    <label><strong>Country:</strong></label>
+                                    <p>{{ $tour->country->name??'' }}</p>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label><strong>City:</strong></label>
+                                    <p>{{ $tour->city->name??'' }}</p>
+                                </div>
+                                <div class="col-md-6 mb-2">
                                     <label><strong>Location:</strong></label>
                                     <p>{{ $tour->location }}</p>
                                 </div>

@@ -26,11 +26,19 @@ class TourService
     //Bead type
     public function getSource()
     {
-        $model = $this->model_tour->getModel()::with(['tour_category', 'destination'])->where('is_deleted', 0);
+        $model = $this->model_tour->getModel()::with(['country','city', 'tour_category', 'destination'])->where('is_deleted', 0);
         $data = DataTables::of($model)
             ->addColumn('category', function ($item) {
 
                 return $item->tour_category->name ?? '';
+            })
+            ->addColumn('country', function ($item) {
+
+                return $item->country->name ?? '';
+            })
+            ->addColumn('city', function ($item) {
+
+                return $item->city->name ?? '';
             })
             ->addColumn('destination', function ($item) {
 
@@ -94,7 +102,7 @@ class TourService
 
                 return $action_column . $dropdown;
             })
-            ->rawColumns(['category', 'destination', 'is_active', 'action'])
+            ->rawColumns(['category', 'country', 'city', 'destination', 'is_active', 'action'])
             ->make(true);
         return $data;
     }
@@ -235,6 +243,8 @@ class TourService
         }
         $query = Tour::select('tours.*')
             ->with([
+                'country',
+                'city',
                 'destination',
                 'tour_category',
                 'tourImage',
@@ -255,6 +265,14 @@ class TourService
         // Filter by type
         if (!empty($data['type'])) {
             $query->where('tour_type', $data['type']);
+        }
+        // Filter by country
+        if (!empty($data['country_id'])) {
+            $query->where('country_id', $data['country_id']);
+        }
+        // Filter by city
+        if (!empty($data['city_id'])) {
+            $query->where('city_id', $data['city_id']);
         }
         // Filter by type
         if (!empty($data['category_id'])) {
@@ -343,6 +361,8 @@ class TourService
     public function tourDetailById($slug, $data)
     {
         $tour = Tour::with([
+            'country',
+            'city',
             'destination',
             'tour_category',
             'tourReviews' => function ($query) {
@@ -377,6 +397,8 @@ class TourService
 
         $related_tours = Tour::select('tours.*')
             ->with([
+                'country',
+                'city',
                 'destination',
                 'tour_category',
                 'tourImage',

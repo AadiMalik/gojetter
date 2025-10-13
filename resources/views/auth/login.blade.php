@@ -18,7 +18,9 @@
                     <div class="col-md-12">
                         <div class="p-4">
                             <div class="auth-logo text-center mb-4">
-                                <img style="width:auto;" src="{{asset('public/dist-assets/images/logo.png') }}" alt="">
+                                <img style="width:auto;" src="{{ getSetting()?->admin_panel_logo 
+                ? asset('storage/app/public/' . getSetting()->admin_panel_logo) 
+                : asset('public/dist-assets/images/logo.png') }}" alt="">
                             </div>
                             <h1 class="mb-3 text-18">Sign In</h1>
                             <form method="POST" action="{{ route('login') }}">
@@ -63,11 +65,11 @@
                                 <button class="btn btn-rounded btn-primary btn-block mt-2">Sign In</button>
                             </form>
                             @if (Route::has('password.request'))
-                                <div class="mt-3 text-center">
+                            <div class="mt-3 text-center">
 
-                                    <a href="{{ route('password.request') }}" class="text-muted"><u>Forgot
-                                            Password?</u></a>
-                                </div>
+                                <a href="{{ route('password.request') }}" class="text-muted"><u>Forgot
+                                        Password?</u></a>
+                            </div>
                             @endif
                         </div>
                     </div>

@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Country extends Model
+class City extends Model
 {
     use HasFactory;
     protected $fillable = [
         'name',
+        'country_id',
         'is_active',
         'is_deleted',
         'createdby_id',
@@ -32,9 +33,8 @@ class Country extends Model
     {
         return $this->hasMany(User::class);
     }
-    public function cities()
+    public function country()
     {
-        return $this->hasMany(City::class, 'country_id')->where('is_active', 1)
-        ->where('is_deleted', 0);
+        return $this->belongsTo(Country::class, 'country_id');
     }
 }

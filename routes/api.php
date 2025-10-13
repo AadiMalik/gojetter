@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\GalleryController;
 use App\Http\Controllers\Api\HomeController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ServiceController;
+use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\SocialMediaController;
 use App\Http\Controllers\Api\TourController;
 use App\Http\Controllers\Api\WishlistController;
@@ -92,6 +93,8 @@ Route::post('save-contact-us', [ContactUsMessageController::class, 'store']);
 Route::get('gallery-list', [GalleryController::class, 'index']);
 // testimonial
 Route::get('testimonial-list', [TestimonialController::class, 'list']);
+
+Route::get('setting', [SettingController::class, 'index']);
 
 Route::group(['middleware' => ['auth:api']], function () {
 

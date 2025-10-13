@@ -156,7 +156,29 @@
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
                             </div>
-
+                            {{-- country --}}
+                            <div class="col-md-4 form-group mb-3">
+                                <label>Country <span class="text-danger">*</span></label>
+                                <select name="country_id" class="form-control" id="country_id" required>
+                                <option value="">--Select Country--</option>
+                                    @foreach($country as $item)
+                                    <option value="{{ $item->id }}" @if (isset($tour) && $tour->country_id == $item->id) selected @endif>{{ $item->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('country_id')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            {{-- city --}}
+                            <div class="col-md-4 form-group mb-3">
+                                <label>City <span class="text-danger">*</span></label>
+                                <select name="city_id" class="form-control" id="city_id" required>
+                                <option value="">--Select City--</option>
+                                </select>
+                                @error('city_id')
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
 
                             {{-- destination --}}
                             <div class="col-md-4 form-group mb-3">
@@ -285,10 +307,39 @@
 @section('js')
 <script>
     $(document).ready(function() {
-        $('.summernote').summernote({
-            height: 150,
+        $('#destination_id').select2();
+        $('#category_id').select2();
+        $('#country_id').select2();
+        $('#city_id').select2();
+        function loadCities(countryId, selectedCityId = null) {
+            if (countryId) {
+                $.ajax({
+                    url: "{{ url('city/by-country-id') }}/" + countryId,
+                    type: "GET",
+                    success: function(res) {
+                        var res = res.Data;
+                        $('#city_id').empty().append('<option value="">--Select City--</option>');
+                        $.each(res, function(key, city) {
+                            let selected = (selectedCityId == city.id) ? 'selected' : '';
+                            $('#city_id').append('<option value="' + city.id + '" ' + selected + '>' + city.name + '</option>');
+                        });
+                    }
+                });
+            } else {
+                $('#city_id').empty().append('<option value="">--Select City--</option>');
+            }
+        }
+
+        // On country change
+        $('#country_id').on('change', function() {
+            var countryId = $(this).val();
+            loadCities(countryId);
         });
-        $('#tour_category_id').select2();
+
+        // If edit mode
+        @if(isset($tour))
+        loadCities("{{ $tour->country_id }}", "{{ $tour->city_id }}");
+        @endif
     });
 
     function slugify(text) {

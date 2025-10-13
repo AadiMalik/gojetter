@@ -58,6 +58,22 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
+                                {{-- latitude --}}
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="latitude">Latitude</label>
+                                    <input id="latitude" class="form-control" type="text" name="latitude">
+                                    @error('latitude')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                                {{-- longitude --}}
+                                <div class="col-md-6 form-group mb-3">
+                                    <label for="longitude">Longitude</label>
+                                    <input id="longitude" class="form-control" type="text" name="longitude">
+                                    @error('longitude')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
                                 {{-- image --}}
                                 <div class="col-md-6 form-group mb-3">
                                     <label for="image">Image</label>
@@ -92,6 +108,8 @@
                                     <tr>
                                         <th scope="col">Day #</th>
                                         <th scope="col">Title</th>
+                                        <th scope="col">Latitude</th>
+                                        <th scope="col">Longitude</th>
                                         <th scope="col">Image</th>
                                         <th scope="col">Description</th>
                                         <th scope="col">Action</th>
@@ -115,6 +133,8 @@
         'columns' => "
                     {data: 'day_number' , name: 'day_number'},
                     {data: 'title' , name: 'title'},
+                    {data: 'latitude' , name: 'latitude'},
+                    {data: 'longitude' , name: 'longitude'},
                     {data: 'image' , name: 'image' , 'sortable': false , searchable: false},
                     {data: 'description' , name: 'description'},
                     {data: 'action' , name: 'action' , 'sortable': false , searchable: false},",

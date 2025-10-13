@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\ResponseMessage;
 use App\Http\Controllers\Controller;
 use App\Services\Concrete\ActivityService;
+use App\Services\Concrete\CountryService;
 use App\Services\Concrete\DestinationService;
 use App\Services\Concrete\TourCategoryService;
 use App\Traits\ResponseAPI;
@@ -19,15 +20,18 @@ class ActivityController extends Controller
     use ResponseAPI;
     protected $activity_category_service;
     protected $activity_service;
+    protected $country_service;
     protected $destination_service;
 
     public function __construct(
         TourCategoryService $activity_category_service,
         ActivityService $activity_service,
+        CountryService $country_service,
         DestinationService $destination_service
     ) {
         $this->activity_category_service = $activity_category_service;
         $this->activity_service = $activity_service;
+        $this->country_service = $country_service;
         $this->destination_service = $destination_service;
     }
 
@@ -50,8 +54,9 @@ class ActivityController extends Controller
     {
         abort_if(Gate::denies('activity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activity_category = $this->activity_category_service->getAllActive();
+        $country = $this->country_service->getAllActive();
         $destinations = $this->destination_service->getAllActive();
-        return view('activity.create', compact('activity_category','destinations'));
+        return view('activity.create', compact('activity_category','country','destinations'));
     }
     public function store(Request $request)
     {
@@ -68,6 +73,8 @@ class ActivityController extends Controller
                 'overview'          => 'nullable|string',
                 'short_description' => 'nullable|string',
                 'full_description'  => 'nullable|string',
+                'country_id'        => 'required',
+                'city_id'           => 'required',
                 'destination_id'    => 'required',
                 'highlights'        => 'nullable|string',
                 'rules'             => 'nullable|string',
@@ -94,7 +101,7 @@ class ActivityController extends Controller
             return redirect()->back()->withErrors($validation)->withInput();
         }
 
-        // try {
+        try {
             $obj = $request->all();
 
             if ($request->hasFile('thumbnail')) {
@@ -111,9 +118,9 @@ class ActivityController extends Controller
             }
 
             return redirect('activity')->with('success', ResponseMessage::SAVE);
-        // } catch (Exception $e) {
-        //     return redirect()->back()->with('error', ResponseMessage::ERROR);
-        // }
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', ResponseMessage::ERROR);
+        }
     }
 
     public function edit($id)
@@ -121,8 +128,9 @@ class ActivityController extends Controller
         abort_if(Gate::denies('activity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $activity_category = $this->activity_category_service->getAllActive();
         $destinations = $this->destination_service->getAllActive();
+        $country = $this->country_service->getAllActive();
         $activity = $this->activity_service->getById($id);
-        return view('activity.create', compact('activity_category', 'activity','destinations'));
+        return view('activity.create', compact('activity_category','country', 'activity','destinations'));
     }
 
     public function view($id)

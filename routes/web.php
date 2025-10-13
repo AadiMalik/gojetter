@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ActivityTimeSlotController;
 use App\Http\Controllers\Admin\BlogCategoryController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\BookingController;
+use App\Http\Controllers\Admin\CityController;
 use App\Http\Controllers\Admin\ContactUsMessageController;
 use App\Http\Controllers\Admin\CountryController;
 use App\Http\Controllers\Admin\CouponController;
@@ -45,6 +46,7 @@ use App\Http\Controllers\Admin\TourItineraryController;
 use App\Http\Controllers\Admin\TourReviewController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Response;
@@ -396,6 +398,28 @@ Route::group(['middleware' => ['auth']], function () {
         });
     });
 
+    //city
+    Route::group(['prefix' => 'city'], function () {
+        Route::get('/', [CityController::class, 'index']);
+        Route::post('data', [CityController::class, 'getData'])->name('city.data');
+        Route::get('create', [CityController::class, 'create']);
+        Route::post('store', [CityController::class, 'store']);
+        Route::get('edit/{id}', [CityController::class, 'edit']);
+        Route::post('update', [CityController::class, 'update']);
+        Route::get('destroy/{id}', [CityController::class, 'destroy']);
+        Route::get('status/{id}', [CityController::class, 'status']);
+        Route::get('by-country-id/{country_id}', [CityController::class, 'cityByCountryId']);
+        Route::get('/js/city.js', function () {
+            $path = resource_path('views/city/js/city.js');
+            if (file_exists($path)) {
+                return Response::file($path, [
+                    'Content-Type' => 'application/javascript',
+                ]);
+            }
+            abort(404);
+        });
+    });
+
     //destination
     Route::group(['prefix' => 'destination'], function () {
         Route::get('/', [DestinationController::class, 'index']);
@@ -554,5 +578,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('order-detail-report', [ReportController::class, 'orderDetailReport']);
         Route::get('get-order-detail-report', [ReportController::class, 'getOrderDetailReport']);
         Route::get('get-preview-order-detail-report', [ReportController::class, 'getPreviewOrderDetailReport'])->name('report.get-preview-order-detail-report');
+    });
+
+    //setting
+    Route::group(['prefix' => 'setting'], function () {
+        Route::get('/', [SettingController::class, 'create']);
+        Route::post('store', [SettingController::class, 'store']);
     });
 });
