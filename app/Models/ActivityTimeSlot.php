@@ -37,12 +37,12 @@ class ActivityTimeSlot extends Model
     // Format start_time when getting
     public function getStartTimeAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format('h A') : null;
+        return $value ? Carbon::parse($value)->format('h:i A') : null;
     }
 
     // Format end_time when getting
     public function getEndTimeAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format('h A') : null;
+        return $value ? Carbon::parse($value)->format('h:i A') : null;
     }
 }
