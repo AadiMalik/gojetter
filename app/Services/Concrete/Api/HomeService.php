@@ -130,8 +130,7 @@ class HomeService
             $random_activities = $this->model_activity->getModel()::where('is_active', 1)
                 ->where('is_deleted', 0)
                 ->where('is_featured', 1)
-                ->whereNotIn('id', $top_activities->pluck('id')) // avoid duplicates
-                ->inRandomOrder()
+                ->whereNotIn('id', $top_activities->pluck('id'))
                 ->take($needed)
                 ->with([
                     'destination',
