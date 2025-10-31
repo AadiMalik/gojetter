@@ -179,10 +179,11 @@ class HomeService
             }], 'rating')
             ->where('tours.is_active', 1)
             ->where('tours.is_deleted', 0)
-            ->whereHas('tourDate', function ($q) {
-                $q->whereNotNull('discount_price')
-                    ->where('discount_price', '>', 0);
-            })
+            ->where('discount_price', '>', 0)
+            // ->whereHas('tourDate', function ($q) {
+            //     $q->whereNotNull('discount_price')
+            //         ->where('discount_price', '>', 0);
+            // })
             ->inRandomOrder()
             ->get();
 
