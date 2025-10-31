@@ -123,6 +123,37 @@ class HomeService
             }], 'rating')
             ->take(6)
             ->get();
+        if ($top_activities->count() < 6) {
+            $needed = 6 - $top_activities->count();
+
+            // Step 3: Fetch random remaining
+            $random_activities = $this->model_activity->getModel()::where('is_active', 1)
+                ->where('is_deleted', 0)
+                ->where('is_featured', 1)
+                ->whereNotIn('id', $top_activities->pluck('id')) // avoid duplicates
+                ->inRandomOrder()
+                ->take($needed)
+                ->with([
+                    'destination',
+                    'activity_category',
+                    'activityImage',
+                    'activityDate',
+                    'activityDate.activityTimeSlot',
+                    'activityExpectation',
+                    'activityExclusion',
+                    'activityPolicy',
+                    'activityInclusion',
+                    'activityReviews',
+                    'activityNotSuitable'
+                ])
+                ->withAvg(['activityReviews as average_rating' => function ($q) {
+                    $q->where('is_active', 1)->where('is_deleted', 0);
+                }], 'rating')
+                ->get();
+
+            // Step 4: Merge both collections
+            $top_activities = $top_activities->merge($random_activities);
+        }
         foreach ($top_activities as $item) {
             if (!empty($data['user_id']) && $data['user_id'] != '') {
                 $item['is_wishlist'] = $this->activity_service->isActivityWishlist($item->id, $data['user_id']);
